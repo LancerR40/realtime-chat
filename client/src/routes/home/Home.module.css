@@ -1,0 +1,75 @@
+.home {
+  background-color: #f7fbfe;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  margin-bottom: 15px;
+  font-size: 25px;
+}
+
+.smallText {
+  color: #4f4f4f;
+}
+
+.imgContainer {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.img {
+  width: 280px;
+  height: 200px;
+}
+
+.imgContent {
+  width: 358.89px;
+  margin: 15px 0;
+  color: #4f4f4f;
+  line-height: 25px;
+  display: block;
+}
+
+.pointer {
+  background-color: rgb(141, 141, 141);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.pointer:nth-child(2) {
+  margin: 0 15px;
+}
+
+.activePointer {
+  background-color: #4ea9f6;
+  width: 6px;
+  height: 6px;
+}
+
+.button {
+  width: 235.77px;
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  display: block;
+  cursor: pointer;
+}
+
+.buttonSignup {
+  background: linear-gradient(120deg, #4ea9f6, rgb(55, 118, 253));
+  color: #fff;
+}
+
+.buttonLogin {
+  background-color: #fff;
+  margin-top: 15px;
+  box-shadow: 0 1px 2px 1px rgb(228, 228, 228);
+}

@@ -1,5 +1,10 @@
+import Public from './auth/Public';
+import Private from './auth/Private';
+
 const App = () => {
-  return <h1>Hello World</h1>;
+  const isAuth = true;
+
+  return isAuth === false ? <Public /> : <Private />;
 };
 
 export default App;
