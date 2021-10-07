@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // Components
 import Modal from './Modal';
-import FormInput from '../../components/formInput/FormInput';
+import FormInput from '../../../components/formInput/FormInput';
 
 // Icons
 import { AiOutlineUser, AiOutlineMail, AiOutlineUpload } from 'react-icons/ai';

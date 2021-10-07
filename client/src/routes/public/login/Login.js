@@ -2,7 +2,7 @@ import styles from './Login.module.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import FormInput from '../../components/formInput/FormInput';
+import FormInput from '../../../components/formInput/FormInput';
 
 // Icons
 import { AiOutlineMail } from 'react-icons/ai';

@@ -1,8 +1,8 @@
 import styles from './Home.module.css';
 import { useState } from 'react';
-import img1 from '../../assets/img/img-1.svg';
-import img2 from '../../assets/img/img-2.svg';
-import img3 from '../../assets/img/img-3.svg';
+import img1 from '../../../assets/img/img-1.svg';
+import img2 from '../../../assets/img/img-2.svg';
+import img3 from '../../../assets/img/img-3.svg';
 
 const CONTENT = [
   {
