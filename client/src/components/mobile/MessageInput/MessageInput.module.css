@@ -1,0 +1,31 @@
+.messageInput {
+  background-color: rgb(245, 245, 245);
+  height: 45px;
+  margin: 0 15px 15px 15px;
+  border-radius: 20px;
+  display: flex;
+}
+
+.input {
+  background: none;
+  width: calc(100% - 45px);
+  padding-left: 15px;
+  outline: none;
+  border: none;
+}
+
+.iconContainer {
+  background-color: rgb(49, 84, 199);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon {
+  color: #fff;
+  font-size: 18px;
+}

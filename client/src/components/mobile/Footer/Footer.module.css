@@ -1,0 +1,28 @@
+.footer {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconContainer {
+  margin: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.icon {
+  margin-bottom: 3px;
+  font-size: 20px;
+}
+
+.text {
+  font-size: 11px;
+}
+
+.active {
+  color: rgb(49, 84, 199);
+}

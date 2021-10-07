@@ -1,0 +1,37 @@
+.usersFoundList {
+  height: calc(100vh - 272px);
+  overflow-y: scroll;
+}
+
+.usersFoundList::-webkit-scrollbar {
+  display: none;
+}
+
+.titleContainer {
+  background-color: rgb(245, 245, 245);
+  padding: 20px;
+}
+
+.title {
+  font-size: 18px;
+}
+
+.user {
+  padding: 20px;
+  border-bottom: 1px solid rgb(238, 238, 238);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.img {
+  object-fit: cover;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.name {
+  margin-left: 15px;
+  font-size: 14px;
+}

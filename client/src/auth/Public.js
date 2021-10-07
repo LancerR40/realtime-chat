@@ -1,6 +1,6 @@
-import Home from '../routes/home/Home';
-import Signup from '../routes/signup/Signup';
-import Login from '../routes/login/Login';
+import Home from '../routes/public/home/Home';
+import Signup from '../routes/public/signup/Signup';
+import Login from '../routes/public/login/Login';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const Public = () => (

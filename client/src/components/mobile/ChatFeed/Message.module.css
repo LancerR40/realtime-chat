@@ -1,0 +1,45 @@
+.messageContainer {
+  display: flex;
+}
+
+.message {
+  position: relative;
+  max-width: 200px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.messageText {
+  display: inline-block;
+  margin-bottom: 5px;
+  line-height: 20px;
+  font-size: 12px;
+}
+
+.datetime {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 10px;
+}
+
+.incomingMessage {
+  background-color: rgb(245, 245, 245);
+  border-radius: 10px 10px 10px 0;
+}
+
+.outgoingMessage {
+  background-color: rgb(49, 84, 199);
+  border-radius: 10px 10px 0 10px;
+  color: #fff;
+}
+
+.flexEnd {
+  justify-content: flex-end;
+}
+
+@media screen and (min-width: 350px) {
+  .message {
+    max-width: 250px;
+  }
+}

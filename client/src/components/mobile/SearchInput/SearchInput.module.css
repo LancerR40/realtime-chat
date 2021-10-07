@@ -1,0 +1,37 @@
+.searchInput {
+  background-color: rgb(245, 245, 245);
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  background: none;
+  width: calc(100% - 45px);
+  height: 40px;
+  padding-left: 15px;
+  outline: none;
+  border: none;
+  font-size: 13px;
+}
+
+.line {
+  background-color: rgb(223, 223, 223);
+  width: 1px;
+  height: 40px;
+  display: inline-block;
+}
+
+.iconContainer {
+  width: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 18px;
+}
