@@ -1,5 +1,6 @@
 import styles from './Home.module.css';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import img1 from '../../../assets/img/img-1.svg';
 import img2 from '../../../assets/img/img-2.svg';
 import img3 from '../../../assets/img/img-3.svg';
@@ -28,6 +29,8 @@ const CONTENT = [
 ];
 
 const Home = () => {
+  const { push } = useHistory();
+
   const [currentImg, setCurrentImg] = useState(CONTENT[0]);
 
   const changeImgHandler = (index) => setCurrentImg(CONTENT[index]);
@@ -64,11 +67,17 @@ const Home = () => {
         </div>
       </div>
 
-      <button className={`${styles.button} ${styles.buttonSignup}`}>
+      <button
+        className={`${styles.button} ${styles.buttonSignup}`}
+        onClick={() => push('/signup')}
+      >
         Sign Up
       </button>
 
-      <button className={`${styles.button} ${styles.buttonLogin}`}>
+      <button
+        className={`${styles.button} ${styles.buttonLogin}`}
+        onClick={() => push('/login')}
+      >
         Log In
       </button>
     </div>

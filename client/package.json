@@ -8,11 +8,15 @@
     "dev": "webpack server --mode development --devtool inline-source-map"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-image-crop": "^9.0.4",
-    "react-router-dom": "^5.3.0"
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^5.3.0",
+    "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -20,8 +24,8 @@
     "@babel/preset-react": "^7.14.5",
     "babel-loader": "^8.2.2",
     "css-loader": "^6.3.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.26.0",
+    "eslint": "^8.0.1",
+    "eslint-plugin-react": "^7.26.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.3.0",
