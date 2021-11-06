@@ -3,6 +3,9 @@ import styles from './Signup.module.css';
 import { useState, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 
+// Serices
+import { signupService } from '../../../services/authServices';
+
 // Components
 import Modal from './Modal';
 import FormInput from '../../../components/formInput/FormInput';
@@ -26,6 +29,8 @@ const reducer = (state, action) => {
       return { ...state, email: action.payload };
     case 'password':
       return { ...state, password: action.payload };
+    default:
+      return state;
   }
 };
 
@@ -35,11 +40,17 @@ const Signup = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const signup = (event) => {
+  const signup = async (event) => {
     event.preventDefault();
 
-    console.log(state);
-    console.log(previewAvatar);
+    state.avatar = previewAvatar;
+
+    const response = await signupService(state);
+    const { success, message } = response;
+
+    if (success === true) {
+      alert(message);
+    }
   };
 
   const inputHandler = (event) => {
@@ -109,54 +120,54 @@ const Signup = () => {
 
         <form className={styles.form} onSubmit={signup}>
           <FormInput
-            label="Full name"
+            label='Full name'
             Icon={AiOutlineUser}
-            type="text"
-            name="fullname"
+            type='text'
+            name='fullname'
             handler={inputHandler}
-            placeholder="Full name..."
+            placeholder='Full name...'
             isAvatar={false}
           />
 
           <FormInput
-            label="Email"
+            label='Email'
             Icon={AiOutlineMail}
-            type="email"
-            name="email"
+            type='email'
+            name='email'
             handler={inputHandler}
-            placeholder="Email..."
+            placeholder='Email...'
             isAvatar={false}
           />
 
           <FormInput
-            label="Password"
+            label='Password'
             Icon={RiLockPasswordLine}
-            type="password"
-            name="password"
+            type='password'
+            name='password'
             handler={inputHandler}
-            placeholder="Password..."
+            placeholder='Password...'
             isAvatar={false}
           />
 
           <FormInput
-            label="Avatar"
+            label='Avatar'
             Icon={AiOutlineUpload}
-            type="file"
-            name="avatar"
+            type='file'
+            name='avatar'
             handler={previewAvatarHandler}
-            placeholder="Password..."
+            placeholder='Password...'
             isAvatar={true}
             SecondIcon={BiCheckSquare}
             previewAvatar={previewAvatar}
           />
 
-          <button className={styles.button} type="submit">
+          <button className={styles.button} type='submit'>
             Sign Up
           </button>
 
           <span className={styles.linkText}>
             {'Already have an account? '}
-            <Link className={styles.link} to="/login">
+            <Link className={styles.link} to='/login'>
               Login
             </Link>
           </span>
