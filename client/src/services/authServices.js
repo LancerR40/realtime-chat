@@ -1,10 +1,8 @@
-import axios from 'axios';
+import axios from '../utils/axios';
 import base64ToFile from '../utils/base64ToFile';
 
-// Origin
-const BASE_URL = 'http://localhost:8080/api/auth';
-
-const SIGNUP_BASE_URL = BASE_URL + '/signup';
+const SIGNUP_BASE_URL = '/auth/signup';
+const LOGIN_BASE_URL = '/auth/login';
 
 export const signupService = async (data) => {
   const { fullname, email, password, avatar } = data;
@@ -15,6 +13,23 @@ export const signupService = async (data) => {
   formData.append('userPassword', password);
   formData.append('userAvatar', await base64ToFile(avatar));
 
-  const request = await axios.post(SIGNUP_BASE_URL, formData);
-  return request.data;
+  try {
+    const request = await axios.post(SIGNUP_BASE_URL, formData, {
+      withCredentials: true,
+    });
+    return request.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const loginService = async (data) => {
+  try {
+    const request = await axios.post(LOGIN_BASE_URL, data, {
+      withCredentials: true,
+    });
+    return request.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

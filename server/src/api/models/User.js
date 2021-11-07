@@ -7,6 +7,6 @@ const schema = new mongoose.Schema({
   userAvatar: String,
 });
 
-const User = mongoose.model('Users', schema);
+const User = mongoose.model('users', schema);
 
 export default User;

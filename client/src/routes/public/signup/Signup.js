@@ -46,10 +46,14 @@ const Signup = () => {
     state.avatar = previewAvatar;
 
     const response = await signupService(state);
-    const { success, message } = response;
+    const { success, msg } = response;
+
+    if (success === false) {
+      return alert(msg);
+    }
 
     if (success === true) {
-      alert(message);
+      alert(msg);
     }
   };
 

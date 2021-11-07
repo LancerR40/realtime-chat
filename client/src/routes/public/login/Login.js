@@ -4,14 +4,16 @@ import { Link } from 'react-router-dom';
 
 import FormInput from '../../../components/formInput/FormInput';
 
+import { loginService } from '../../../services/authServices';
+
 // Icons
 import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
 const Login = () => {
   const [data, setData] = useState({
-    email: '',
-    password: '',
+    userEmail: '',
+    userPassword: '',
   });
 
   const inputHandler = (event) => {
@@ -26,7 +28,16 @@ const Login = () => {
   const login = async (event) => {
     event.preventDefault();
 
-    console.log(data);
+    const response = await loginService(data);
+    const { success, auth, msg } = response;
+
+    if (success === false) {
+      alert(msg);
+    }
+
+    if (success === true) {
+      console.log(auth);
+    }
   };
 
   return (
@@ -38,32 +49,32 @@ const Login = () => {
 
       <form className={styles.form} onSubmit={login}>
         <FormInput
-          label="Email"
+          label='Email'
           Icon={AiOutlineMail}
-          type="email"
-          name="email"
+          type='email'
+          name='userEmail'
           handler={inputHandler}
-          placeholder="Email..."
+          placeholder='Email...'
           isAvatar={false}
         />
 
         <FormInput
-          label="Password"
+          label='Password'
           Icon={RiLockPasswordLine}
-          type="password"
-          name="password"
+          type='password'
+          name='userPassword'
           handler={inputHandler}
-          placeholder="Password..."
+          placeholder='Password...'
           isAvatar={false}
         />
 
-        <button className={styles.button} type="submit">
+        <button className={styles.button} type='submit'>
           Log In
         </button>
 
         <span className={styles.linkText}>
           {'Dont have an account? '}
-          <Link className={styles.link} to="/signup">
+          <Link className={styles.link} to='/signup'>
             Sign Up
           </Link>
         </span>
