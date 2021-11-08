@@ -1,22 +1,20 @@
 import axios from '../utils/axios';
-import base64ToFile from '../utils/base64ToFile';
+import { authRequests } from '../utils/requests';
 
-const SIGNUP_BASE_URL = '/auth/signup';
-const LOGIN_BASE_URL = '/auth/login';
+const { AUTH_VERIFY_URL, SIGNUP_URL, LOGIN_URL, LOGOUT_URL } = authRequests;
 
-export const signupService = async (data) => {
-  const { fullname, email, password, avatar } = data;
-  const formData = new FormData();
-
-  formData.append('userFullname', fullname);
-  formData.append('userEmail', email);
-  formData.append('userPassword', password);
-  formData.append('userAvatar', await base64ToFile(avatar));
-
+export const authVerifyService = async () => {
   try {
-    const request = await axios.post(SIGNUP_BASE_URL, formData, {
-      withCredentials: true,
-    });
+    const request = await axios.get(AUTH_VERIFY_URL);
+    return request.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const signupService = async (formData) => {
+  try {
+    const request = await axios.post(SIGNUP_URL, formData);
     return request.data;
   } catch (error) {
     console.log(error);
@@ -25,9 +23,16 @@ export const signupService = async (data) => {
 
 export const loginService = async (data) => {
   try {
-    const request = await axios.post(LOGIN_BASE_URL, data, {
-      withCredentials: true,
-    });
+    const request = await axios.post(LOGIN_URL, data);
+    return request.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logoutService = async () => {
+  try {
+    const request = await axios.get(LOGOUT_URL);
     return request.data;
   } catch (error) {
     console.log(error);

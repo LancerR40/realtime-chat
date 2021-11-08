@@ -1,19 +1,26 @@
 import styles from './Login.module.css';
+
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import FormInput from '../../../components/formInput/FormInput';
 
 import { loginService } from '../../../services/authServices';
+
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../../../store/actions/authActions';
 
 // Icons
 import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
 const Login = () => {
+  const { push } = useHistory();
+  const dispatch = useDispatch();
+
   const [data, setData] = useState({
-    userEmail: '',
-    userPassword: '',
+    email: '',
+    password: '',
   });
 
   const inputHandler = (event) => {
@@ -36,7 +43,9 @@ const Login = () => {
     }
 
     if (success === true) {
-      console.log(auth);
+      push('/chat');
+
+      dispatch(loginAction(auth));
     }
   };
 
@@ -52,7 +61,8 @@ const Login = () => {
           label='Email'
           Icon={AiOutlineMail}
           type='email'
-          name='userEmail'
+          name='email'
+          value={data.email}
           handler={inputHandler}
           placeholder='Email...'
           isAvatar={false}
@@ -62,7 +72,8 @@ const Login = () => {
           label='Password'
           Icon={RiLockPasswordLine}
           type='password'
-          name='userPassword'
+          name='password'
+          value={data.password}
           handler={inputHandler}
           placeholder='Password...'
           isAvatar={false}

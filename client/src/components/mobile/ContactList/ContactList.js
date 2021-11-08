@@ -3,35 +3,39 @@ import { useState, useEffect } from 'react';
 import { BsTrash, BsFillTrashFill } from 'react-icons/bs';
 import { FaTrash } from 'react-icons/fa';
 
+import { useDispatch } from 'react-redux';
+
 const ContactList = ({ setChat }) => {
-  const [frecuently, setFrecuently] = useState([]);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getFrecuently = async () => {
-      const request = await fetch('https://randomuser.me/api/?results=4');
-      const data = await request.json();
-      const people = data.results;
+  // const [frecuently, setFrecuently] = useState([]);
 
-      // Add chats fakes
-      for (let i = 0; i < people.length; i++) {
-        people[i].chat = [
-          {
-            id: 1,
-            msg: 'Hello',
-          },
-        ];
-      }
+  // useEffect(() => {
+  //   const getFrecuently = async () => {
+  //     const request = await fetch('https://randomuser.me/api/?results=4');
+  //     const data = await request.json();
+  //     const people = data.results;
 
-      setFrecuently(people);
-    };
+  //     // Add chats fakes
+  //     for (let i = 0; i < people.length; i++) {
+  //       people[i].chat = [
+  //         {
+  //           id: 1,
+  //           msg: 'Hello',
+  //         },
+  //       ];
+  //     }
 
-    getFrecuently();
-  }, []);
+  //     setFrecuently(people);
+  //   };
+
+  //   getFrecuently();
+  // }, []);
 
   return (
     <div className={styles.contactList}>
       {/* Frecuently contact list */}
-      <div className={styles.titleContainer}>
+      {/* <div className={styles.titleContainer}>
         <h2 className={styles.title}>Frequent contacts</h2>
       </div>
 
@@ -55,14 +59,14 @@ const ContactList = ({ setChat }) => {
             <FaTrash className={styles.icon} />
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* All contacts */}
       <div className={styles.titleContainer}>
         <h2 className={styles.title}>My contacts</h2>
       </div>
 
-      <div className={styles.frecuentlyContactsContainer}>
+      {/* <div className={styles.frecuentlyContactsContainer}>
         {frecuently.map((contact) => (
           <div
             className={styles.contact}
@@ -72,7 +76,7 @@ const ContactList = ({ setChat }) => {
             <img
               className={styles.img}
               src={contact.picture.medium}
-              alt="Fake"
+              alt='Fake'
             />
 
             <span className={styles.name}>
@@ -82,7 +86,7 @@ const ContactList = ({ setChat }) => {
             <FaTrash className={styles.icon} />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

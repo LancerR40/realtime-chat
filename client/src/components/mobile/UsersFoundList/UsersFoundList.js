@@ -9,15 +9,17 @@ const UsersFoundList = ({ list, display }) => {
             <h2 className={styles.title}>Users found</h2>
           </div>
 
+          {console.log(list)}
+
           {list.map((user) => (
-            <div className={styles.user} key={user.cell}>
+            <div className={styles.user} key={user.id}>
               <img
                 className={styles.img}
-                src={user.picture.medium}
-                alt="Fake"
+                src={user.avatar}
+                alt={user.fullname}
               />
 
-              <span className={styles.name}>{user.name.first}</span>
+              <span className={styles.name}>{user.fullname}</span>
             </div>
           ))}
         </>

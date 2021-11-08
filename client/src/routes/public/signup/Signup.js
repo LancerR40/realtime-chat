@@ -1,7 +1,9 @@
 import styles from './Signup.module.css';
 
-import { useState, useReducer } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import base64ToFile from '../../../utils/base64ToFile';
 
 // Serices
 import { signupService } from '../../../services/authServices';
@@ -15,51 +17,54 @@ import { AiOutlineUser, AiOutlineMail, AiOutlineUpload } from 'react-icons/ai';
 import { BiCheckSquare } from 'react-icons/bi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
-const initialState = {
-  fullname: '',
-  email: '',
-  password: '',
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'fullname':
-      return { ...state, fullname: action.payload };
-    case 'email':
-      return { ...state, email: action.payload };
-    case 'password':
-      return { ...state, password: action.payload };
-    default:
-      return state;
-  }
-};
-
 const Signup = () => {
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [data, setData] = useState({
+    fullname: '',
+    email: '',
+    password: '',
+  });
 
   const signup = async (event) => {
     event.preventDefault();
 
-    state.avatar = previewAvatar;
+    const { fullname, email, password } = data;
+    const formData = new FormData();
 
-    const response = await signupService(state);
-    const { success, msg } = response;
+    formData.append('fullname', fullname);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('avatar', await base64ToFile(previewAvatar));
+
+    const request = await signupService(formData);
+    const { success, msg } = request;
 
     if (success === false) {
       return alert(msg);
     }
 
     if (success === true) {
+      setData({
+        fullname: '',
+        email: '',
+        password: '',
+      });
+
+      setPreviewAvatar(null);
+
       alert(msg);
     }
   };
 
   const inputHandler = (event) => {
     const { name, value } = event.target;
-    dispatch({ type: name, payload: value });
+
+    setData({
+      ...data,
+      [name]: value,
+    });
   };
 
   const previewAvatarHandler = (event) => {
@@ -128,6 +133,7 @@ const Signup = () => {
             Icon={AiOutlineUser}
             type='text'
             name='fullname'
+            value={data.fullname}
             handler={inputHandler}
             placeholder='Full name...'
             isAvatar={false}
@@ -138,6 +144,7 @@ const Signup = () => {
             Icon={AiOutlineMail}
             type='email'
             name='email'
+            value={data.email}
             handler={inputHandler}
             placeholder='Email...'
             isAvatar={false}
@@ -148,6 +155,7 @@ const Signup = () => {
             Icon={RiLockPasswordLine}
             type='password'
             name='password'
+            value={data.password}
             handler={inputHandler}
             placeholder='Password...'
             isAvatar={false}

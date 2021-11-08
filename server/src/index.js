@@ -3,17 +3,19 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
-// Db connection
-require('./db/connection');
-
-// Import routes
-import authRoutes from './api/routes/auth';
+// From config
+require('./api/config/connection');
+require('./api/config/cloudinary');
 
 const app = express();
 const port = process.env.SERVER_PORT || 4000;
+
+import authRoutes from './api/routes/auth';
+import findRoutes from './api/routes/find';
 
 // Middlewares
 app.use(
@@ -22,6 +24,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -29,5 +32,6 @@ app.use(fileUpload());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/user/find', findRoutes);
 
 app.listen(port, () => console.log('Server on port: ' + port));

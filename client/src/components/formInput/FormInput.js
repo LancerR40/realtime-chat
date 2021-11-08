@@ -5,6 +5,7 @@ const FormInput = ({
   Icon,
   type,
   name,
+  value,
   handler,
   placeholder,
   isAvatar,
@@ -22,6 +23,7 @@ const FormInput = ({
           className={styles.input}
           type={type}
           name={name}
+          value={value}
           onChange={handler}
           placeholder={placeholder}
         />
@@ -34,9 +36,9 @@ const FormInput = ({
           </span>
           <input
             className={styles.uploadInput}
-            type="file"
-            accept="images/*"
-            name="avatar"
+            type='file'
+            accept='images/*'
+            name='avatar'
             onChange={handler}
           />
           {previewAvatar !== null && (

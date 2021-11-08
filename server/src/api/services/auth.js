@@ -1,14 +1,14 @@
 import User from '../models/User';
-import cloudinary from '../utils/cloudinary';
+import mongoose, { Mongoose, Schema } from 'mongoose';
 
 class AuthService {
-  signup = async (newUser) => {
+  signup = async (newUser, cloudinary) => {
     try {
-      const uploaded = await cloudinary.uploader.upload(newUser.userAvatar, {
+      const uploaded = await cloudinary.uploader.upload(newUser.avatar, {
         folder: 'mern-chat-app/avatars',
       });
 
-      newUser.userAvatar = uploaded.secure_url;
+      newUser.avatar = uploaded.secure_url;
 
       const user = new User(newUser);
       await user.save();
@@ -19,25 +19,25 @@ class AuthService {
     }
   };
 
-  login = async (userEmail) => {
+  login = async (email) => {
     try {
-      const findUser = await User.findOne({ userEmail: userEmail });
+      const findUser = await User.findOne({ email });
 
       if (findUser === null) {
         return { success: false, msg: 'Invalid credentials' };
       }
 
-      const { _id: IDUser, userPassword } = findUser;
+      const { _id: id, password } = findUser;
 
-      return { success: true, user: { IDUser, userPassword } };
+      return { success: true, user: { id, password } };
     } catch (error) {
       return { success: false, error };
     }
   };
 
-  verifyEmail = async (userEmail) => {
+  verifyEmail = async (email) => {
     try {
-      const findEmail = await User.findOne({ userEmail });
+      const findEmail = await User.findOne({ email });
 
       if (findEmail !== null) {
         return { success: false, msg: 'User already exists' };

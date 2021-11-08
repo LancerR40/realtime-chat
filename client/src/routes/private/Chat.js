@@ -10,15 +10,23 @@ import MobileChatFeed from '../../components/mobile/ChatFeed/ChatFeed';
 
 // Modules
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../../store/actions/authActions';
+import { findUserAction } from '../../store/actions/findActions';
 
 const MobileUI = () => {
+  const { push } = useHistory();
+  const dispatch = useDispatch();
+
   // States
   const [people, setPeople] = useState([]);
 
   const [currentChat, setCurrentChat] = useState({});
   const [currentSection, setCurrentSection] = useState('Chats');
 
-  const [usersFound, setUsersFound] = useState([]);
+  const usersFound = useSelector((state) => state.chat.usersFound);
 
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
@@ -28,28 +36,36 @@ const MobileUI = () => {
   const usersFoundHandler = async (event) => {
     const { value } = event.target;
 
-    if (value === '') {
-      setUsersFound([]);
+    // if (value === '') {
+    //   setUsersFound([]);
 
-      return;
-    }
+    //   return;
+    // }
 
-    const name = value[0].toUpperCase() + value.slice(1);
+    dispatch(findUserAction(value));
 
-    const filteredUsers = people.filter((user) =>
-      user.name.first.startsWith(name)
-    );
+    // const name = value[0].toUpperCase() + value.slice(1);
 
-    if (filteredUsers.length > 0) {
-      setUsersFound(filteredUsers);
+    // const filteredUsers = people.filter((user) =>
+    //   user.name.first.startsWith(name)
+    // );
 
-      return;
-    }
+    // if (filteredUsers.length > 0) {
+    //   setUsersFound(filteredUsers);
 
-    setUsersFound([{ msg: 'Not found' }]);
+    //   return;
+    // }
+
+    // setUsersFound([{ msg: 'Not found' }]);
   };
 
   const closeCurrentChat = () => setCurrentChat({});
+
+  const logout = () => {
+    push('/login');
+
+    dispatch(logoutAction());
+  };
 
   useEffect(() => {
     const getPeople = async () => {
@@ -72,6 +88,8 @@ const MobileUI = () => {
       true
     );
   }, [screenHeight]);
+
+  console.log(usersFound);
 
   return (
     <div className={styles.mobile} style={{ height: screenHeight }}>
@@ -102,6 +120,7 @@ const MobileUI = () => {
           <MobileFooter
             section={currentSection}
             changeSection={sectionHandler}
+            logout={logout}
           />
         </>
       )}
