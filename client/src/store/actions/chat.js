@@ -8,12 +8,15 @@ import { USERS_FOUND, SET_CURRENT_CHAT, SEND_MSG } from '../constants/chat';
 export const chatDataAction = () => {
   return async (dispatch) => {
     const response = await chatDataService();
-    const { success, contacts } = response;
+    const { success, contacts, user } = response;
 
     if (success === true) {
       return dispatch({
         type: '@chat/ALL_DATA',
-        payload: contacts,
+        payload: {
+          contacts,
+          user: user.avatar,
+        },
       });
     }
   };
@@ -59,17 +62,26 @@ export const closeCurrentChatAction = () => ({
   payload: {},
 });
 
-export const sendMsgAction = (data) => {
+export const sendMsgAction = (data, msgRef, socket) => {
   return async (dispatch) => {
     const response = await sendMsgService(data);
-    console.log(response);
-    // const { success, msg } = response;
+    const { success, msg } = response;
 
-    // if (success === true) {
-    //   dispatch({
-    //     type: SEND_MSG,
-    //     payload: msg,
-    //   });
-    // }
+    if (success === true) {
+      socket.emit('chat:msg', data);
+
+      dispatch({
+        type: SEND_MSG,
+        payload: msg,
+      });
+
+      // Reset msg input
+      msgRef.current.value = '';
+    }
   };
 };
+
+export const msgFromServerAction = (data) => ({
+  type: 'MSG_FROM_SERVER',
+  payload: data,
+});

@@ -12,6 +12,7 @@ import MobileChatFeed from '../../components/mobile/ChatFeed/ChatFeed';
 import { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../store/actions/auth';
 import {
@@ -20,7 +21,13 @@ import {
   setCurrentChatAction,
   closeCurrentChatAction,
   sendMsgAction,
+  msgFromServerAction,
 } from '../../store/actions/chat';
+
+// Socket IO
+import { io } from 'socket.io-client';
+const ENDPOINT = 'http://localhost:8080';
+let socket;
 
 const MobileUI = () => {
   const { push } = useHistory();
@@ -53,7 +60,7 @@ const MobileUI = () => {
       msg: value,
     };
 
-    dispatch(sendMsgAction(data));
+    dispatch(sendMsgAction(data, msgRef, socket));
   };
 
   const sectionHandler = (sectionName) => setCurrentSection(sectionName);
@@ -83,8 +90,16 @@ const MobileUI = () => {
   const logout = () => dispatch(logoutAction(push));
 
   useEffect(() => {
-    dispatch(chatDataAction());
+    const token = document.cookie.slice(6);
+
+    socket = io(ENDPOINT, {
+      query: {
+        token,
+      },
+    });
   }, []);
+
+  useEffect(() => dispatch(chatDataAction()), []);
 
   useEffect(() => {
     addEventListener('resize', () => setScreenHeight(window.innerHeight), true);
@@ -95,6 +110,13 @@ const MobileUI = () => {
       true
     );
   }, [screenHeight]);
+
+  // Socket events handlers
+  useEffect(() => {
+    socket.on('chat:msg', (data) => {
+      dispatch(msgFromServerAction(data));
+    });
+  }, []);
 
   return (
     <div className={styles.mobile} style={{ height: screenHeight }}>

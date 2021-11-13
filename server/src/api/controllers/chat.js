@@ -31,7 +31,9 @@ export const chatDataController = async (req, res) => {
     })
   );
 
-  res.status(200).json({ success: true, contacts });
+  res
+    .status(200)
+    .json({ success: true, user: { avatar: user.avatar }, contacts });
 };
 
 export const sendMsgController = async (req, res) => {
@@ -58,59 +60,64 @@ export const sendMsgController = async (req, res) => {
     content: msg,
   };
 
-  if (!isContact) {
-    // Push new contact in outgoing user
-    outgoingUser.contacts.push({
-      _id: formatIncomingUserId,
-      fullname: incomingUserFullname,
-      email: incomingUser.email,
-      avatar: incomingUser.avatar,
-      chat: [newMsg],
-    });
-
-    // Save new contact in outgoing user
-    const saveOutgoingUser = new User(outgoingUser);
-    await saveOutgoingUser.save();
-
-    // Push new contact in incoming user
-    incomingUser.contacts.push({
-      _id: formatOutgoingUserId,
-      fullname: outgoingUser.fullname,
-      email: outgoingUser.email,
-      avatar: outgoingUser.avatar,
-      chat: [newMsg],
-    });
-
-    // Save new contact in outgoing user
-    const saveIncomingUser = new User(incomingUser);
-    await saveIncomingUser.save();
-
-    return res.status(200).json({
-      success: true,
-      msg: { outgoingUserId, incomingUserId, content: msg },
-    });
-  }
-
-  let index = outgoingUser.contacts.findIndex(
-    (contact) => contact._id.toString() === incomingUserId
-  );
-
-  outgoingUser.contacts[index].chat.push(newMsg);
-
-  index = incomingUser.contacts.findIndex(
-    (contact) => contact._id.toString() === outgoingUserId
-  );
-
-  incomingUser.contacts[index].chat.push(newMsg);
-
-  const saveOutgoingUser = new User(outgoingUser);
-  await saveOutgoingUser.save();
-
-  const saveIncomingUser = new User(incomingUser);
-  await saveIncomingUser.save();
-
   return res.status(200).json({
     success: true,
     msg: { outgoingUserId, incomingUserId, content: msg },
   });
+
+  // if (!isContact) {
+  //   // Push new contact in outgoing user
+  //   outgoingUser.contacts.push({
+  //     _id: formatIncomingUserId,
+  //     fullname: incomingUserFullname,
+  //     email: incomingUser.email,
+  //     avatar: incomingUser.avatar,
+  //     chat: [newMsg],
+  //   });
+
+  //   // Save new contact in outgoing user
+  //   const saveOutgoingUser = new User(outgoingUser);
+  //   await saveOutgoingUser.save();
+
+  //   // Push new contact in incoming user
+  //   incomingUser.contacts.push({
+  //     _id: formatOutgoingUserId,
+  //     fullname: outgoingUser.fullname,
+  //     email: outgoingUser.email,
+  //     avatar: outgoingUser.avatar,
+  //     chat: [newMsg],
+  //   });
+
+  //   // Save new contact in outgoing user
+  //   const saveIncomingUser = new User(incomingUser);
+  //   await saveIncomingUser.save();
+
+  //   return res.status(200).json({
+  //     success: true,
+  //     msg: { outgoingUserId, incomingUserId, content: msg },
+  //   });
+  // }
+
+  // let index = outgoingUser.contacts.findIndex(
+  //   (contact) => contact._id.toString() === incomingUserId
+  // );
+
+  // outgoingUser.contacts[index].chat.push(newMsg);
+
+  // index = incomingUser.contacts.findIndex(
+  //   (contact) => contact._id.toString() === outgoingUserId
+  // );
+
+  // incomingUser.contacts[index].chat.push(newMsg);
+
+  // const saveOutgoingUser = new User(outgoingUser);
+  // await saveOutgoingUser.save();
+
+  // const saveIncomingUser = new User(incomingUser);
+  // await saveIncomingUser.save();
+
+  // return res.status(200).json({
+  //   success: true,
+  //   msg: { outgoingUserId, incomingUserId, content: msg },
+  // });
 };

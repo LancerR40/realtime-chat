@@ -70,7 +70,7 @@ export const loginController = async (req, res) => {
   res
     .status(200)
     .cookie('token', token, {
-      httpOnly: true,
+      // httpOnly: true,
     })
     .json({ success: true, auth: true });
 };

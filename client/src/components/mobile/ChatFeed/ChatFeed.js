@@ -14,7 +14,7 @@ const ChatFeed = ({ chat, msg, sendMsg, closeChat }) => {
       <Header userData={chat} close={closeChat} />
 
       <div className={styles.chat}>
-        {messages.length > 0 &&
+        {messages?.length > 0 &&
           messages.map((msg, index) =>
             msg.outgoingUserId !== currentChat.id ? (
               <Message key={index} type='outgoing' text={msg.content} />

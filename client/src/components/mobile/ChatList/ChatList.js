@@ -5,7 +5,7 @@ const ChatList = ({ setChat }) => {
   const chats = useSelector((state) => {
     const { contacts } = state.chat;
 
-    return contacts.filter((contact) => contact.chat.length > 0);
+    return contacts.filter((contact) => contact?.chat.length > 0);
   });
 
   return (

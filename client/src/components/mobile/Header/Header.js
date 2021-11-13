@@ -4,15 +4,17 @@ import styles from './Header.module.css';
 import SearchInput from '../SearchInput/SearchInput';
 import Contacts from '../Contacts/Contacts';
 
-import img from '../../../assets/img/img-5.jpg';
+import { useSelector } from 'react-redux';
 
 const Header = ({ setUsers }) => {
+  const avatar = useSelector((state) => state.chat.user);
+
   return (
     <header className={styles.header}>
       <div className={styles.top}>
         <h1 className={styles.title}>Chat Room</h1>
 
-        <img className={styles.avatar} src={img} alt='Ronald Abu Saleh' />
+        <img className={styles.avatar} src={avatar} alt='Ronald Abu Saleh' />
       </div>
 
       <div className={styles.bottom}>

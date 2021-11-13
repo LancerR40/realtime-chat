@@ -1,5 +1,4 @@
 import styles from './Contacts.module.css';
-import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 const Contacts = () => {
