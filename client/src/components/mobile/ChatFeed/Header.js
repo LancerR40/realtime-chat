@@ -12,16 +12,14 @@ const Header = ({ userData, close }) => {
         <div className={styles.avatarContainer}>
           <img
             className={styles.avatar}
-            src={userData.picture.medium}
-            alt="Fake name"
+            src={userData.avatar}
+            alt={userData.fullname}
           />
           <span className={styles.status}></span>
         </div>
 
         <div className={styles.userNameContainer}>
-          <span className={styles.userName}>
-            {userData.name.first} {userData.name.last}
-          </span>
+          <span className={styles.userName}>{userData.fullname}</span>
         </div>
       </div>
     </div>

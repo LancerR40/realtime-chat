@@ -1,23 +1,35 @@
-const authReducer = (state = false, action) => {
+const initialState = {
+  isAuth: false,
+  requestData: {
+    onSuccess: {
+      status: false,
+      msg: '',
+    },
+    error: {
+      status: false,
+      msg: '',
+    },
+  },
+};
+
+const authReducer = (state = initialState, action) => {
+  const { payload } = action;
+
   switch (action.type) {
-    case '@auth/verify': {
-      const { payload } = action;
-      return payload;
-    }
+    case '@auth/AUTH_VERIFY':
+      return { ...state, isAuth: payload };
 
-    case '@auth/login': {
-      const { payload } = action;
-      return payload;
-    }
+    case '@auth/SIGNUP':
+      return { ...state, requestData: { ...state.requestData, ...payload } };
 
-    case '@auth/logout': {
-      const { payload } = action;
-      return payload;
-    }
+    case '@auth/LOGIN':
+      return { ...state, isAuth: payload };
 
-    default: {
+    case '@auth/LOGOUT':
+      return { ...state, isAuth: payload };
+
+    default:
       return state;
-    }
   }
 };
 

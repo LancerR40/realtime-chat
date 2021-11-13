@@ -1,49 +1,31 @@
 import styles from './ChatList.module.css';
-import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const ChatList = ({ setChat }) => {
-  const [chats, setChats] = useState([]);
+  const chats = useSelector((state) => {
+    const { contacts } = state.chat;
 
-  useEffect(() => {
-    const getPeople = async () => {
-      const request = await fetch('https://randomuser.me/api/?results=4');
-      const data = await request.json();
-      const people = data.results;
-
-      // Add chats fakes
-      for (let i = 0; i < people.length; i++) {
-        people[i].chat = [
-          {
-            id: 1,
-            msg: 'Hello',
-          },
-        ];
-      }
-
-      setChats(people);
-    };
-
-    getPeople();
-  }, []);
+    return contacts.filter((contact) => contact.chat.length > 0);
+  });
 
   return (
     <div className={styles.chatList}>
       {chats.map((chat) => (
         <div
           className={styles.chat}
-          key={chat.cell}
+          key={chat.id}
           onClick={() => setChat(chat)}
         >
           <div className={styles.imgContainer}>
-            <img className={styles.img} src={chat.picture.medium} alt="" />
+            <img className={styles.img} src={chat.avatar} alt='' />
             <span className={styles.status}></span>
           </div>
 
           <div className={styles.chatData}>
-            <span className={styles.name}>
-              {chat.name.first} {chat.name.last}
+            <span className={styles.name}>{chat.fullname}</span>
+            <span className={styles.lastMsg}>
+              {chat.chat[chat.chat.length - 1].content}
             </span>
-            <span className={styles.lastMsg}>Hello developer! ....</span>
             <span className={styles.timeAgo}>2 min ago</span>
           </div>
         </div>

@@ -12,7 +12,7 @@ const Header = ({ setUsers }) => {
       <div className={styles.top}>
         <h1 className={styles.title}>Chat Room</h1>
 
-        <img className={styles.avatar} src={img} alt="Ronald Abu Saleh" />
+        <img className={styles.avatar} src={img} alt='Ronald Abu Saleh' />
       </div>
 
       <div className={styles.bottom}>

@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.SERVER_PORT || 4000;
 
 import authRoutes from './api/routes/auth';
-import findRoutes from './api/routes/find';
+import chatRoutes from './api/routes/chat';
 
 // Middlewares
 app.use(
@@ -32,6 +32,6 @@ app.use(fileUpload());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/user/find', findRoutes);
+app.use('/api/chat', chatRoutes);
 
 app.listen(port, () => console.log('Server on port: ' + port));

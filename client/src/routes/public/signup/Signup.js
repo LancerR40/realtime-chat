@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 
 import base64ToFile from '../../../utils/base64ToFile';
 
-// Serices
-import { signupService } from '../../../services/authServices';
+// Redux
+import { useDispatch } from 'react-redux';
+import { signupAction } from '../../../store/actions/auth';
 
 // Components
 import Modal from './Modal';
@@ -18,6 +19,8 @@ import { BiCheckSquare } from 'react-icons/bi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
 
@@ -38,24 +41,7 @@ const Signup = () => {
     formData.append('password', password);
     formData.append('avatar', await base64ToFile(previewAvatar));
 
-    const request = await signupService(formData);
-    const { success, msg } = request;
-
-    if (success === false) {
-      return alert(msg);
-    }
-
-    if (success === true) {
-      setData({
-        fullname: '',
-        email: '',
-        password: '',
-      });
-
-      setPreviewAvatar(null);
-
-      alert(msg);
-    }
+    dispatch(signupAction(formData));
   };
 
   const inputHandler = (event) => {

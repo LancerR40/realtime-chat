@@ -5,10 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import FormInput from '../../../components/formInput/FormInput';
 
-import { loginService } from '../../../services/authServices';
-
 import { useDispatch } from 'react-redux';
-import { loginAction } from '../../../store/actions/authActions';
+import { loginAction } from '../../../store/actions/auth';
 
 // Icons
 import { AiOutlineMail } from 'react-icons/ai';
@@ -35,18 +33,7 @@ const Login = () => {
   const login = async (event) => {
     event.preventDefault();
 
-    const response = await loginService(data);
-    const { success, auth, msg } = response;
-
-    if (success === false) {
-      alert(msg);
-    }
-
-    if (success === true) {
-      push('/chat');
-
-      dispatch(loginAction(auth));
-    }
+    dispatch(loginAction(data, push));
   };
 
   return (

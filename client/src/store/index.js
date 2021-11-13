@@ -4,7 +4,7 @@ import chatReducer from './reducers/chatReducer';
 
 const store = configureStore({
   reducer: {
-    isAuth: authReducer,
+    auth: authReducer,
     chat: chatReducer,
   },
 });

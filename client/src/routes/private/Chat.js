@@ -9,74 +9,81 @@ import MobileFooter from '../../components/mobile/Footer/Footer';
 import MobileChatFeed from '../../components/mobile/ChatFeed/ChatFeed';
 
 // Modules
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutAction } from '../../store/actions/authActions';
-import { findUserAction } from '../../store/actions/findActions';
+import { logoutAction } from '../../store/actions/auth';
+import {
+  chatDataAction,
+  findUsersAction,
+  setCurrentChatAction,
+  closeCurrentChatAction,
+  sendMsgAction,
+} from '../../store/actions/chat';
 
 const MobileUI = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
 
-  // States
-  const [people, setPeople] = useState([]);
+  // Ref
+  const msgRef = useRef('');
 
-  const [currentChat, setCurrentChat] = useState({});
+  // States
   const [currentSection, setCurrentSection] = useState('Chats');
 
   const usersFound = useSelector((state) => state.chat.usersFound);
+  const currentChat = useSelector((state) => state.chat.currentChat);
 
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
   // Functions
-  const sectionHandler = (sectionName) => setCurrentSection(sectionName);
+  const sendMsg = () => {
+    const { value } = msgRef.current;
 
-  const usersFoundHandler = async (event) => {
-    const { value } = event.target;
+    if (value === '') {
+      return;
+    }
 
-    // if (value === '') {
-    //   setUsersFound([]);
+    const { id, fullname } = currentChat;
 
-    //   return;
-    // }
-
-    dispatch(findUserAction(value));
-
-    // const name = value[0].toUpperCase() + value.slice(1);
-
-    // const filteredUsers = people.filter((user) =>
-    //   user.name.first.startsWith(name)
-    // );
-
-    // if (filteredUsers.length > 0) {
-    //   setUsersFound(filteredUsers);
-
-    //   return;
-    // }
-
-    // setUsersFound([{ msg: 'Not found' }]);
-  };
-
-  const closeCurrentChat = () => setCurrentChat({});
-
-  const logout = () => {
-    push('/login');
-
-    dispatch(logoutAction());
-  };
-
-  useEffect(() => {
-    const getPeople = async () => {
-      const request = await fetch('https://randomuser.me/api/?results=1000');
-      const data = await request.json();
-      const people = data.results;
-
-      setPeople(people);
+    const data = {
+      incomingUserId: id,
+      incomingUserFullname: fullname,
+      msg: value,
     };
 
-    getPeople();
+    dispatch(sendMsgAction(data));
+  };
+
+  const sectionHandler = (sectionName) => setCurrentSection(sectionName);
+
+  const usersFoundHandler = (event) => {
+    const { value } = event.target;
+
+    dispatch(findUsersAction(value));
+  };
+
+  const setCurrentChat = (user) => {
+    if (!user.chat) {
+      return dispatch(setCurrentChatAction(user));
+    }
+
+    dispatch(setCurrentChatAction(user));
+  };
+
+  const closeCurrentChat = () => {
+    if (usersFound.length > 0) {
+      dispatch(findUsersAction());
+    }
+
+    dispatch(closeCurrentChatAction());
+  };
+
+  const logout = () => dispatch(logoutAction(push));
+
+  useEffect(() => {
+    dispatch(chatDataAction());
   }, []);
 
   useEffect(() => {
@@ -88,8 +95,6 @@ const MobileUI = () => {
       true
     );
   }, [screenHeight]);
-
-  console.log(usersFound);
 
   return (
     <div className={styles.mobile} style={{ height: screenHeight }}>
@@ -113,7 +118,11 @@ const MobileUI = () => {
             <MobileUsersFoundList list={usersFound} display={false} />
           ) : (
             usersFound.length > 0 && (
-              <MobileUsersFoundList list={usersFound} display={true} />
+              <MobileUsersFoundList
+                list={usersFound}
+                display={true}
+                setChat={setCurrentChat}
+              />
             )
           )}
 
@@ -126,7 +135,12 @@ const MobileUI = () => {
       )}
 
       {Object.keys(currentChat).length > 0 && (
-        <MobileChatFeed chat={currentChat} closeChat={closeCurrentChat} />
+        <MobileChatFeed
+          chat={currentChat}
+          msg={msgRef}
+          sendMsg={sendMsg}
+          closeChat={closeCurrentChat}
+        />
       )}
     </div>
   );

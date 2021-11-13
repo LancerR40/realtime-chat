@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 
-const username = process.env.MONGO_USERNAME;
-const password = process.env.MONGO_PASSWORD;
-const cluster = process.env.MONGO_CLUSTER;
-const dbname = process.env.MONGO_DB_NAME;
+// const username = process.env.MONGO_USERNAME;
+// const password = process.env.MONGO_PASSWORD;
+// const cluster = process.env.MONGO_CLUSTER;
+// const dbname = process.env.MONGO_DB_NAME;
 
-const uri = `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority`;
+const uri = 'mongodb://localhost:27017/mernChatAppDb';
 
 mongoose.connect(uri, {
   useNewUrlParser: true,

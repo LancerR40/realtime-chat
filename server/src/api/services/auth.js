@@ -1,9 +1,15 @@
 import User from '../models/User';
-import mongoose, { Mongoose, Schema } from 'mongoose';
 
 class AuthService {
   signup = async (newUser, cloudinary) => {
     try {
+      console.log(newUser.email);
+      const findUser = await User.findOne({ email: newUser.email });
+      if (findUser) {
+        console.log('Usuario registrado');
+        return { success: false, isUserExist: true };
+      }
+
       const uploaded = await cloudinary.uploader.upload(newUser.avatar, {
         folder: 'mern-chat-app/avatars',
       });
@@ -13,9 +19,15 @@ class AuthService {
       const user = new User(newUser);
       await user.save();
 
-      return { success: true, msg: 'Successfully registered user!' };
+      console.log('Registrado');
+
+      return { success: true };
     } catch (error) {
-      return { success: false, error };
+      console.log(error);
+      return {
+        success: false,
+        error,
+      };
     }
   };
 
@@ -23,29 +35,18 @@ class AuthService {
     try {
       const findUser = await User.findOne({ email });
 
-      if (findUser === null) {
-        return { success: false, msg: 'Invalid credentials' };
+      if (!findUser) {
+        return { success: false, userFound: false };
       }
 
       const { _id: id, password } = findUser;
 
-      return { success: true, user: { id, password } };
+      return { success: true, userFound: true, data: { id, password } };
     } catch (error) {
-      return { success: false, error };
-    }
-  };
-
-  verifyEmail = async (email) => {
-    try {
-      const findEmail = await User.findOne({ email });
-
-      if (findEmail !== null) {
-        return { success: false, msg: 'User already exists' };
-      }
-
-      return { success: true };
-    } catch (error) {
-      return { success: false, error };
+      return {
+        success: false,
+        error,
+      };
     }
   };
 }

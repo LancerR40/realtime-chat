@@ -1,5 +1,4 @@
 import AuthService from '../services/auth';
-
 import { encryptPassword, decryptPassword } from '../utils/bcrypt';
 import { createJWT, verifyJWT } from '../utils/jsonwebtoken';
 import cloudinary from '../config/cloudinary';
@@ -27,19 +26,6 @@ export const signupController = async (req, res) => {
   const { fullname, email, password } = req.body;
   const { avatar } = req.files;
 
-  const auth = new AuthService();
-
-  const isUserExist = await auth.verifyEmail(email);
-  const { success, msg, error } = isUserExist;
-
-  if (success === false && error) {
-    return console.log(error);
-  }
-
-  if (success === false) {
-    return res.status(200).json({ success, msg });
-  }
-
   const newUser = {
     fullname,
     email,
@@ -47,39 +33,42 @@ export const signupController = async (req, res) => {
     avatar: toBase64(avatar),
   };
 
+  const auth = new AuthService();
   const response = await auth.signup(newUser, cloudinary);
+  const { success, isUserExist } = response;
 
-  if (response.success === false && response.error) {
-    return console.log(error);
+  if (isUserExist) {
+    res.status(200).json({ success, msg: 'User already exists' });
   }
 
-  res.status(200).json(response);
+  if (success === true) {
+    res.status(200).json({ success, msg: 'Successfully registered user!' });
+  }
 };
 
 export const loginController = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password: textPlainPassword } = req.body;
 
   const auth = new AuthService();
   const response = await auth.login(email);
-  const { success, msg, user, error } = response;
+  const { success, userFound, data } = response;
 
-  if (success === false && error) {
-    return console.log(error);
+  if (!userFound) {
+    return res.status(200).json({ success, msg: 'Invalid credentials' });
   }
 
-  if (success === false && msg) {
-    return res.status(200).json({ success: false, msg });
-  }
+  const { id, password: hash } = data;
 
-  const comparePassword = await decryptPassword(password, user.password);
+  const isTruePassword = await decryptPassword(textPlainPassword, hash);
 
-  if (comparePassword !== true) {
+  if (!isTruePassword) {
     return res.status(200).json({ success: false, msg: 'Invalid credentials' });
   }
 
-  const token = createJWT(user.id);
+  const token = createJWT(id);
 
   res
+    .status(200)
     .cookie('token', token, {
       httpOnly: true,
     })
