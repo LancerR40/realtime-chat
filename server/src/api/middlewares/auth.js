@@ -4,10 +4,8 @@ export const isAuth = (req, res, next) => {
   const { token } = req.cookies;
 
   if (!token) {
-    return res.json({
-      success: false,
-      auth: false,
-      msg: 'Authentication failed',
+    return res.status(403).json({
+      error: 'Authorization failed',
     });
   }
 
@@ -18,10 +16,8 @@ export const isAuth = (req, res, next) => {
 
       next();
     } catch (error) {
-      return res.json({
-        success: false,
-        auth: false,
-        msg: 'Authentication failed',
+      return res.status(403).json({
+        error: 'Authorization failed',
       });
     }
   }

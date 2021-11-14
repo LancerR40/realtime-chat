@@ -1,53 +1,61 @@
 import User from '../models/User';
 
+import cloudinary from '../config/cloudinary';
+import toBase64 from '../utils/toBase64';
+import { createJWT, verifyJWT } from '../utils/jsonwebtoken';
+import { encryptPassword, decryptPassword } from '../utils/bcrypt';
+
 class AuthService {
-  signup = async (newUser, cloudinary) => {
-    try {
-      console.log(newUser.email);
-      const findUser = await User.findOne({ email: newUser.email });
-      if (findUser) {
-        console.log('Usuario registrado');
-        return { success: false, isUserExist: true };
-      }
+  isAuth = (token) => {
+    const payload = verifyJWT(token);
 
-      const uploaded = await cloudinary.uploader.upload(newUser.avatar, {
-        folder: 'mern-chat-app/avatars',
-      });
-
-      newUser.avatar = uploaded.secure_url;
-
-      const user = new User(newUser);
-      await user.save();
-
-      console.log('Registrado');
-
-      return { success: true };
-    } catch (error) {
-      console.log(error);
-      return {
-        success: false,
-        error,
-      };
+    if (payload) {
+      return { status: true };
     }
   };
 
-  login = async (email) => {
-    try {
-      const findUser = await User.findOne({ email });
+  signup = async (newUser) => {
+    const isUserExist = await User.findOne({ email: newUser.email });
 
-      if (!findUser) {
-        return { success: false, userFound: false };
-      }
-
-      const { _id: id, password } = findUser;
-
-      return { success: true, userFound: true, data: { id, password } };
-    } catch (error) {
-      return {
-        success: false,
-        error,
-      };
+    if (isUserExist) {
+      return { isUserExist: true };
     }
+
+    const uploaded = await cloudinary.uploader.upload(
+      toBase64(newUser.avatar),
+      {
+        folder: 'mern-chat-app/avatars',
+      }
+    );
+
+    newUser.password = await encryptPassword(newUser.password);
+    newUser.avatar = uploaded.secure_url;
+
+    const user = new User(newUser);
+    await user.save();
+
+    return { status: true };
+  };
+
+  login = async (user) => {
+    const isUserExist = await User.findOne({ email: user.email });
+
+    if (!isUserExist) {
+      return { error: 'Invalid credentials' };
+    }
+
+    const comparePassword = await decryptPassword(
+      user.password,
+      isUserExist.password
+    );
+
+    if (comparePassword !== true) {
+      return { error: 'Invalid credentials' };
+    }
+
+    const token = createJWT(isUserExist._id);
+
+    return { token };
   };
 }
 

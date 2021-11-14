@@ -67,7 +67,7 @@ const chatReducer = (state = initialState, action) => {
       return newState;
     }
 
-    case 'MSG_FROM_SERVER': {
+    case '@chat/MSG_FROM_SERVER': {
       const { outgoingUser, incomingUser, content } = action.payload;
 
       const { id: outgoingUserId, fullname, email, avatar } = outgoingUser;

@@ -10,9 +10,7 @@ const App = () => {
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    dispatch(isAuthAction());
-  }, []);
+  useEffect(() => dispatch(isAuthAction()), []);
 
   return isAuth === false ? <Public /> : <Private />;
 };

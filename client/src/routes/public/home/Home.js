@@ -1,28 +1,29 @@
 import styles from './Home.module.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import img1 from '../../../assets/img/img-1.svg';
-import img2 from '../../../assets/img/img-2.svg';
-import img3 from '../../../assets/img/img-3.svg';
+
+import GreatChat from '../../../../public/assets/GreatChat.jsx';
+import Community from '../../../../public/assets/Community.jsx';
+import Security from '../../../../public/assets/Security.jsx';
 
 const CONTENT = [
   {
     id: 1,
     name: 'World chat',
-    img: img1,
+    img: <GreatChat />,
     description: 'Get started with this great online chat community worldwide!',
   },
   {
     id: 2,
     name: 'Best network',
-    img: img2,
+    img: <Community />,
     description:
       'Connect with people from all over the world in this fantastic network',
   },
   {
     id: 3,
     name: 'Real time chat',
-    img: img3,
+    img: <Security />,
     description:
       'Do you send messages at all times, concerned about security? We protect your data',
   },
@@ -44,11 +45,8 @@ const Home = () => {
       <small className={styles.smallText}>Start with sign up or login!</small>
 
       <div className={styles.imgContainer}>
-        <img
-          className={styles.img}
-          src={currentImg.img}
-          alt={currentImg.name}
-        />
+        {currentImg.img}
+
         <small className={styles.imgContent}>{currentImg.description}</small>
 
         <div>

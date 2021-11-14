@@ -1,4 +1,4 @@
-import Server from './server/Server';
+import Server from './api/models/Server';
 
 const server = new Server();
 server.execute();

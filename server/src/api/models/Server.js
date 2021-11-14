@@ -8,8 +8,8 @@ import cookieParser from 'cookie-parser';
 import http from 'http';
 import io from 'socket.io';
 
-import authRoutes from '../api/routes/auth';
-import chatRoutes from '../api/routes/chat';
+import authRoutes from '../routes/auth';
+import chatRoutes from '../routes/chat';
 
 import SocketServer from './SocketServer';
 
@@ -32,8 +32,8 @@ class Server {
     });
 
     // Global settings
-    this.connection = require('../api/config/connection');
-    this.cloudinary = require('../api/config/cloudinary');
+    this.db = require('../config/db');
+    this.cloudinary = require('../config/cloudinary');
   }
 
   routes() {

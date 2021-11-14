@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom';
 import base64ToFile from '../../../utils/base64ToFile';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signupAction } from '../../../store/actions/auth';
 
 // Components
 import Modal from './Modal';
 import FormInput from '../../../components/formInput/FormInput';
+import Loading from '../../../components/loading/Loading';
 
 // Icons
 import { AiOutlineUser, AiOutlineMail, AiOutlineUpload } from 'react-icons/ai';
@@ -23,6 +24,8 @@ const Signup = () => {
 
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
+
+  const isLoading = useSelector((state) => state.auth.isLoading);
 
   const [data, setData] = useState({
     fullname: '',
@@ -41,7 +44,7 @@ const Signup = () => {
     formData.append('password', password);
     formData.append('avatar', await base64ToFile(previewAvatar));
 
-    dispatch(signupAction(formData));
+    dispatch(signupAction(formData, setData, setPreviewAvatar));
   };
 
   const inputHandler = (event) => {
@@ -106,6 +109,8 @@ const Signup = () => {
           changeAvatarHandler={changeAvatarModalHandler}
         />
       )}
+
+      {isLoading === true && <Loading />}
 
       <div className={styles.signup}>
         <h1 className={styles.title}>Register</h1>

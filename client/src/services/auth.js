@@ -5,7 +5,7 @@ export const isAuthService = async () => {
     const request = await axios.get('/auth');
     return request.data;
   } catch (error) {
-    console.log(error);
+    return { error: error.response.data.error };
   }
 };
 
@@ -14,7 +14,7 @@ export const signupService = async (data) => {
     const request = await axios.post('/auth/signup', data);
     return request.data;
   } catch (error) {
-    console.log(error);
+    return { error: error.response.data.error };
   }
 };
 
@@ -23,7 +23,7 @@ export const loginService = async (data) => {
     const request = await axios.post('/auth/login', data);
     return request.data;
   } catch (error) {
-    console.log(error);
+    return { error: error.response.data.error };
   }
 };
 
@@ -32,6 +32,6 @@ export const logoutService = async () => {
     const request = await axios.get('/auth/logout');
     return request.data;
   } catch (error) {
-    console.log(error);
+    return { error: error.response.data.error };
   }
 };

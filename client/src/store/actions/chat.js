@@ -3,22 +3,30 @@ import {
   findUsersService,
   sendMsgService,
 } from '../../services/chat';
-import { USERS_FOUND, SET_CURRENT_CHAT, SEND_MSG } from '../constants/chat';
+import {
+  ALL_DATA,
+  USERS_FOUND,
+  SET_CURRENT_CHAT,
+  SEND_MSG,
+  MSG_FROM_SERVER,
+} from '../constants/chat';
 
 export const chatDataAction = () => {
   return async (dispatch) => {
     const response = await chatDataService();
-    const { success, contacts, user } = response;
+    const { user, contacts, error } = response;
 
-    if (success === true) {
-      return dispatch({
-        type: '@chat/ALL_DATA',
-        payload: {
-          contacts,
-          user: user.avatar,
-        },
-      });
+    if (error) {
+      return alert('Internal error');
     }
+
+    return dispatch({
+      type: ALL_DATA,
+      payload: {
+        contacts,
+        user: user.avatar,
+      },
+    });
   };
 };
 
@@ -31,12 +39,7 @@ export const findUsersAction = (value = '') => {
       });
     }
 
-    const response = await findUsersService(value);
-    const { success, usersFound } = response;
-
-    if (success !== true) {
-      return;
-    }
+    const { usersFound } = await findUsersService(value);
 
     if (usersFound.length < 1) {
       return dispatch({
@@ -64,24 +67,21 @@ export const closeCurrentChatAction = () => ({
 
 export const sendMsgAction = (data, msgRef, socket) => {
   return async (dispatch) => {
-    const response = await sendMsgService(data);
-    const { success, msg } = response;
+    const { msg } = await sendMsgService(data);
 
-    if (success === true) {
-      socket.emit('chat:msg', data);
+    // Send msg to socket server
+    socket.emit('chat:msg', data);
 
-      dispatch({
-        type: SEND_MSG,
-        payload: msg,
-      });
+    dispatch({
+      type: SEND_MSG,
+      payload: msg,
+    });
 
-      // Reset msg input
-      msgRef.current.value = '';
-    }
+    msgRef.current.value = '';
   };
 };
 
 export const msgFromServerAction = (data) => ({
-  type: 'MSG_FROM_SERVER',
+  type: MSG_FROM_SERVER,
   payload: data,
 });

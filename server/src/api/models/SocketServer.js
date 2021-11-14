@@ -1,5 +1,5 @@
-import { verifyJWT } from '../api/utils/jsonwebtoken';
-import User from '../api/models/User';
+import User from './User';
+import { verifyJWT } from '../utils/jsonwebtoken';
 
 class SocketServer {
   constructor(io) {
@@ -52,8 +52,7 @@ class SocketServer {
 
       socket.on('chat:msg', (data) => {
         // Outgoing user data
-        const outgoingUser = this.users.get(id);
-        const { userId, fullname, email, avatar } = outgoingUser;
+        const { userId, fullname, email, avatar } = this.users.get(id);
 
         const newMsg = {
           outgoingUser: {

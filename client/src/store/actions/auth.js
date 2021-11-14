@@ -4,15 +4,15 @@ import {
   loginService,
   logoutService,
 } from '../../services/auth';
-import { AUTH_VERIFY, SIGNUP, LOGOUT, LOGIN } from '../constants/auth';
+import { AUTH_VERIFY, LOGIN, LOGOUT, LOADING_STATUS } from '../constants/auth';
 
 export const isAuthAction = () => {
   return async (dispatch) => {
     const response = await isAuthService();
-    const { success, auth } = response;
+    const { auth, error } = response;
 
-    if (success !== true) {
-      return;
+    if (error) {
+      return alert(error);
     }
 
     dispatch({
@@ -22,58 +22,66 @@ export const isAuthAction = () => {
   };
 };
 
-export const signupAction = (data) => {
+export const signupAction = (data, setData, setPreviewAvatar) => {
   return async (dispatch) => {
-    const response = await signupService(data);
-    console.log(response);
-    const { success: status, msg } = response;
+    dispatch({
+      type: LOADING_STATUS,
+      payload: true,
+    });
 
-    if (status !== true) {
-      // Display error msg
-      return;
-    }
+    const { msg, error } = await signupService(data);
 
     dispatch({
-      type: SIGNUP,
-      payload: {
-        onSuccess: {
-          status,
-          msg,
-        },
-      },
+      type: LOADING_STATUS,
+      payload: false,
     });
+
+    if (error) {
+      return alert(error);
+    }
+
+    setData({
+      fullname: '',
+      email: '',
+      password: '',
+    });
+
+    setPreviewAvatar(null);
+
+    alert(msg);
   };
 };
 
 export const loginAction = (data, push) => {
   return async (dispatch) => {
-    const response = await loginService(data);
-    const { success, auth } = response;
-    if (success !== true) {
-      // Display error msg
-      return;
+    const { auth, error } = await loginService(data);
+
+    if (error) {
+      return alert(error);
     }
 
-    push('/chat');
+    if (auth) {
+      push('/chat');
 
-    // In construction
-    dispatch({
-      type: LOGIN,
-      payload: auth,
-    });
+      dispatch({
+        type: LOGIN,
+        payload: auth,
+      });
+    }
   };
 };
 
 export const logoutAction = (push) => {
   return async (dispatch) => {
-    const response = await logoutService('GET', '/auth/logout');
-    const { auth } = response;
+    const { auth } = await logoutService();
 
-    push('/');
+    if (!auth) {
+      push('/');
 
-    return dispatch({
-      type: LOGOUT,
-      payload: auth,
-    });
+      return dispatch({
+        type: LOGOUT,
+        payload: auth,
+      });
+    }
   };
 };
