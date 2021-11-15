@@ -90,7 +90,8 @@ const MobileUI = () => {
   const logout = () => dispatch(logoutAction(push));
 
   useEffect(() => {
-    const token = document.cookie.slice(6);
+    const token = localStorage.getItem('token');
+    // const token = document.cookie.slice(6);
 
     socket = io(ENDPOINT, {
       query: {

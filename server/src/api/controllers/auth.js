@@ -1,9 +1,10 @@
 import AuthService from '../services/auth';
 
 export const isAuthController = (req, res) => {
-  const { token } = req.cookies;
+  // const { token } = req.cookies;
+  const token = req.headers['x-token'];
 
-  if (!token) {
+  if (!token || token == 'null') {
     return res.status(200).json({ auth: false });
   }
 
@@ -56,12 +57,14 @@ export const loginController = async (req, res) => {
     }
 
     if (token) {
-      return res.status(200).cookie('token', token).json({ auth: true });
+      res.status(200).json({ auth: true, token });
+      // return res.status(200).cookie('token', token).json({ auth: true });
     }
   } catch (error) {
     res.status(400).json({ error });
   }
 };
 
-export const logoutController = (_req, res) =>
-  res.status(200).clearCookie('token').json({ auth: false });
+export const logoutController = (_req, res) => {
+  //  res.status(200).clearCookie('token').json({ auth: false });
+};

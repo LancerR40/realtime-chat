@@ -1,9 +1,10 @@
 import { verifyJWT } from '../utils/jsonwebtoken';
 
 export const isAuth = (req, res, next) => {
-  const { token } = req.cookies;
+  // const { token } = req.cookies;
+  const token = req.headers['x-token'];
 
-  if (!token) {
+  if (!token || token == 'null') {
     return res.status(403).json({
       error: 'Authorization failed',
     });

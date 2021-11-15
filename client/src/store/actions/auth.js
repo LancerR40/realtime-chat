@@ -54,13 +54,16 @@ export const signupAction = (data, setData, setPreviewAvatar) => {
 
 export const loginAction = (data, push) => {
   return async (dispatch) => {
-    const { auth, error } = await loginService(data);
+    const { auth, token, error } = await loginService(data);
 
     if (error) {
       return alert(error);
     }
 
     if (auth) {
+      // Set token in localstorage
+      localStorage.setItem('token', token);
+
       push('/chat');
 
       dispatch({
@@ -73,15 +76,24 @@ export const loginAction = (data, push) => {
 
 export const logoutAction = (push) => {
   return async (dispatch) => {
-    const { auth } = await logoutService();
+    localStorage.removeItem('token');
 
-    if (!auth) {
-      push('/');
+    push('/');
 
-      return dispatch({
-        type: LOGOUT,
-        payload: auth,
-      });
-    }
+    return dispatch({
+      type: LOGOUT,
+      payload: false,
+    });
+
+    // const { auth } = await logoutService();
+
+    // if (!auth) {
+    //   push('/');
+
+    //   return dispatch({
+    //     type: LOGOUT,
+    //     payload: auth,
+    //   });
+    // }
   };
 };

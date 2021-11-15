@@ -2,7 +2,11 @@ import axios from '../utils/api/axios';
 
 export const isAuthService = async () => {
   try {
-    const request = await axios.get('/auth');
+    const request = await axios.get('/auth', {
+      headers: {
+        'X-Token': localStorage.getItem('token'),
+      },
+    });
     return request.data;
   } catch (error) {
     return { error: error.response.data.error };
