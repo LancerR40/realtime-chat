@@ -68,7 +68,7 @@ const chatReducer = (state = initialState, action) => {
     }
 
     case '@chat/MSG_FROM_SERVER': {
-      const { outgoingUser, incomingUser, content } = action.payload;
+      const { outgoingUser, incomingUser, content, datetime } = action.payload;
 
       const { id: outgoingUserId, fullname, email, avatar } = outgoingUser;
       const { id: incomingUserId } = incomingUser;
@@ -81,6 +81,7 @@ const chatReducer = (state = initialState, action) => {
         outgoingUserId,
         incomingUserId,
         content,
+        datetime,
       };
 
       if (isContact === -1) {

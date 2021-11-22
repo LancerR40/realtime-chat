@@ -1,7 +1,4 @@
 import ChatServices from '../services/chat';
-// import User from '../models/User';
-// import toObjectId from '../utils/toObjectId';
-// import { contactVerify } from '../utils/chat';
 
 export const chatDataController = async (req, res) => {
   const { id } = req.user;
@@ -33,14 +30,14 @@ export const findUsersController = async (req, res) => {
 export const sendMsgController = async (req, res) => {
   try {
     const service = new ChatServices();
-    const { outgoingUserId, incomingUserId, content } = await service.sendMsg(
-      req.body,
-      req.user
-    );
+    const { outgoingUserId, incomingUserId, content, datetime } =
+      await service.sendMsg(req.body, req.user);
+
     const msg = {
       outgoingUserId,
       incomingUserId,
       content,
+      datetime,
     };
 
     res.status(200).json({ msg });

@@ -56,15 +56,21 @@ class ChatServices {
     // Incoming user contact verify
     const isContact = contactVerify(outgoingUser.contacts, incomingUserId);
 
-    // Msg to push
+    // Msg to push - Msg model
     const newMsg = {
       outgoingUserId: formatOutgoingUserId,
       incomingUserId: formatIncomingUserId,
       content,
+      datetime: new Date().getTime(),
     };
 
     // This a test code
-    // return { outgoingUserId, incomingUserId, content };
+    // return {
+    //   outgoingUserId,
+    //   incomingUserId,
+    //   content,
+    //   datetime: new Date().getTime(),
+    // };
 
     if (!isContact) {
       // Push new contact in outgoing user
@@ -93,7 +99,12 @@ class ChatServices {
       const saveIncomingUser = new User(incomingUser);
       await saveIncomingUser.save();
 
-      return { outgoingUserId, incomingUserId, content };
+      return {
+        outgoingUserId,
+        incomingUserId,
+        content,
+        datetime: new Date().getTime(),
+      };
     }
 
     let index = outgoingUser.contacts.findIndex(
@@ -114,7 +125,12 @@ class ChatServices {
     const saveIncomingUser = new User(incomingUser);
     await saveIncomingUser.save();
 
-    return { outgoingUserId, incomingUserId, content };
+    return {
+      outgoingUserId,
+      incomingUserId,
+      content,
+      datetime: new Date().getTime(),
+    };
   };
 }
 

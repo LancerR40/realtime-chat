@@ -65,6 +65,7 @@ class SocketServer {
             id: data.incomingUserId,
           },
           content: data.msg,
+          datetime: new Date().getTime(),
         };
 
         this.users.forEach((element) => {

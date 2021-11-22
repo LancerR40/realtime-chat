@@ -13,6 +13,9 @@
 }
 
 .smallText {
+  padding: 0 10px;
+  line-height: 25px;
+  text-align: center;
   color: #4f4f4f;
 }
 
