@@ -4,8 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node src/",
-    "dev": "nodemon --exec babel-node src/"
+    "start": "node dist/index.js",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "build": "babel src -d dist -s",
+    "clean": "rm -rf dist && mkdir dist"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -25,7 +27,9 @@
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.8",
     "@babel/node": "^7.15.8",
+    "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.15.8",
+    "@babel/runtime": "^7.16.3",
     "eslint": "^8.0.1",
     "nodemon": "^2.0.14"
   }
