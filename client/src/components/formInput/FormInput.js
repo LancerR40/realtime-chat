@@ -37,7 +37,6 @@ const FormInput = ({
           <input
             className={styles.uploadInput}
             type='file'
-            accept='images/*'
             name='avatar'
             onChange={handler}
           />

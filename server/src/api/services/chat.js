@@ -2,6 +2,8 @@ import User from '../models/User';
 import toObjectId from '../utils/toObjectId';
 import { contactVerify } from '../utils/chat';
 
+import ChatEmitter from '../subscribers/chat';
+
 class ChatServices {
   chatData = async (userId) => {
     const user = await User.findOne({ _id: userId });
@@ -40,7 +42,7 @@ class ChatServices {
   };
 
   sendMsg = async (msg, token) => {
-    const { incomingUserId, incomingUserFullname, msg: content } = msg;
+    const { incomingUserId, msg: content } = msg;
     const { id: outgoingUserId } = token;
 
     // Format id
@@ -56,7 +58,7 @@ class ChatServices {
     // Incoming user contact verify
     const isContact = contactVerify(outgoingUser.contacts, incomingUserId);
 
-    // Msg to push - Msg model
+    // New msg to push
     const newMsg = {
       outgoingUserId: formatOutgoingUserId,
       incomingUserId: formatIncomingUserId,
@@ -64,73 +66,21 @@ class ChatServices {
       datetime: new Date().getTime(),
     };
 
-    // This a test code
-    // return {
-    //   outgoingUserId,
-    //   incomingUserId,
-    //   content,
-    //   datetime: new Date().getTime(),
-    // };
+    const data = {
+      newMsg,
+      outgoingUser,
+      incomingUser,
+    };
+
+    console.log(isContact);
 
     if (!isContact) {
-      // Push new contact in outgoing user
-      outgoingUser.contacts.push({
-        _id: formatIncomingUserId,
-        fullname: incomingUserFullname,
-        email: incomingUser.email,
-        avatar: incomingUser.avatar,
-        chat: [newMsg],
-      });
-
-      // Save new contact in outgoing user
-      const saveOutgoingUser = new User(outgoingUser);
-      await saveOutgoingUser.save();
-
-      // Push new contact in incoming user
-      incomingUser.contacts.push({
-        _id: formatOutgoingUserId,
-        fullname: outgoingUser.fullname,
-        email: outgoingUser.email,
-        avatar: outgoingUser.avatar,
-        chat: [newMsg],
-      });
-
-      // Save new contact in outgoing user
-      const saveIncomingUser = new User(incomingUser);
-      await saveIncomingUser.save();
-
-      return {
-        outgoingUserId,
-        incomingUserId,
-        content,
-        datetime: new Date().getTime(),
-      };
+      ChatEmitter.emit('isContact:false', data, User);
+      return newMsg;
     }
 
-    let index = outgoingUser.contacts.findIndex(
-      (contact) => contact._id.toString() === incomingUserId
-    );
-
-    outgoingUser.contacts[index].chat.push(newMsg);
-
-    index = incomingUser.contacts.findIndex(
-      (contact) => contact._id.toString() === outgoingUserId
-    );
-
-    incomingUser.contacts[index].chat.push(newMsg);
-
-    const saveOutgoingUser = new User(outgoingUser);
-    await saveOutgoingUser.save();
-
-    const saveIncomingUser = new User(incomingUser);
-    await saveIncomingUser.save();
-
-    return {
-      outgoingUserId,
-      incomingUserId,
-      content,
-      datetime: new Date().getTime(),
-    };
+    ChatEmitter.emit('isContact:true', data, User);
+    return newMsg;
   };
 }
 

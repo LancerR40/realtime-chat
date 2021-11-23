@@ -2,12 +2,14 @@ import styles from './Modal.module.css';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { useState, useEffect, useCallback, useRef } from 'react';
+import useHeight from '../../../hooks/useHeight';
 
 const Modal = ({ avatar, avatarHandler, changeAvatarHandler }) => {
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
   const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 16 / 9 });
   const [completedCrop, setCompletedCrop] = useState(null);
+  const screenHeight = useHeight();
 
   const onLoad = useCallback((img) => {
     imgRef.current = img;
@@ -47,7 +49,7 @@ const Modal = ({ avatar, avatarHandler, changeAvatarHandler }) => {
   }, [completedCrop]);
 
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} style={{ height: screenHeight }}>
       <ReactCrop
         className={styles.reactCrop}
         src={avatar}
@@ -73,14 +75,14 @@ const Modal = ({ avatar, avatarHandler, changeAvatarHandler }) => {
 
           <input
             className={styles.otherAvatarInput}
-            type="file"
+            type='file'
             onChange={changeAvatarHandler}
           />
         </div>
 
         <button
           className={`${styles.modalButton} ${styles.saveAvatar}`}
-          type="button"
+          type='button'
           disabled={!completedCrop?.width || !completedCrop?.height}
           onClick={() => avatarHandler(previewCanvasRef.current, completedCrop)}
         >

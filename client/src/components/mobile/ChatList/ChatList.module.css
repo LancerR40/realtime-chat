@@ -1,6 +1,9 @@
 .chatList {
   height: calc(100% - 272px);
   overflow-y: scroll;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .chatList::-webkit-scrollbar {
@@ -53,7 +56,7 @@
 
 .lastMsg {
   color: rgb(94, 94, 94);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .timeAgo {
@@ -61,5 +64,5 @@
   top: 0;
   right: 0;
   color: rgb(94, 94, 94);
-  font-size: 12px;
+  font-size: 13px;
 }

@@ -74,9 +74,11 @@ export const loginAction = (data, push) => {
   };
 };
 
-export const logoutAction = (push) => {
+export const logoutAction = (push, socket) => {
   return async (dispatch) => {
     localStorage.removeItem('token');
+
+    socket.emit('chat:logout');
 
     push('/');
 

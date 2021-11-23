@@ -2,6 +2,7 @@ import styles from './Signup.module.css';
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useHeight from '../../../hooks/useHeight';
 
 import base64ToFile from '../../../utils/base64ToFile';
 
@@ -21,6 +22,7 @@ import { RiLockPasswordLine } from 'react-icons/ri';
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const screenHeight = useHeight();
 
   const [previewAvatar, setPreviewAvatar] = useState(null);
   const [modalStatus, setModalStatus] = useState(false);
@@ -112,7 +114,7 @@ const Signup = () => {
 
       {isLoading === true && <Loading />}
 
-      <div className={styles.signup}>
+      <div className={styles.signup} style={{ height: screenHeight }}>
         <h1 className={styles.title}>Register</h1>
         <small className={styles.smallText}>
           You and Your Friends always Connected

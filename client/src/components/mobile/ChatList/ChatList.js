@@ -43,7 +43,13 @@ const ChatList = ({ setChat }) => {
   const chats = useSelector((state) => {
     const { contacts } = state.chat;
 
-    return contacts.filter((contact) => contact?.chat.length > 0);
+    return contacts
+      .filter((contact) => contact?.chat.length > 0)
+      .sort(
+        (a, b) =>
+          b.chat[b.chat.length - 1].datetime -
+          a.chat[a.chat.length - 1].datetime
+      );
   });
 
   return (

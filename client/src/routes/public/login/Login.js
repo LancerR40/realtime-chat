@@ -2,6 +2,7 @@ import styles from './Login.module.css';
 
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import useHeight from '../../../hooks/useHeight';
 
 import FormInput from '../../../components/formInput/FormInput';
 
@@ -15,6 +16,7 @@ import { RiLockPasswordLine } from 'react-icons/ri';
 const Login = () => {
   const { push } = useHistory();
   const dispatch = useDispatch();
+  const screenHeight = useHeight();
 
   const [data, setData] = useState({
     email: '',
@@ -37,7 +39,7 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login}>
+    <div className={styles.login} style={{ height: screenHeight }}>
       <h1 className={styles.title}>Login</h1>
       <small className={styles.smallText}>
         Remember to get up & stretch once in a while - your friends at chat

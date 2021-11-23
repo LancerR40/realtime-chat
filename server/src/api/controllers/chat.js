@@ -30,15 +30,7 @@ export const findUsersController = async (req, res) => {
 export const sendMsgController = async (req, res) => {
   try {
     const service = new ChatServices();
-    const { outgoingUserId, incomingUserId, content, datetime } =
-      await service.sendMsg(req.body, req.user);
-
-    const msg = {
-      outgoingUserId,
-      incomingUserId,
-      content,
-      datetime,
-    };
+    const msg = await service.sendMsg(req.body, req.user);
 
     res.status(200).json({ msg });
   } catch (error) {

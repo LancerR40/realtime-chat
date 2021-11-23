@@ -1,11 +1,15 @@
 import styles from './Header.module.css';
-import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowBack, IoArrowBack } from 'react-icons/io5';
 
 const Header = ({ userData, close }) => {
   return (
     <div className={styles.header}>
       <div className={styles.backContainer} onClick={close}>
-        <IoIosArrowBack className={styles.icon} />
+        <IoArrowBack className={styles.icon} />
+      </div>
+
+      <div className={styles.userNameContainer}>
+        <span className={styles.userName}>{userData.fullname}</span>
       </div>
 
       <div className={styles.userData}>
@@ -18,9 +22,9 @@ const Header = ({ userData, close }) => {
           <span className={styles.status}></span>
         </div>
 
-        <div className={styles.userNameContainer}>
+        {/* <div className={styles.userNameContainer}>
           <span className={styles.userName}>{userData.fullname}</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

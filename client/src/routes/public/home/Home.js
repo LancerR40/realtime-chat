@@ -1,6 +1,7 @@
 import styles from './Home.module.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import useHeight from '../../../hooks/useHeight';
 
 import GreatChat from '../../../../public/assets/GreatChat.jsx';
 import Community from '../../../../public/assets/Community.jsx';
@@ -31,6 +32,7 @@ const CONTENT = [
 
 const Home = () => {
   const { push } = useHistory();
+  const screenHeight = useHeight();
 
   const [currentImg, setCurrentImg] = useState(CONTENT[0]);
 
@@ -40,9 +42,9 @@ const Home = () => {
     currentImg.id === id ? styles.activePointer : '';
 
   return (
-    <div className={styles.home}>
+    <div className={styles.home} style={{ height: screenHeight }}>
       <h1 className={styles.title}>Get started</h1>
-      <small className={styles.smallText}>Start with sign up or login!</small>
+      <small className={styles.smallText}>Start with Sign Up or Log In!</small>
 
       <div className={styles.imgContainer}>
         {currentImg.img}

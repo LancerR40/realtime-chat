@@ -1,10 +1,15 @@
 .home {
-  background-color: #f7fbfe;
-  height: 100vh;
+  /* background-color: #f7fbfe; */
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow-y: auto;
+}
+
+.home::-webkit-scrollbar {
+  display: none;
 }
 
 .title {
@@ -27,8 +32,7 @@
 }
 
 .imgContent {
-  width: 358.89px;
-  margin: 15px 0;
+  margin: 15px;
   color: #4f4f4f;
   line-height: 25px;
   display: block;
@@ -73,3 +77,10 @@
   margin-top: 15px;
   box-shadow: 0 1px 2px 1px rgb(228, 228, 228);
 }
+
+/* @media screen and (max-height: 650px) {
+  .home {
+    overflow-y: auto;
+    height: 650px;
+  }
+} */

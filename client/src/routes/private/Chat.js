@@ -87,7 +87,7 @@ const MobileUI = () => {
     dispatch(closeCurrentChatAction());
   };
 
-  const logout = () => dispatch(logoutAction(push));
+  const logout = () => dispatch(logoutAction(push, socket));
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -116,6 +116,10 @@ const MobileUI = () => {
   useEffect(() => {
     socket.on('chat:msg', (data) => {
       dispatch(msgFromServerAction(data));
+    });
+
+    socket.on('chat:connected_users', (data) => {
+      console.log(data);
     });
   }, []);
 

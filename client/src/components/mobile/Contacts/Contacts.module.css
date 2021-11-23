@@ -3,6 +3,9 @@
   min-height: 54px;
   overflow-x: scroll;
   display: flex;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .contacts::-webkit-scrollbar {

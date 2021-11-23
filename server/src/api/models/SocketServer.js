@@ -50,6 +50,25 @@ class SocketServer {
         avatar,
       });
 
+      // Emit connected users
+      const connectedContacts = [];
+
+      for (let x = 0; x < user.contacts.length; x++) {
+        const { _id: id } = user.contacts[x];
+
+        this.users.forEach(({ userId }) => {
+          if (String(id) === userId) {
+            connectedContacts.push({ id: userId, status: true });
+          }
+        });
+      }
+
+      if (connectedContacts.length > 0) {
+        this.io
+          .to(id)
+          .emit('chat:connected_users', { connectedUsers: connectedContacts });
+      }
+
       socket.on('chat:msg', (data) => {
         // Outgoing user data
         const { userId, fullname, email, avatar } = this.users.get(id);
@@ -74,6 +93,8 @@ class SocketServer {
           }
         });
       });
+
+      socket.on('chat:logout', () => this.users.delete(id));
 
       socket.on('disconnect', () => this.users.delete(id));
     });

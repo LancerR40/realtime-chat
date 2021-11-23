@@ -1,10 +1,15 @@
 .signup {
-  background-color: #f7fbfe;
-  height: 100vh;
+  /* background-color: #f7fbfe; */
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  overflow-y: auto;
+}
+
+.signup::-webkit-scrollbar {
+  display: none;
 }
 
 .title {
