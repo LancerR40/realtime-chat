@@ -1,7 +1,4 @@
-import styles from './Signup.module.css';
-
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import useHeight from '../../../hooks/useHeight';
 
 import base64ToFile from '../../../utils/base64ToFile';
@@ -12,13 +9,8 @@ import { signupAction } from '../../../store/actions/auth';
 
 // Components
 import Modal from './Modal';
-import FormInput from '../../../components/formInput/FormInput';
 import Loading from '../../../components/loading/Loading';
-
-// Icons
-import { AiOutlineUser, AiOutlineMail, AiOutlineUpload } from 'react-icons/ai';
-import { BiCheckSquare } from 'react-icons/bi';
-import { RiLockPasswordLine } from 'react-icons/ri';
+import FormLayout from '../../../components/formLayout/FormLayout';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -114,70 +106,17 @@ const Signup = () => {
 
       {isLoading === true && <Loading />}
 
-      <div className={styles.signup} style={{ height: screenHeight }}>
-        <h1 className={styles.title}>Register</h1>
-        <small className={styles.smallText}>
-          You and Your Friends always Connected
-        </small>
-
-        <form className={styles.form} onSubmit={signup}>
-          <FormInput
-            label='Full name'
-            Icon={AiOutlineUser}
-            type='text'
-            name='fullname'
-            value={data.fullname}
-            handler={inputHandler}
-            placeholder='Full name...'
-            isAvatar={false}
-          />
-
-          <FormInput
-            label='Email'
-            Icon={AiOutlineMail}
-            type='email'
-            name='email'
-            value={data.email}
-            handler={inputHandler}
-            placeholder='Email...'
-            isAvatar={false}
-          />
-
-          <FormInput
-            label='Password'
-            Icon={RiLockPasswordLine}
-            type='password'
-            name='password'
-            value={data.password}
-            handler={inputHandler}
-            placeholder='Password...'
-            isAvatar={false}
-          />
-
-          <FormInput
-            label='Avatar'
-            Icon={AiOutlineUpload}
-            type='file'
-            name='avatar'
-            handler={previewAvatarHandler}
-            placeholder='Password...'
-            isAvatar={true}
-            SecondIcon={BiCheckSquare}
-            previewAvatar={previewAvatar}
-          />
-
-          <button className={styles.button} type='submit'>
-            Sign Up
-          </button>
-
-          <span className={styles.linkText}>
-            {'Already have an account? '}
-            <Link className={styles.link} to='/login'>
-              Login
-            </Link>
-          </span>
-        </form>
-      </div>
+      <FormLayout
+        title='Register'
+        smallText='You and Your Friends always Connected'
+        linkText='Already have an account? '
+        linkTitle='Log In'
+        formType='Signup'
+        onAction={signup}
+        state={data}
+        handler={inputHandler}
+        {...{ previewAvatar, previewAvatarHandler }}
+      />
     </>
   );
 };

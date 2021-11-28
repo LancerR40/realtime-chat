@@ -27,7 +27,7 @@ import {
 // Socket IO
 import { io } from 'socket.io-client';
 const ENDPOINT = 'http://localhost:8080';
-let socket;
+let socket = null;
 
 const MobileUI = () => {
   const { push } = useHistory();
@@ -87,7 +87,11 @@ const MobileUI = () => {
     dispatch(closeCurrentChatAction());
   };
 
-  const logout = () => dispatch(logoutAction(push, socket));
+  const logout = () => {
+    dispatch(logoutAction(push, socket));
+
+    socket = null;
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('token');

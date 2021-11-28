@@ -5,7 +5,7 @@
 
 .label {
   color: #4f4f4f;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .inputContainer {
@@ -25,7 +25,7 @@
   padding-left: 15px;
   outline: none;
   border: none;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .input::placeholder {
@@ -61,7 +61,7 @@
 
 .uploadText {
   color: lightslategrey;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .uploadInput {

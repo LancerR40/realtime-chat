@@ -1,12 +1,11 @@
 import AuthService from '../services/auth';
 
 export const isAuthController = (req, res) => {
-  // const { token } = req.cookies;
-  const token = req.headers['x-token'];
-
-  if (!token || token == 'null') {
+  if (req.headers['x-token'] == 'null') {
     return res.status(200).json({ auth: false });
   }
+
+  const token = req.headers['x-token'];
 
   try {
     const auth = new AuthService();
