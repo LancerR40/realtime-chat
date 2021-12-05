@@ -34,6 +34,7 @@ const MobileUI = () => {
   const dispatch = useDispatch();
 
   // Ref
+  const searchUserRef = useRef('');
   const msgRef = useRef('');
 
   // States
@@ -67,6 +68,9 @@ const MobileUI = () => {
 
   const usersFoundHandler = (event) => {
     const { value } = event.target;
+
+    // Set value in search user ref
+    searchUserRef.current = value;
 
     dispatch(findUsersAction(value));
   };
@@ -131,7 +135,10 @@ const MobileUI = () => {
     <div className={styles.mobile} style={{ height: screenHeight }}>
       {Object.keys(currentChat).length < 1 && (
         <>
-          <MobileHeader setUsers={usersFoundHandler} />
+          <MobileHeader
+            searchUserFullname={searchUserRef}
+            setUsers={usersFoundHandler}
+          />
 
           {usersFound.length < 1 && (
             <>

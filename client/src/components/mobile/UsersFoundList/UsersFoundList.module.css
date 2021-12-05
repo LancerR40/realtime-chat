@@ -1,6 +1,10 @@
 .usersFoundList {
-  height: calc(100vh - 272px);
+  /* height: calc(100vh - 272px); */
   overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .usersFoundList::-webkit-scrollbar {

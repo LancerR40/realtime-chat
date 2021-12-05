@@ -1,7 +1,7 @@
 .searchInput {
   background-color: rgb(245, 245, 245);
   width: 100%;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border-radius: 2px;
   display: flex;
   align-items: center;
@@ -14,7 +14,8 @@
   padding-left: 15px;
   outline: none;
   border: none;
-  font-size: 13px;
+  /* font-size: 13px; */
+  font-size: 14px;
 }
 
 .line {
@@ -25,6 +26,7 @@
 }
 
 .iconContainer {
+  position: relative;
   width: 45px;
   display: flex;
   justify-content: center;
@@ -33,5 +35,8 @@
 }
 
 .icon {
+  position: absolute;
+  opacity: 0;
   font-size: 18px;
+  transition: opacity 0.2s ease-in-out;
 }

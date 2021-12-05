@@ -1,6 +1,10 @@
 .contactList {
-  height: calc(100% - 272px);
+  /* height: calc(100% - 272px); */
   overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .contactList::-webkit-scrollbar {

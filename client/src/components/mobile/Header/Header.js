@@ -1,26 +1,28 @@
 import styles from './Header.module.css';
 
-// Components
 import SearchInput from '../SearchInput/SearchInput';
-import Contacts from '../Contacts/Contacts';
+// import Contacts from '../Contacts/Contacts';
 
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
-const Header = ({ setUsers }) => {
-  const avatar = useSelector((state) => state.chat.user);
+const Header = ({ searchUserFullname, setUsers }) => {
+  // const avatar = useSelector((state) => state.chat.user);
 
   return (
     <header className={styles.header}>
       <div className={styles.top}>
-        <h1 className={styles.title}>Chat Room</h1>
+        <h1 className={styles.title}>Messages</h1>
 
-        <img className={styles.avatar} src={avatar} alt='Ronald Abu Saleh' />
+        {/* <img className={styles.avatar} src={avatar} alt='Ronald Abu Saleh' /> */}
       </div>
 
       <div className={styles.bottom}>
-        <SearchInput setUsersHandler={setUsers} />
+        <SearchInput
+          searchUserFullname={searchUserFullname}
+          setUsersHandler={setUsers}
+        />
 
-        <Contacts />
+        {/* <Contacts /> */}
       </div>
     </header>
   );

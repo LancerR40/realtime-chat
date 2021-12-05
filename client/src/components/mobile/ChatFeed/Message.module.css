@@ -19,7 +19,8 @@
   display: inline-block;
   margin-bottom: 5px;
   line-height: 20px;
-  font-size: 13px;
+  /* font-size: 13px; */
+  font-size: 14px;
 }
 
 .datetime {

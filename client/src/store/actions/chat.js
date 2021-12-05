@@ -30,7 +30,7 @@ export const chatDataAction = () => {
   };
 };
 
-export const findUsersAction = (value = '') => {
+export const findUsersAction = (value) => {
   return async (dispatch) => {
     if (value === '') {
       return dispatch({

@@ -2,6 +2,9 @@
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .mobile::-webkit-scrollbar {

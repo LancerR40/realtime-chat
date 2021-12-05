@@ -1,9 +1,13 @@
 .chatList {
-  height: calc(100% - 272px);
+  /* height: calc(100% - 272px); */
   overflow-y: scroll;
 
   scrollbar-width: none;
   -ms-overflow-style: none;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .chatList::-webkit-scrollbar {
@@ -36,8 +40,8 @@
 
 .img {
   object-fit: cover;
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
 }
 
@@ -51,12 +55,13 @@
 
 .name {
   margin-bottom: 5px;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .lastMsg {
   color: rgb(94, 94, 94);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .timeAgo {
@@ -64,5 +69,6 @@
   top: 0;
   right: 0;
   color: rgb(94, 94, 94);
-  font-size: 13px;
+  /* font-size: 13px; */
+  font-size: 14px;
 }
