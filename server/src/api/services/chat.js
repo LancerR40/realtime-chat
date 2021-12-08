@@ -72,8 +72,6 @@ class ChatServices {
       incomingUser,
     };
 
-    console.log(isContact);
-
     if (!isContact) {
       ChatEmitter.emit('isContact:false', data, User);
       return newMsg;

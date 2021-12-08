@@ -67,10 +67,9 @@ export const closeCurrentChatAction = () => ({
 
 export const sendMsgAction = (data, msgRef, socket) => {
   return async (dispatch) => {
-    const { msg } = await sendMsgService(data);
-
-    // Send msg to socket server
     socket.emit('chat:msg', data);
+
+    const { msg } = await sendMsgService(data);
 
     dispatch({
       type: SEND_MSG,

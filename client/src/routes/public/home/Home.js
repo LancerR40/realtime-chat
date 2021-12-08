@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useHeight from '../../../hooks/useHeight';
 
-import GreatChat from '../../../../public/assets/GreatChat.jsx';
-import Community from '../../../../public/assets/Community.jsx';
-import Security from '../../../../public/assets/Security.jsx';
+import GreatChat from '../../../../public/assets/illustrations/GreatChat';
+import Community from '../../../../public/assets/illustrations/Community';
+import Security from '../../../../public/assets/illustrations/Security';
 
 const CONTENT = [
   {

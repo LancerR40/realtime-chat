@@ -19,7 +19,7 @@
 
 .smallText {
   color: #4f4f4f;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .imgContainer {
@@ -37,6 +37,7 @@
   color: #4f4f4f;
   line-height: 25px;
   display: block;
+  font-size: 13px;
 }
 
 .pointer {
@@ -66,7 +67,7 @@
   border-radius: 20px;
   display: block;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .buttonSignup {

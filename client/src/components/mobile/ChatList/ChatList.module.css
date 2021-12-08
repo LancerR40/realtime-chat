@@ -55,13 +55,12 @@
 
 .name {
   margin-bottom: 5px;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
 }
 
 .lastMsg {
   color: rgb(94, 94, 94);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .timeAgo {
@@ -70,5 +69,5 @@
   right: 0;
   color: rgb(94, 94, 94);
   /* font-size: 13px; */
-  font-size: 14px;
+  font-size: 13px;
 }

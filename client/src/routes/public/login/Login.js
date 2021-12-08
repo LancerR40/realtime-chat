@@ -33,7 +33,7 @@ const Login = () => {
   return (
     <FormLayout
       title='Login'
-      smallText='Remember to get up & stretch once in a while - your friends at chat'
+      smallText='Start a new chat with friends!'
       linkText='Dont have an account? '
       linkTitle='Sign Up'
       formType='Login'

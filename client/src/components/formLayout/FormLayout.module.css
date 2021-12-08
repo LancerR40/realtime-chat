@@ -26,11 +26,11 @@
   line-height: 25px;
   text-align: center;
   color: #4f4f4f;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .form {
-  margin-top: 40px;
+  margin-top: 35px;
 }
 
 .button {
@@ -41,14 +41,14 @@
   border: none;
   border-radius: 20px;
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
 }
 
 .linkText {
   margin-top: 15px;
   color: #4f4f4f;
-  font-size: 12px;
+  font-size: 13px;
   text-align: center;
   display: block;
 }
