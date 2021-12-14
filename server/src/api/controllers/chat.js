@@ -27,12 +27,14 @@ export const findUsersController = async (req, res) => {
   }
 };
 
-export const sendMsgController = async (req, res) => {
+export const sendMessageController = async (req, res) => {
   try {
-    const service = new ChatServices();
-    const msg = await service.sendMsg(req.body, req.user);
+    const { body, user } = req;
 
-    res.status(200).json({ msg });
+    const service = new ChatServices();
+    const message = await service.saveMessage(body, user);
+
+    res.status(200).json({ message });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error });

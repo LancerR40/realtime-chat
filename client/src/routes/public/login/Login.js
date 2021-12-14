@@ -1,25 +1,27 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import styles from './Login.module.css';
 
-import FormLayout from '../../../components/formLayout/FormLayout';
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { loginAction } from '../../../store/actions/auth';
+import { loginAction } from '../../../store/action/auth';
+
+import Form from '../../../components/form/LoginForm';
 
 const Login = () => {
-  const { push } = useHistory();
   const dispatch = useDispatch();
+  const { push } = useHistory();
 
-  const [data, setData] = useState({
+  const [state, setState] = useState({
     email: '',
     password: '',
   });
 
-  const inputHandler = (event) => {
+  const onChange = (event) => {
     const { name, value } = event.target;
 
-    setData({
-      ...data,
+    setState({
+      ...state,
       [name]: value,
     });
   };
@@ -27,20 +29,32 @@ const Login = () => {
   const login = async (event) => {
     event.preventDefault();
 
-    dispatch(loginAction(data, push));
+    dispatch(loginAction(state, push));
   };
 
   return (
-    <FormLayout
-      title='Login'
-      smallText='Start a new chat with friends!'
-      linkText='Dont have an account? '
-      linkTitle='Sign Up'
-      formType='Login'
-      onAction={login}
-      state={data}
-      handler={inputHandler}
-    />
+    <div className={styles.login}>
+      <div className={styles.presentation}>
+        <h1 className={styles.title}>Log In</h1>
+
+        <small className={styles.description}>
+          Start a new chat with friends!
+        </small>
+      </div>
+
+      <Form state={state} onChange={onChange} onSubmit={login} />
+
+      <div className={styles.linkContainer}>
+        <span>
+          Dont have an account?{' '}
+          {
+            <Link className={styles.link} to="/signup">
+              Sign up
+            </Link>
+          }
+        </span>
+      </div>
+    </div>
   );
 };
 

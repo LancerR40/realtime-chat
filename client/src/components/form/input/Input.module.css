@@ -1,0 +1,82 @@
+.group {
+  width: 280px;
+  margin-bottom: 15px;
+}
+
+.label {
+  color: #4f4f4f;
+  font-size: 13px;
+}
+
+.container {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  color: rgb(141, 141, 141);
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  background: none;
+  width: 90%;
+  height: 35px;
+  padding-left: 15px;
+  outline: none;
+  border: none;
+  font-size: 13px;
+}
+
+.input::placeholder {
+  color: lightslategrey;
+}
+
+.line {
+  background-color: rgb(216, 216, 216);
+  height: 1px;
+}
+
+.completedLine {
+  background-color: #4ea9f6;
+  width: 0;
+  height: 2px;
+  transition: width 0.4s ease-in-out;
+}
+
+.group:focus-within > .line .completedLine {
+  width: 100%;
+}
+
+.inputAvatarContainer {
+  position: relative;
+  width: 90%;
+  height: 35px;
+  padding-left: 15px;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+.inputAvatar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 280px;
+}
+
+.uploadText {
+  color: lightslategrey;
+  font-size: 13px;
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px #f7fbfe inset;
+  -webkit-box-shadow: 0 0 0 1000px #f7fbfe inset;
+}

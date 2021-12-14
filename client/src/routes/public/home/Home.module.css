@@ -1,15 +1,9 @@
 .home {
   /* background-color: #f7fbfe; */
-  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  overflow-y: auto;
-}
-
-.home::-webkit-scrollbar {
-  display: none;
 }
 
 .title {
@@ -64,7 +58,7 @@
   height: 40px;
   outline: none;
   border: none;
-  border-radius: 20px;
+  border-radius: 2px;
   display: block;
   cursor: pointer;
   font-size: 13px;

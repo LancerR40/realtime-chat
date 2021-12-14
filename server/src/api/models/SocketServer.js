@@ -5,7 +5,6 @@ class SocketServer {
   constructor(io) {
     this.io = io;
 
-    // Connections
     this.users = new Map();
 
     this.socketEvents();
@@ -32,71 +31,76 @@ class SocketServer {
     }
   }
 
+  findUser = async (userId) => {
+    const userProps = await User.findOne({ _id: userId });
+    const { fullname, email, avatar } = userProps;
+
+    return { fullname, email, avatar };
+  };
+
+  connectUser = async (socket) => {
+    const { userId, id: socketId } = socket;
+
+    const user = await this.findUser(userId);
+    const newUser = {
+      socketId,
+      userId,
+      ...user,
+    };
+
+    this.users.set(socketId, newUser);
+  };
+
+  getUserBySocketId = (socket) => {
+    const { id: socketId } = socket;
+
+    return this.users.get(socketId);
+  };
+
+  sendMessage = (message, socket) => {
+    const { userId, fullname, email, avatar } = this.getUserBySocketId(socket);
+    const { incomingUserId, messageContent } = message;
+
+    const outgoingUser = {
+      id: userId,
+      fullname,
+      email,
+      avatar,
+    };
+
+    const data = {
+      message: {
+        outgoingUserId: outgoingUser.id,
+        incomingUserId,
+        content: messageContent,
+        datetime: new Date().getTime(),
+      },
+      outgoingUser,
+      incomingUser: incomingUserId,
+    };
+
+    this.users.forEach(({ userId, socketId }) => {
+      if (userId === incomingUserId) {
+        return socket.to(socketId).emit('chat:message', data);
+      }
+    });
+  };
+
+  disconnectUser = (socket) => {
+    this.users.delete(socket.id);
+  };
+
   socketEvents() {
     this.io.use(this.isAuthMiddleware);
 
     this.io.on('connection', async (socket) => {
-      // Find user data
-      const { userId, id } = socket;
-      const user = await User.findOne({ _id: userId });
-      const { fullname, email, avatar } = user;
+      await this.connectUser(socket);
 
-      // Add user connection, (user id - socket id)
-      this.users.set(id, {
-        socketId: id,
-        userId: userId,
-        fullname,
-        email,
-        avatar,
-      });
+      socket.on('chat:message', (message) => this.sendMessage(message, socket));
 
-      // Emit connected users
-      const connectedContacts = [];
+      socket.on('chat:logout', () => this.disconnectUser(socket));
 
-      for (let x = 0; x < user.contacts.length; x++) {
-        const { _id: id } = user.contacts[x];
-
-        this.users.forEach(({ userId }) => {
-          if (String(id) === userId) {
-            connectedContacts.push({ id: userId, status: true });
-          }
-        });
-      }
-
-      if (connectedContacts.length > 0) {
-        this.io
-          .to(id)
-          .emit('chat:connected_users', { connectedUsers: connectedContacts });
-      }
-
-      socket.on('chat:msg', (data) => {
-        // Outgoing user data
-        const { userId, fullname, email, avatar } = this.users.get(id);
-
-        const newMsg = {
-          outgoingUser: {
-            id: userId,
-            fullname,
-            email,
-            avatar,
-          },
-          incomingUser: {
-            id: data.incomingUserId,
-          },
-          content: data.msg,
-          datetime: new Date().getTime(),
-        };
-
-        this.users.forEach((element) => {
-          if (element.userId === data.incomingUserId) {
-            return socket.to(element.socketId).emit('chat:msg', newMsg);
-          }
-        });
-      });
-
-      socket.on('chat:logout', () => this.users.delete(id));
-
-      socket.on('disconnect', () => this.users.delete(id));
+      socket.on('disconnect', () => this.disconnectUser(socket));
     });
   }
 }

@@ -4,6 +4,7 @@ import cloudinary from '../config/cloudinary';
 import toBase64 from '../utils/toBase64';
 import { createJWT, verifyJWT } from '../utils/jsonwebtoken';
 import { encryptPassword, decryptPassword } from '../utils/bcrypt';
+import toObjectId from '../utils/toObjectId';
 
 class AuthService {
   isAuth = (token) => {
@@ -44,6 +45,10 @@ class AuthService {
       return { error: 'Invalid credentials' };
     }
 
+    if (isUserExist.isConnected) {
+      return { error: 'The user is connected' };
+    }
+
     const comparePassword = await decryptPassword(
       user.password,
       isUserExist.password
@@ -55,7 +60,21 @@ class AuthService {
 
     const token = createJWT(isUserExist._id);
 
+    isUserExist.isConnected = true;
+
+    await User.update(
+      { _id: isUserExist._id },
+      { $set: { isConnected: true } }
+    );
+
     return { token };
+  };
+
+  logout = async (token) => {
+    const payload = verifyJWT(token);
+    const userId = toObjectId(payload.id);
+
+    await User.update({ _id: userId }, { $set: { isConnected: false } });
   };
 }
 

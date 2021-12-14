@@ -3,41 +3,73 @@ import { BsFillChatSquareFill, BsChatSquare } from 'react-icons/bs';
 import { AiFillContacts, AiOutlineContacts } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
-const Footer = ({ section, changeSection, logout }) => {
+const CHATS = 'Chats';
+const CONTACTS = 'Contacts';
+const LOGOUT = 'Logout';
+
+const Footer = ({ currentSection, changeSection, disconnect }) => {
+  const elements = [
+    {
+      id: 1,
+      activeIcon: (
+        <BsFillChatSquareFill
+          style={{ fontSize: '20px' }}
+          className={styles.icon}
+        />
+      ),
+      inactiveIcon: (
+        <BsChatSquare style={{ fontSize: '20px' }} className={styles.icon} />
+      ),
+      sectionName: CHATS,
+      onClick: changeSection,
+    },
+    {
+      id: 2,
+      activeIcon: (
+        <AiFillContacts style={{ fontSize: '23px' }} className={styles.icon} />
+      ),
+      inactiveIcon: (
+        <AiOutlineContacts
+          style={{ fontSize: '23px' }}
+          className={styles.icon}
+        />
+      ),
+      sectionName: CONTACTS,
+      onClick: changeSection,
+    },
+    {
+      id: 3,
+      inactiveIcon: (
+        <FiLogOut style={{ fontSize: '20px' }} className={styles.icon} />
+      ),
+      sectionName: LOGOUT,
+      onClick: disconnect,
+    },
+  ];
+
   return (
     <footer className={styles.footer}>
-      <div
-        className={`${styles.iconContainer} ${
-          section === 'Chats' && styles.active
-        }`}
-        onClick={() => changeSection('Chats')}
-      >
-        {section === 'Chats' ? (
-          <BsFillChatSquareFill className={styles.icon} />
-        ) : (
-          <BsChatSquare className={styles.icon} />
-        )}
-        <span className={styles.text}>Chats</span>
-      </div>
+      {elements.map((section) => {
+        const classes = `${styles.iconContainer} ${
+          currentSection === section.sectionName && styles.active
+        }`;
 
-      <div
-        className={`${styles.iconContainer} ${
-          section === 'Contacts' && styles.active
-        }`}
-        onClick={() => changeSection('Contacts')}
-      >
-        {section === 'Contacts' ? (
-          <AiFillContacts className={styles.icon} />
-        ) : (
-          <AiOutlineContacts className={styles.icon} />
-        )}
-        <span className={styles.text}>Contacts</span>
-      </div>
+        const onClickAction =
+          section.sectionName === LOGOUT
+            ? section.onClick
+            : () => section.onClick(section.sectionName);
 
-      <div className={styles.iconContainer} onClick={logout}>
-        <FiLogOut className={styles.icon} />
-        <span className={styles.text}>Logout</span>
-      </div>
+        return (
+          <div className={classes} onClick={onClickAction}>
+            {currentSection === section.sectionName
+              ? section.activeIcon
+              : section.inactiveIcon}
+
+            {currentSection === LOGOUT && section.inactiveIcon}
+            <span className={styles.text}>{section.sectionName}</span>
+          </div>
+        );
+      })}
     </footer>
   );
 };

@@ -1,123 +1,70 @@
+import styles from './Signup.module.css';
+
 import { useState } from 'react';
-import useHeight from '../../../hooks/useHeight';
+import { Link } from 'react-router-dom';
 
-import base64ToFile from '../../../utils/base64ToFile';
+import { useDispatch } from 'react-redux';
+import { signupAction } from '../../../store/action/auth';
 
-// Redux
-import { useDispatch, useSelector } from 'react-redux';
-import { signupAction } from '../../../store/actions/auth';
-
-// Components
-import Modal from './Modal';
-import Loading from '../../../components/loading/Loading';
-import FormLayout from '../../../components/formLayout/FormLayout';
+import Form from '../../../components/form/SignupForm';
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const screenHeight = useHeight();
 
-  const [previewAvatar, setPreviewAvatar] = useState(null);
-  const [modalStatus, setModalStatus] = useState(false);
-
-  const isLoading = useSelector((state) => state.auth.isLoading);
-
-  const [data, setData] = useState({
+  const [state, setState] = useState({
     fullname: '',
     email: '',
     password: '',
+    avatar: null,
   });
 
-  const signup = async (event) => {
+  const onChange = (e) => {
+    const { name, value, files } = e.target;
+
+    if (files) {
+      return setState((state) => ({ ...state, [name]: files[0] }));
+    }
+
+    setState((state) => ({ ...state, [name]: value }));
+  };
+
+  const signup = (event) => {
     event.preventDefault();
 
-    const { fullname, email, password } = data;
     const formData = new FormData();
+    const { fullname, email, password, avatar } = state;
 
     formData.append('fullname', fullname);
     formData.append('email', email);
     formData.append('password', password);
-    formData.append('avatar', await base64ToFile(previewAvatar));
+    formData.append('avatar', avatar);
 
-    dispatch(signupAction(formData, setData, setPreviewAvatar));
-  };
-
-  const inputHandler = (event) => {
-    const { name, value } = event.target;
-
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
-
-  const previewAvatarHandler = (event) => {
-    if (event.target.files < 1) {
-      return;
-    }
-
-    if (event.target.files[0]?.type.startsWith('image') !== true) {
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = () => {
-      setPreviewAvatar(reader.result);
-
-      setModalStatus(!modalStatus);
-    };
-  };
-
-  const avatarModalHandler = (canvas, crop) => {
-    if (!crop || !canvas) {
-      return;
-    }
-
-    setModalStatus(!modalStatus);
-
-    setPreviewAvatar(canvas.toDataURL());
-  };
-
-  const changeAvatarModalHandler = (event) => {
-    if (event.target.files < 1) {
-      return;
-    }
-
-    if (event.target.files[0].type.startsWith('image') !== true) {
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = () => setPreviewAvatar(reader.result);
+    dispatch(signupAction(formData, setState));
   };
 
   return (
-    <>
-      {modalStatus === true && (
-        <Modal
-          avatar={previewAvatar}
-          avatarHandler={avatarModalHandler}
-          changeAvatarHandler={changeAvatarModalHandler}
-        />
-      )}
+    <div className={styles.signup}>
+      <div className={styles.presentation}>
+        <h1 className={styles.title}>Sign Up</h1>
 
-      {isLoading === true && <Loading />}
+        <small className={styles.description}>
+          You and Your Friends always Connected
+        </small>
+      </div>
 
-      <FormLayout
-        title='Register'
-        smallText='You and Your Friends always Connected'
-        linkText='Already have an account? '
-        linkTitle='Log In'
-        formType='Signup'
-        onAction={signup}
-        state={data}
-        handler={inputHandler}
-        {...{ previewAvatar, previewAvatarHandler }}
-      />
-    </>
+      <Form state={state} onChange={onChange} onSubmit={signup} />
+
+      <div className={styles.linkContainer}>
+        <span>
+          Al ready have an account?{' '}
+          {
+            <Link className={styles.link} to="/login">
+              Log in
+            </Link>
+          }
+        </span>
+      </div>
+    </div>
   );
 };
 

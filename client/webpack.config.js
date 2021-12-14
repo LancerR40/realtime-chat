@@ -43,6 +43,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader',
+      },
     ],
   },
   plugins: [
@@ -57,5 +61,10 @@ module.exports = {
     open: true,
     port: 3000,
     historyApiFallback: true,
+  },
+  resolve: {
+    alias: {
+      Public: path.resolve(__dirname, 'public'),
+    },
   },
 };

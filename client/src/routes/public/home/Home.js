@@ -1,11 +1,10 @@
 import styles from './Home.module.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useHeight from '../../../hooks/useHeight';
 
-import GreatChat from '../../../../public/assets/illustrations/GreatChat';
-import Community from '../../../../public/assets/illustrations/Community';
-import Security from '../../../../public/assets/illustrations/Security';
+import GreatChat from 'Public/assets/illustrations/GreatChat';
+import Community from 'Public/assets/illustrations/Community';
+import Security from 'Public/assets/illustrations/Security';
 
 const CONTENT = [
   {
@@ -18,23 +17,20 @@ const CONTENT = [
     id: 2,
     name: 'Best network',
     img: <Community />,
-    description:
-      'Connect with people from all over the world in this fantastic network',
+    description: 'Connect with people from all over the world!',
   },
   {
     id: 3,
     name: 'Real time chat',
     img: <Security />,
-    description:
-      'Do you send messages at all times, concerned about security? We protect your data',
+    description: 'Concerned about safety? We take care of you',
   },
 ];
 
 const Home = () => {
   const { push } = useHistory();
-  const screenHeight = useHeight();
 
-  const [currentImg, setCurrentImg] = useState(CONTENT[0]);
+  const [currentImg, setCurrentImg] = useState(CONTENT[1]);
 
   const changeImgHandler = (index) => setCurrentImg(CONTENT[index]);
 
@@ -42,7 +38,7 @@ const Home = () => {
     currentImg.id === id ? styles.activePointer : '';
 
   return (
-    <div className={styles.home} style={{ height: screenHeight }}>
+    <div className={styles.home}>
       <h1 className={styles.title}>Get started</h1>
       <small className={styles.smallText}>Start with Sign Up or Log In!</small>
 
@@ -52,10 +48,10 @@ const Home = () => {
         <small className={styles.imgContent}>{currentImg.description}</small>
 
         <div>
-          <span
+          {/* <span
             className={`${styles.pointer} ${activePointerHandler(1)}`}
             onClick={() => changeImgHandler(0)}
-          ></span>
+          ></span> */}
           <span
             className={`${styles.pointer} ${activePointerHandler(2)}`}
             onClick={() => changeImgHandler(1)}

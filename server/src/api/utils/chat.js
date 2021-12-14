@@ -1,11 +1,19 @@
 export const contactVerify = (contacts, incomingUserId) => {
-  const length = contacts.length;
+  const contactsLength = contacts.length;
 
-  for (let i = 0; i < length; i++) {
-    if (contacts[i]._id.toString() === incomingUserId.toString()) {
+  if (contactsLength < 1) {
+    return false;
+  }
+
+  for (let i = 0; i < contactsLength; i++) {
+    if (String(contacts[i]._id) === String(incomingUserId)) {
       return true;
     }
   }
 
   return false;
 };
+
+export const saveNewOutgoingUserContact = () => {};
+
+export const saveNewIncomingUserContact = () => {};

@@ -1,29 +1,34 @@
 import styles from './Message.module.css';
-import { useEffect } from 'react';
 
-const Message = ({ type, text, time, isFocus }) => {
-  useEffect(() => {
-    if (isFocus.focus) {
-      isFocus.ref = isFocus.ref.current.focus();
-    }
-  }, []);
+const getMessageClasses = (messageType) => {
+  let flexEndClass = null;
+  let messageClass = null;
+
+  if (messageType === 'outgoing') {
+    flexEndClass = styles.flexEnd;
+    messageClass = styles.outgoingMessage;
+  }
+
+  if (messageType === 'incoming') {
+    messageClass = styles.incomingMessage;
+  }
+
+  return {
+    container: `${styles.messageContainer} ${flexEndClass}`,
+    message: `${styles.message} ${messageClass}`,
+  };
+};
+
+const Message = ({ type, text, time }) => {
+  const containerClasses = getMessageClasses(type).container;
+  const messageClasses = getMessageClasses(type).message;
 
   return (
-    <div
-      className={`${styles.messageContainer} ${
-        type === 'outgoing' ? styles.flexEnd : ''
-      }`}
-      tabIndex={isFocus.focus ? '-1' : null}
-      ref={isFocus.focus ? isFocus.ref : null}
-    >
-      <div
-        className={`${styles.message} ${
-          type === 'incoming' ? styles.incomingMessage : styles.outgoingMessage
-        }`}
-      >
+    <div className={containerClasses}>
+      <div className={messageClasses}>
         <span className={styles.messageText}>{text}</span>
 
-        <span className={styles.datetime}>{time}</span>
+        {/* <span className={styles.datetime}>{time}</span> */}
       </div>
     </div>
   );

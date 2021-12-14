@@ -1,12 +1,24 @@
 import styles from './Header.module.css';
+import { useRef } from 'react';
 
 import SearchInput from '../SearchInput/SearchInput';
 // import Contacts from '../Contacts/Contacts';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { findUsersAction } from '../../../store/action/chat';
 
-const Header = ({ searchUserFullname, setUsers }) => {
+const Header = () => {
   const avatar = useSelector((state) => state.chat.user);
+  const dispatch = useDispatch();
+
+  const userToSearchRef = useRef('');
+
+  const searchUsers = (event) => {
+    const { value } = event.target;
+    userToSearchRef.current = value;
+
+    dispatch(findUsersAction(value));
+  };
 
   return (
     <header className={styles.header}>
@@ -18,8 +30,8 @@ const Header = ({ searchUserFullname, setUsers }) => {
 
       <div className={styles.bottom}>
         <SearchInput
-          searchUserFullname={searchUserFullname}
-          setUsersHandler={setUsers}
+          userToSearch={userToSearchRef}
+          searchUsersHandler={searchUsers}
         />
 
         {/* <Contacts /> */}

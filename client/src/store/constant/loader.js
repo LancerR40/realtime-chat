@@ -1,0 +1,4 @@
+export const LOADER_CONSTANTS = {
+  SIGNUP_LOADER: '@loader/SIGNUP_LOADER',
+  LOGIN_LOADER: '@loader/LOGIN_LOADER',
+};

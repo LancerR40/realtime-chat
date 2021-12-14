@@ -1,10 +1,27 @@
 import styles from './Header.module.css';
-import { IoIosArrowBack, IoArrowBack } from 'react-icons/io5';
+import { IoArrowBack } from 'react-icons/io5';
 
-const Header = ({ userData, close }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setCurrentChatAction,
+  findUsersAction,
+} from '../../../store/action/chat';
+
+const Header = ({ userData }) => {
+  const dispatch = useDispatch();
+  const usersFound = useSelector((state) => state.chat.usersFound);
+
+  const closeChat = () => {
+    if (usersFound.length) {
+      dispatch(findUsersAction());
+    }
+
+    dispatch(setCurrentChatAction());
+  };
+
   return (
     <div className={styles.header}>
-      <div className={styles.backContainer} onClick={close}>
+      <div className={styles.backContainer} onClick={closeChat}>
         <IoArrowBack className={styles.icon} />
       </div>
 
@@ -21,10 +38,6 @@ const Header = ({ userData, close }) => {
           />
           <span className={styles.status}></span>
         </div>
-
-        {/* <div className={styles.userNameContainer}>
-          <span className={styles.userName}>{userData.fullname}</span>
-        </div> */}
       </div>
     </div>
   );
