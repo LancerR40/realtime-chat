@@ -50,53 +50,42 @@ class SocketServer {
         avatar,
       });
 
-      // Emit connected users
-      const connectedContacts = [];
-
-      for (let x = 0; x < user.contacts.length; x++) {
-        const { _id: id } = user.contacts[x];
-
-        this.users.forEach(({ userId }) => {
-          if (String(id) === userId) {
-            connectedContacts.push({ id: userId, status: true });
-          }
-        });
-      }
-
-      if (connectedContacts.length > 0) {
-        this.io
-          .to(id)
-          .emit('chat:connected_users', { connectedUsers: connectedContacts });
-      }
-
       socket.on('chat:msg', (data) => {
-        // Outgoing user data
+        // Get outgoing user data
         const { userId, fullname, email, avatar } = this.users.get(id);
 
-        const newMsg = {
-          outgoingUser: {
-            id: userId,
-            fullname,
-            email,
-            avatar,
-          },
-          incomingUser: {
-            id: data.incomingUserId,
-          },
-          content: data.msg,
+        const outgoingUser = {
+          id: userId,
+          fullname,
+          email,
+          avatar,
+        };
+
+        const incomingUser = {
+          id: data.incomingUserId,
+        };
+
+        const newMessage = {
+          outgoingUser,
+          incomingUser,
+          content: data.messageContent,
           datetime: new Date().getTime(),
         };
 
-        this.users.forEach((element) => {
-          if (element.userId === data.incomingUserId) {
-            return socket.to(element.socketId).emit('chat:msg', newMsg);
+        this.users.forEach((user) => {
+          if (user.userId === data.incomingUserId) {
+            return socket.to(user.socketId).emit('chat:msg', newMessage);
           }
         });
       });
 
-      socket.on('chat:logout', () => this.users.delete(id));
+      socket.on('chat:logout', () => {
+        this.users.delete(id);
+      });
 
-      socket.on('disconnect', () => this.users.delete(id));
+      socket.on('disconnect', () => {
+        this.users.delete(id);
+      });
     });
   }
 }

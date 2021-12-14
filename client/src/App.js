@@ -1,8 +1,6 @@
 import { useEffect, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { isAuthAction } from './store/actions/auth';
-
-import Loading from './components/loading/Loading';
+import { isAuthAction } from './store/action/auth';
 
 const Public = lazy(() => import('./auth/Public'));
 const Private = lazy(() => import('./auth/Private'));
@@ -14,11 +12,11 @@ const App = () => {
   useEffect(() => dispatch(isAuthAction()), []);
 
   return isAuth === false ? (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<div></div>}>
       <Public />
     </Suspense>
   ) : (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<div></div>}>
       <Private />
     </Suspense>
   );

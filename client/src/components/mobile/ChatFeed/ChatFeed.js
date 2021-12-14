@@ -3,53 +3,74 @@ import Header from './Header';
 import Message from './Message';
 import MessageInput from '../MessageInput/MessageInput';
 
-import { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendMsgToUserAction } from '../../../store/action/chat';
 
 import { formatTimestamp } from '../../../utils/date';
 
-const ChatFeed = ({ chat, msg, sendMsg, closeChat }) => {
+import sendMessageSound from '../../../../public/assets/sounds/src_message_sent.mp3';
+
+const ChatFeed = ({ chat, socket }) => {
+  const dispatch = useDispatch();
+
   const currentChat = useSelector((state) => state.chat.currentChat);
   const messages = useSelector((state) => state.chat.currentChat.chat);
 
-  const messageFocus = useRef(null);
+  const chatContainer = useRef('');
+  const messageText = useRef('');
+
+  const sendMsgToUser = () => {
+    const audio = new Audio(sendMessageSound);
+    audio.play();
+
+    const { value } = messageText.current;
+
+    if (value === '') return;
+
+    const { id } = currentChat;
+
+    const message = {
+      incomingUserId: id,
+      messageContent: value,
+    };
+
+    dispatch(sendMsgToUserAction(message, socket));
+
+    messageText.current.value = '';
+  };
+
+  useEffect(() => {
+    const { current: DOMElement } = chatContainer;
+
+    DOMElement.scrollTop = DOMElement.scrollHeight;
+  }, [messages]);
 
   return (
     <>
-      <Header userData={chat} close={closeChat} />
+      <Header userData={chat} />
 
-      <div className={styles.chat}>
-        {messages?.length > 0 &&
-          messages.map((msg, index) =>
-            msg.outgoingUserId !== currentChat.id ? (
-              <Message
-                key={index}
-                type='outgoing'
-                text={msg.content}
-                time={formatTimestamp(msg.datetime)}
-                isFocus={
-                  index === messages.length - 1
-                    ? { focus: true, ref: messageFocus }
-                    : false
-                }
-              />
-            ) : (
-              <Message
-                key={index}
-                type='incoming'
-                text={msg.content}
-                time={formatTimestamp(msg.datetime)}
-                isFocus={
-                  index === messages.length - 1
-                    ? { focus: true, ref: messageFocus }
-                    : false
-                }
-              />
-            )
-          )}
+      <div className={styles.chat} ref={chatContainer}>
+        {messages.map((msg, index) =>
+          msg.outgoingUserId !== currentChat.id ? (
+            <Message
+              key={index}
+              type="outgoing"
+              text={msg.content}
+              time={formatTimestamp(msg.datetime)}
+            />
+          ) : (
+            <Message
+              key={index}
+              type="incoming"
+              text={msg.content}
+              time={formatTimestamp(msg.datetime)}
+            />
+          )
+        )}
       </div>
 
-      <MessageInput msg={msg} sendMsg={sendMsg} />
+      <MessageInput sendMsg={sendMsgToUser} text={messageText} />
     </>
   );
 };

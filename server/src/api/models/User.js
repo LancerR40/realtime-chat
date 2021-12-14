@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
   fullname: String,
@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
   contacts: {
     type: Array,
     default: [],
+  },
+  isConnected: {
+    type: Boolean,
+    default: false,
   },
 });
 

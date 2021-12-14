@@ -11,8 +11,8 @@ const getStyleProp = (userFullname) => {
   };
 };
 
-const SearchInput = ({ searchUserFullname, setUsersHandler }) => {
-  const { current: userFullname } = searchUserFullname;
+const SearchInput = ({ userToSearch, searchUsersHandler }) => {
+  const { current: userFullname } = userToSearch;
 
   return (
     <div className={styles.searchInput}>
@@ -20,7 +20,7 @@ const SearchInput = ({ searchUserFullname, setUsersHandler }) => {
         className={styles.input}
         type='text'
         placeholder='Search here...'
-        onChange={setUsersHandler}
+        onChange={searchUsersHandler}
       />
 
       <span className={styles.line}></span>

@@ -1,0 +1,14 @@
+.button {
+  background: linear-gradient(120deg, #4ea9f6, rgb(55, 118, 253));
+  width: 280px;
+  height: 35px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

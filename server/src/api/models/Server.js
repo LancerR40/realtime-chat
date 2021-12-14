@@ -25,7 +25,7 @@ class Server {
 
     // Socket server
     this.io = io(this.server, {
-      // transport: ['websocket'],
+      transport: ['websocket'],
       cors: {
         origin: 'http://localhost:3000',
       },

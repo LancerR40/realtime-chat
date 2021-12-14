@@ -1,36 +1,12 @@
 import styles from './ContactList.module.css';
-import { useState, useEffect } from 'react';
-import { BsTrash, BsFillTrashFill } from 'react-icons/bs';
-import { FaTrash } from 'react-icons/fa';
+// import { useState, useEffect } from 'react';
+// import { BsTrash, BsFillTrashFill } from 'react-icons/bs';
+// import { FaTrash } from 'react-icons/fa';
 
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const ContactList = ({ setChat }) => {
-  const dispatch = useDispatch();
-
-  // const [frecuently, setFrecuently] = useState([]);
-
-  // useEffect(() => {
-  //   const getFrecuently = async () => {
-  //     const request = await fetch('https://randomuser.me/api/?results=4');
-  //     const data = await request.json();
-  //     const people = data.results;
-
-  //     // Add chats fakes
-  //     for (let i = 0; i < people.length; i++) {
-  //       people[i].chat = [
-  //         {
-  //           id: 1,
-  //           msg: 'Hello',
-  //         },
-  //       ];
-  //     }
-
-  //     setFrecuently(people);
-  //   };
-
-  //   getFrecuently();
-  // }, []);
+  const contacts = useSelector((state) => state.chat.contacts);
 
   return (
     <div className={styles.contactList}>
@@ -66,27 +42,25 @@ const ContactList = ({ setChat }) => {
         <h2 className={styles.title}>My contacts</h2>
       </div>
 
-      {/* <div className={styles.frecuentlyContactsContainer}>
-        {frecuently.map((contact) => (
+      <div className={styles.frecuentlyContactsContainer}>
+        {contacts.map((contact) => (
           <div
             className={styles.contact}
-            key={contact.cell}
+            key={contact.id}
             onClick={() => setChat(contact)}
           >
             <img
               className={styles.img}
-              src={contact.picture.medium}
-              alt='Fake'
+              src={contact.avatar}
+              alt={contact.fullname}
             />
 
-            <span className={styles.name}>
-              {contact.name.first} {contact.name.last}
-            </span>
+            <span className={styles.name}>{contact.fullname}</span>
 
-            <FaTrash className={styles.icon} />
+            {/* <FaTrash className={styles.icon} /> */}
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

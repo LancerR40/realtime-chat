@@ -29,6 +29,7 @@ class ChatServices {
     const usersFound = await User.find({
       fullname: { $regex: `^${fullname}`, $options: 'i' },
     });
+    const { contacts: userContacts } = await User.findOne({ _id: userId });
 
     const formatUsers = usersFound
       .filter((user) => user._id.toString() !== userId)
@@ -38,11 +39,19 @@ class ChatServices {
         avatar,
       }));
 
+    for (let row = 0; row < formatUsers.length; row++) {
+      for (let column = 0; column < userContacts.length; column++) {
+        if (String(formatUsers[row].id) === String(userContacts[column]._id)) {
+          formatUsers.splice(row, 1);
+        }
+      }
+    }
+
     return { usersFound: formatUsers };
   };
 
   sendMsg = async (msg, token) => {
-    const { incomingUserId, msg: content } = msg;
+    const { incomingUserId, messageContent: content } = msg;
     const { id: outgoingUserId } = token;
 
     // Format id
@@ -74,10 +83,14 @@ class ChatServices {
 
     if (!isContact) {
       ChatEmitter.emit('isContact:false', data, User);
+      newMsg.isContact = false;
+
       return newMsg;
     }
 
     ChatEmitter.emit('isContact:true', data, User);
+    newMsg.isContact = true;
+
     return newMsg;
   };
 }

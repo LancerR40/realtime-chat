@@ -3,7 +3,7 @@ import { BsFillChatSquareFill, BsChatSquare } from 'react-icons/bs';
 import { AiFillContacts, AiOutlineContacts } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
 
-const Footer = ({ section, changeSection, logout }) => {
+const Footer = ({ section, changeSection, disconnect }) => {
   return (
     <footer className={styles.footer}>
       <div
@@ -34,7 +34,7 @@ const Footer = ({ section, changeSection, logout }) => {
         <span className={styles.text}>Contacts</span>
       </div>
 
-      <div className={styles.iconContainer} onClick={logout}>
+      <div className={styles.iconContainer} onClick={disconnect}>
         <FiLogOut className={styles.icon} />
         <span className={styles.text}>Logout</span>
       </div>

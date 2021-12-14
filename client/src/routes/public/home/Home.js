@@ -1,11 +1,11 @@
 import styles from './Home.module.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useHeight from '../../../hooks/useHeight';
+import useCalculateHeight from '../../../hooks/useCalculateHeight';
 
-import GreatChat from '../../../../public/assets/illustrations/GreatChat';
-import Community from '../../../../public/assets/illustrations/Community';
-import Security from '../../../../public/assets/illustrations/Security';
+import GreatChat from 'Public/assets/illustrations/GreatChat';
+import Community from 'Public/assets/illustrations/Community';
+import Security from 'Public/assets/illustrations/Security';
 
 const CONTENT = [
   {
@@ -32,7 +32,7 @@ const CONTENT = [
 
 const Home = () => {
   const { push } = useHistory();
-  const screenHeight = useHeight();
+  const screenHeight = useCalculateHeight();
 
   const [currentImg, setCurrentImg] = useState(CONTENT[0]);
 
