@@ -18,8 +18,8 @@ const SearchInput = ({ userToSearch, searchUsersHandler }) => {
     <div className={styles.searchInput}>
       <input
         className={styles.input}
-        type='text'
-        placeholder='Search here...'
+        type="text"
+        placeholder="Search here..."
         onChange={searchUsersHandler}
       />
 

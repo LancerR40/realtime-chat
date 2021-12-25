@@ -13,44 +13,44 @@ const SignupForm = ({ state, onChange, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <Input
-        label='Fullname'
-        type='text'
-        name='fullname'
+        label="Fullname"
+        type="text"
+        name="fullname"
         value={state.fullname}
         icon={<AiOutlineUser />}
-        placeholder='Fullname...'
+        placeholder="Fullname..."
         onChange={onChange}
       />
 
       <Input
-        label='Email'
-        type='email'
-        name='email'
+        label="Email"
+        type="email"
+        name="email"
         value={state.email}
         icon={<AiOutlineMail />}
-        placeholder='Email...'
+        placeholder="Email..."
         onChange={onChange}
       />
 
       <Input
-        label='Password'
-        type='password'
-        name='password'
+        label="Password"
+        type="password"
+        name="password"
         value={state.password}
         icon={<RiLockPasswordLine />}
-        placeholder='Password...'
+        placeholder="Password..."
         onChange={onChange}
       />
 
       <InputAvatar
-        label='Avatar'
-        type='file'
-        name='avatar'
+        label="Avatar"
+        type="file"
+        name="avatar"
         icon={<AiOutlineUpload />}
         onChange={onChange}
       />
 
-      <Button title='Sign Up' withAnimation={isLoading} />
+      <Button title="Sign Up" withAnimation={isLoading} />
     </form>
   );
 };

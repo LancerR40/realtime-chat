@@ -7,7 +7,7 @@
     "start": "rm -rf dist && webpack --mode production",
     "dev": "webpack server --mode development --devtool inline-source-map",
     "clean": "rm -rf dist",
-    "format": "prettier --write . --config ./.prettierrc"
+    "format": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",

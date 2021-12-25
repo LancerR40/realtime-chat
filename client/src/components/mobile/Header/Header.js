@@ -25,7 +25,7 @@ const Header = () => {
       <div className={styles.top}>
         <h1 className={styles.title}>Chat Rooms</h1>
 
-        <img className={styles.avatar} src={avatar} alt='Ronald Abu Saleh' />
+        <img className={styles.avatar} src={avatar} alt="Ronald Abu Saleh" />
       </div>
 
       <div className={styles.bottom}>
