@@ -9,7 +9,7 @@
 .input {
   background: none;
   width: calc(100% - 45px);
-  padding-left: 15px;
+  padding: 0 15px;
   outline: none;
   border: none;
   font-size: 14px;

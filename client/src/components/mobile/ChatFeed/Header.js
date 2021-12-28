@@ -1,4 +1,6 @@
 import styles from './Header.module.css';
+import PropTypes from 'prop-types';
+
 import { IoArrowBack } from 'react-icons/io5';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +12,10 @@ import {
 const Header = ({ userData }) => {
   const dispatch = useDispatch();
   const usersFound = useSelector((state) => state.chat.usersFound);
+
+  const isConnectedBackground = userData.isConnected
+    ? 'rgb(50, 204, 50)'
+    : 'red';
 
   const closeChat = () => {
     if (usersFound.length) {
@@ -36,11 +42,18 @@ const Header = ({ userData }) => {
             src={userData.avatar}
             alt={userData.fullname}
           />
-          <span className={styles.status}></span>
+          <span
+            className={styles.status}
+            style={{ background: isConnectedBackground }}
+          ></span>
         </div>
       </div>
     </div>
   );
+};
+
+Header.propTypes = {
+  userData: PropTypes.object.isRequired,
 };
 
 export default Header;

@@ -4,12 +4,11 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  // extends: ['eslint:recommended', 'plugin:react/jsx-runtime'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
-    'prettier',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -20,6 +19,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    // 'react/react-in-jsx-scope': 'off',
+    'no-console': 'error',
+    'no-unused-vars': 'warn',
   },
 };

@@ -72,8 +72,8 @@
 }
 
 .uploadText {
-  color: lightslategrey;
   font-size: 13px;
+  pointer-events: none;
 }
 
 input:-webkit-autofill {

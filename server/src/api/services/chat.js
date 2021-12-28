@@ -4,23 +4,26 @@ import { contactVerify } from '../utils/chat';
 
 class ChatServices {
   chatData = async (userId) => {
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findOne({ _id: userId }).select(
+      'fullname email avatar contacts'
+    );
 
-    if (user) {
-      const contacts = user.contacts.map(
-        ({ _id, fullname, email, avatar, chat }) => ({
-          id: _id,
-          fullname,
-          email,
-          avatar,
-          chat,
-        })
-      );
+    const contacts = user.contacts.map(
+      async ({ _id, fullname, email, avatar, chat }) => ({
+        id: _id,
+        fullname,
+        email,
+        avatar,
+        chat,
+        isConnected: await User.findById({ _id }).then(
+          (user) => user.isConnected
+        ),
+      })
+    );
 
-      const { avatar } = user;
+    user.contacts = await Promise.all(contacts);
 
-      return { contacts, user: { avatar } };
-    }
+    return { user };
   };
 
   findUsers = async (fullname, userId) => {
@@ -78,7 +81,6 @@ class ChatServices {
     };
 
     if (!isContact) {
-      console.log('No es contacto');
       // Outgoing user new contact saved process
       const outgoingUserContacts = outgoingUser.contacts;
       const { _id, fullname, email, avatar } = incomingUser;
@@ -109,7 +111,7 @@ class ChatServices {
       } = outgoingUser;
 
       const newIncomingUserContact = {
-        _id: outgoingUserId,
+        _id: outgoingUser._id,
         fullname: outgoingUserFullname,
         email: outgoingUserEmail,
         avatar: outgoingUserAvatar,

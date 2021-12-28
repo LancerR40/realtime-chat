@@ -1,4 +1,5 @@
 import styles from './ContactList.module.css';
+import PropTypes from 'prop-types';
 // import { useState, useEffect } from 'react';
 // import { BsTrash, BsFillTrashFill } from 'react-icons/bs';
 // import { FaTrash } from 'react-icons/fa';
@@ -63,6 +64,10 @@ const ContactList = ({ setChat }) => {
       </div>
     </div>
   );
+};
+
+ContactList.propTypes = {
+  setChat: PropTypes.func.isRequired,
 };
 
 export default ContactList;

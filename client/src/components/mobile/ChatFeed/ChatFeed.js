@@ -1,4 +1,6 @@
 import styles from './ChatFeed.module.css';
+import PropTypes from 'prop-types';
+
 import Header from './Header';
 import Message from './Message';
 import MessageInput from '../MessageInput/MessageInput';
@@ -82,6 +84,11 @@ const ChatFeed = ({ chat, socket }) => {
       />
     </>
   );
+};
+
+ChatFeed.propTypes = {
+  chat: PropTypes.object.isRequired,
+  socket: PropTypes.object.isRequired,
 };
 
 export default ChatFeed;

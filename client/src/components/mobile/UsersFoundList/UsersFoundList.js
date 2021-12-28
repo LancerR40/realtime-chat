@@ -1,4 +1,5 @@
 import styles from './UsersFoundList.module.css';
+import PropTypes from 'prop-types';
 
 const UsersFoundList = ({ list, setChat }) => (
   <div className={styles.usersFoundList}>
@@ -23,5 +24,10 @@ const UsersFoundList = ({ list, setChat }) => (
     )}
   </div>
 );
+
+UsersFoundList.propTypes = {
+  list: PropTypes.array.isRequired,
+  setChat: PropTypes.func.isRequired,
+};
 
 export default UsersFoundList;

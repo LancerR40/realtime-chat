@@ -1,4 +1,6 @@
 import styles from './Footer.module.css';
+import PropTypes from 'prop-types';
+
 import { BsFillChatSquareFill, BsChatSquare } from 'react-icons/bs';
 import { AiFillContacts, AiOutlineContacts } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
@@ -37,14 +39,6 @@ const Footer = ({ currentSection, changeSection, disconnect }) => {
       sectionName: CONTACTS,
       onClick: changeSection,
     },
-    {
-      id: 3,
-      inactiveIcon: (
-        <FiLogOut style={{ fontSize: '20px' }} className={styles.icon} />
-      ),
-      sectionName: LOGOUT,
-      onClick: disconnect,
-    },
   ];
 
   return (
@@ -54,24 +48,36 @@ const Footer = ({ currentSection, changeSection, disconnect }) => {
           currentSection === section.sectionName && styles.active
         }`;
 
-        const onClickAction =
-          section.sectionName === LOGOUT
-            ? section.onClick
-            : () => section.onClick(section.sectionName);
+        const icon =
+          currentSection === section.sectionName
+            ? section.activeIcon
+            : section.inactiveIcon;
 
         return (
-          <div className={classes} onClick={onClickAction}>
-            {currentSection === section.sectionName
-              ? section.activeIcon
-              : section.inactiveIcon}
+          <div
+            key={section.id}
+            className={classes}
+            onClick={() => section.onClick(section.sectionName)}
+          >
+            {icon}
 
-            {currentSection === LOGOUT && section.inactiveIcon}
             <span className={styles.text}>{section.sectionName}</span>
           </div>
         );
       })}
+
+      <div className={styles.iconContainer} onClick={disconnect}>
+        <FiLogOut style={{ fontSize: '20px' }} className={styles.icon} />
+        <span className={styles.text}>{LOGOUT}</span>
+      </div>
     </footer>
   );
+};
+
+Footer.propTypes = {
+  currentSection: PropTypes.string.isRequired,
+  changeSection: PropTypes.func.isRequired,
+  disconnect: PropTypes.func.isRequired,
 };
 
 export default Footer;

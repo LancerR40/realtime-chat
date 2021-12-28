@@ -48,6 +48,8 @@ class SocketServer {
       ...user,
     };
 
+    socket.broadcast.emit('chat:user-online', { userId, isConnected: true });
+
     this.users.set(socketId, newUser);
   };
 
@@ -88,6 +90,11 @@ class SocketServer {
 
   disconnectUser = (socket) => {
     this.users.delete(socket.id);
+
+    socket.broadcast.emit('chat:user-offline', {
+      userId: socket.userId,
+      isConnected: false,
+    });
   };
 
   socketEvents() {

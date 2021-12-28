@@ -4,6 +4,8 @@ import ContactList from '../ContactList/ContactList';
 import UsersFoundList from '../UsersFoundList/UsersFoundList';
 import Footer from '../Footer/Footer';
 
+import PropTypes from 'prop-types';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChatAction } from '../../../store/action/chat';
 
@@ -51,6 +53,10 @@ const ChatMenu = ({ disconnect }) => {
       />
     </>
   );
+};
+
+ChatMenu.propTypes = {
+  disconnect: PropTypes.func.isRequired,
 };
 
 export default ChatMenu;

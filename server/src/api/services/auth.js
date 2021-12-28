@@ -62,7 +62,7 @@ class AuthService {
 
     isUserExist.isConnected = true;
 
-    await User.update(
+    await User.updateOne(
       { _id: isUserExist._id },
       { $set: { isConnected: true } }
     );
@@ -74,7 +74,7 @@ class AuthService {
     const payload = verifyJWT(token);
     const userId = toObjectId(payload.id);
 
-    await User.update({ _id: userId }, { $set: { isConnected: false } });
+    await User.updateOne({ _id: userId }, { $set: { isConnected: false } });
   };
 }
 

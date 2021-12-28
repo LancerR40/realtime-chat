@@ -9,10 +9,10 @@ export const isAuthAction = () => {
     const { auth, error } = response;
 
     if (error) {
-      const token = localStorage.getItem('token');
+      const token = window.localStorage.getItem('token');
 
       if (token !== null) {
-        localStorage.removeItem('token');
+        window.localStorage.removeItem('token');
       }
 
       return;
@@ -32,7 +32,7 @@ export const signupAction = (data, setData) => {
       payload: true,
     });
 
-    const { msg, error } = await authServices.signupService(data);
+    const { message, error } = await authServices.signupService(data);
 
     dispatch({
       type: LOADER_CONSTANTS.SIGNUP_LOADER,
@@ -50,7 +50,7 @@ export const signupAction = (data, setData) => {
       avatar: null,
     });
 
-    alert(msg);
+    alert(message);
   };
 };
 
@@ -73,7 +73,7 @@ export const loginAction = (data, push) => {
     }
 
     if (auth) {
-      localStorage.setItem('token', token);
+      window.localStorage.setItem('token', token);
 
       push('/chat');
 
@@ -93,7 +93,7 @@ export const logoutAction = (push, socket) => {
       return alert(error);
     }
 
-    localStorage.removeItem('token');
+    window.localStorage.removeItem('token');
 
     socket.emit('chat:logout');
 

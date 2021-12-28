@@ -1,5 +1,8 @@
 import styles from './ChatList.module.css';
+
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+
 import UserCard from './UserCard';
 
 const ChatList = ({ setChat }) => {
@@ -18,10 +21,19 @@ const ChatList = ({ setChat }) => {
   return (
     <div className={styles.chatList}>
       {chats.map((chat) => (
-        <UserCard key={chat.id} chat={chat} setCurrentChat={setChat} />
+        <UserCard
+          key={chat.id}
+          chat={chat}
+          isConnected={chat.isConnected}
+          setCurrentChat={setChat}
+        />
       ))}
     </div>
   );
+};
+
+ChatList.propTypes = {
+  setChat: PropTypes.func.isRequired,
 };
 
 export default ChatList;

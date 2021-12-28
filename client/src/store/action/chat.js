@@ -4,7 +4,7 @@ import { CHAT_CONSTANTS } from '../constant/chat';
 export const getUserDataAction = () => {
   return async (dispatch) => {
     const response = await chatServices.getUserDataService();
-    const { user, contacts, error } = response;
+    const { user, error } = response;
 
     if (error) {
       return alert('Internal error');
@@ -13,8 +13,8 @@ export const getUserDataAction = () => {
     return dispatch({
       type: CHAT_CONSTANTS.GET_USER_DATA,
       payload: {
-        contacts,
-        user: user.avatar,
+        contacts: user.contacts,
+        user,
       },
     });
   };
@@ -45,11 +45,6 @@ export const setCurrentChatAction = (user = {}) => ({
   payload: user,
 });
 
-export const closeCurrentChatAction = () => ({
-  type: CHAT_CONSTANTS.SET_CURRENT_CHAT,
-  payload: {},
-});
-
 export const sendMessageAction = (data, socket) => {
   return async (dispatch) => {
     const { message, error } = await chatServices.sendMessageService(data);
@@ -74,9 +69,9 @@ export const userMsgFromServerAction = (data) => {
   };
 };
 
-export const setSocketClientAction = (socket) => {
+export const updateContactsConnectionAction = (data) => {
   return {
-    type: CHAT_CONSTANTS.SET_SOCKET_CLIENT,
-    payload: socket,
+    type: '@chat/UPDATE_CONTACT_CONNECTION',
+    payload: data,
   };
 };

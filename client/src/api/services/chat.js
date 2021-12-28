@@ -3,10 +3,12 @@ import { CHAT_REQUESTS } from '../requests';
 
 export const getUserDataService = async () => {
   try {
+    const headers = {
+      'X-Token': window.localStorage.getItem('token'),
+    };
+
     const request = await axios.get(CHAT_REQUESTS.GET_CHAT_DATA, {
-      headers: {
-        'X-Token': localStorage.getItem('token'),
-      },
+      headers,
     });
     return request.data;
   } catch (error) {
@@ -16,28 +18,31 @@ export const getUserDataService = async () => {
 
 export const sendMessageService = async (data) => {
   try {
+    const headers = {
+      'X-Token': window.localStorage.getItem('token'),
+    };
+
     const request = await axios.post(CHAT_REQUESTS.SEND_MSG_TO_USER, data, {
-      headers: {
-        'X-Token': localStorage.getItem('token'),
-      },
+      headers,
     });
     return request.data;
   } catch (error) {
-    console.log(error.response);
     return { error };
   }
 };
 
 export const findUsersService = async (fullname) => {
   try {
+    const headers = {
+      'X-Token': window.localStorage.getItem('token'),
+    };
+
     const request = await axios.get(CHAT_REQUESTS.FIND_USERS(fullname), {
-      headers: {
-        'X-Token': localStorage.getItem('token'),
-      },
+      headers,
     });
     return request.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

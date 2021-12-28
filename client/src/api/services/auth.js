@@ -5,7 +5,7 @@ const isAuthService = async () => {
   try {
     const request = await axios.get(AUTH_REQUESTS.IS_AUTH, {
       headers: {
-        'X-Token': localStorage.getItem('token'),
+        'X-Token': window.localStorage.getItem('token'),
       },
     });
     return request.data;
@@ -19,15 +19,11 @@ const signupService = async (data) => {
     const request = await axios.post(AUTH_REQUESTS.SIGNUP, data);
     return request.data;
   } catch (error) {
-    if (!error.response) {
-      return { error: 'Connection to server failed, check network' };
-    }
-
     if (error.response.data.error) {
       return { error: error.response.data.error };
     }
 
-    return { error: 'INTERNAL ERROR' };
+    return { error: 'Connection to server failed, check network' };
   }
 };
 
@@ -36,36 +32,26 @@ const loginService = async (data) => {
     const request = await axios.post(AUTH_REQUESTS.LOGIN, data);
     return request.data;
   } catch (error) {
-    if (!error.response) {
-      return { error: 'Connection to server failed, check network' };
-    }
-
     if (error.response.data.error) {
       return { error: error.response.data.error };
     }
 
-    return { error: 'INTERNAL ERROR' };
+    return { error: 'Connection to server failed, check network' };
   }
 };
 
 const logoutService = async () => {
   try {
+    const headers = {
+      'X-Token': window.localStorage.getItem('token'),
+    };
+
     const request = await axios.get(AUTH_REQUESTS.LOGOUT, {
-      headers: {
-        'X-Token': localStorage.getItem('token'),
-      },
+      headers,
     });
     return request.data;
   } catch (error) {
-    if (!error.response) {
-      return { error: 'Connection to server failed, check network' };
-    }
-
-    if (error.response.data.error) {
-      return { error: error.response.data.error };
-    }
-
-    return { error: 'INTERNAL ERROR' };
+    return { error: 'Connection to server failed, check network' };
   }
 };
 

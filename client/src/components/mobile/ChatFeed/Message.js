@@ -1,4 +1,5 @@
 import styles from './Message.module.css';
+import PropTypes from 'prop-types';
 
 const getMessageClasses = (messageType) => {
   let flexEndClass = null;
@@ -32,6 +33,12 @@ const Message = ({ type, text, time }) => {
       </div>
     </div>
   );
+};
+
+Message.propTypes = {
+  type: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  time: PropTypes.string,
 };
 
 export default Message;

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Input from './input/Input';
 import Button from './button/Button';
 
@@ -34,6 +36,12 @@ const LoginForm = ({ state, onChange, onSubmit }) => {
       <Button title="Log In" withAnimation={isLoading} />
     </form>
   );
+};
+
+LoginForm.propTypes = {
+  state: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

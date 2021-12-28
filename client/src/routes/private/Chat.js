@@ -11,6 +11,7 @@ import { logoutAction } from '../../store/action/auth';
 import {
   getUserDataAction,
   userMsgFromServerAction,
+  updateContactsConnectionAction,
 } from '../../store/action/chat';
 
 import { io } from 'socket.io-client';
@@ -52,6 +53,14 @@ const MobileUI = () => {
       audio.play();
 
       dispatch(userMsgFromServerAction(data));
+    });
+
+    socket.on('chat:user-online', (data) => {
+      dispatch(updateContactsConnectionAction(data));
+    });
+
+    socket.on('chat:user-offline', (data) => {
+      dispatch(updateContactsConnectionAction(data));
     });
 
     return () => socket !== null && socket.off();

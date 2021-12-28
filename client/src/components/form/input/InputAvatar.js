@@ -1,4 +1,5 @@
 import styles from './Input.module.css';
+import PropTypes from 'prop-types';
 
 const InputAvatar = ({
   label,
@@ -9,6 +10,8 @@ const InputAvatar = ({
   placeholder,
   onChange,
 }) => {
+  const fontColor = value === null ? 'lightslategrey' : 'black';
+
   return (
     <div className={styles.group}>
       <label className={styles.label}>{label}</label>
@@ -17,13 +20,14 @@ const InputAvatar = ({
         <div className={styles.icon}>{icon}</div>
 
         <div className={styles.inputAvatarContainer}>
-          <span className={styles.uploadText}>Upload avatar</span>
+          <span className={styles.uploadText} style={{ color: fontColor }}>
+            {placeholder}
+          </span>
 
           <input
             className={styles.inputAvatar}
             type={type}
             name={name}
-            value={value}
             placeholder={placeholder}
             onChange={onChange}
           />
@@ -35,6 +39,20 @@ const InputAvatar = ({
       </div>
     </div>
   );
+};
+
+InputAvatar.propTypes = {
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: (props) => {
+    if (props === null || props !== null) {
+      return;
+    }
+  },
+  icon: PropTypes.node,
+  placeholder: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default InputAvatar;

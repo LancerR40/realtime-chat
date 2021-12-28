@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Input from './input/Input';
 import InputAvatar from './input/InputAvatar';
 import Button from './button/Button';
@@ -46,13 +48,23 @@ const SignupForm = ({ state, onChange, onSubmit }) => {
         label="Avatar"
         type="file"
         name="avatar"
+        value={state.avatar}
         icon={<AiOutlineUpload />}
+        placeholder={
+          state.avatar === null ? 'Upload avatar' : 'Avatar selected'
+        }
         onChange={onChange}
       />
 
       <Button title="Sign Up" withAnimation={isLoading} />
     </form>
   );
+};
+
+SignupForm.propTypes = {
+  state: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SignupForm;

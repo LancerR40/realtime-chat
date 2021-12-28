@@ -5,9 +5,9 @@ export const chatDataController = async (req, res) => {
 
   try {
     const service = new ChatServices();
-    const { user, contacts } = await service.chatData(id);
+    const { user } = await service.chatData(id);
 
-    res.status(200).json({ user, contacts });
+    res.status(200).json({ user });
   } catch (error) {
     res.status(400).json({ error });
   }

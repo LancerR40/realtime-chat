@@ -1,7 +1,7 @@
 import { CHAT_CONSTANTS } from '../constant/chat';
 
 const initialState = {
-  user: '',
+  user: {},
   currentChat: {},
   usersFound: [],
   contacts: [],
@@ -122,6 +122,41 @@ const chatReducer = (state = initialState, action) => {
             chat: state.currentChat.chat.concat(message),
           },
           contacts,
+        };
+
+        return newState;
+      }
+
+      const newState = {
+        ...state,
+        contacts,
+      };
+
+      return newState;
+    }
+
+    case '@chat/UPDATE_CONTACT_CONNECTION': {
+      const contacts = state.contacts.map((contact) => {
+        if (contact.id === payload.userId) {
+          return {
+            ...contact,
+            isConnected: payload.isConnected,
+          };
+        }
+
+        return contact;
+      });
+
+      if (state.currentChat?.id === payload.userId) {
+        const currentChat = {
+          ...state.currentChat,
+          isConnected: payload.isConnected,
+        };
+
+        const newState = {
+          ...state,
+          contacts,
+          currentChat,
         };
 
         return newState;

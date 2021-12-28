@@ -1,4 +1,5 @@
 import styles from './Input.module.css';
+import PropTypes from 'prop-types';
 
 const Input = ({ label, type, name, value, icon, placeholder, onChange }) => {
   return (
@@ -23,6 +24,16 @@ const Input = ({ label, type, name, value, icon, placeholder, onChange }) => {
       </div>
     </div>
   );
+};
+
+Input.propTypes = {
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  icon: PropTypes.node,
+  placeholder: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Input;

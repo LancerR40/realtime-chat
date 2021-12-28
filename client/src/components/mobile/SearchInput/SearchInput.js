@@ -1,4 +1,6 @@
 import styles from './SearchInput.module.css';
+import PropTypes from 'prop-types';
+
 import { BiSearch } from 'react-icons/bi';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 
@@ -25,7 +27,6 @@ const SearchInput = ({ userToSearch, searchUsersHandler }) => {
 
       <span className={styles.line}></span>
 
-      {/* Icon here */}
       <div className={styles.iconContainer}>
         <BiSearch
           className={styles.icon}
@@ -38,6 +39,11 @@ const SearchInput = ({ userToSearch, searchUsersHandler }) => {
       </div>
     </div>
   );
+};
+
+SearchInput.propTypes = {
+  userToSearch: PropTypes.object.isRequired,
+  searchUsersHandler: PropTypes.func.isRequired,
 };
 
 export default SearchInput;

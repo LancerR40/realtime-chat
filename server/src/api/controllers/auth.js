@@ -3,10 +3,6 @@ import AuthService from '../services/auth';
 export const isAuthController = (req, res) => {
   const token = req.headers['x-token'];
 
-  if (token === 'null') {
-    return res.status(200).json({ auth: false });
-  }
-
   try {
     const auth = new AuthService();
     const { status } = auth.isAuth(token);
@@ -15,6 +11,10 @@ export const isAuthController = (req, res) => {
       res.status(200).json({ auth: true });
     }
   } catch (error) {
+    if (token === 'null') {
+      return res.status(200).json({ auth: false });
+    }
+
     res.status(403).json({ error: 'Auth failed' });
   }
 };
@@ -39,7 +39,7 @@ export const signupController = async (req, res) => {
     }
 
     if (status === true) {
-      return res.status(200).json({ msg: 'User registered successfully' });
+      return res.status(200).json({ message: 'User registered successfully' });
     }
   } catch (error) {
     res.status(400).json({ error: 'An error occurred, restart and try again' });
@@ -48,8 +48,10 @@ export const signupController = async (req, res) => {
 
 export const loginController = async (req, res) => {
   try {
+    const user = req.body;
+
     const auth = new AuthService();
-    const { token, error } = await auth.login(req.body);
+    const { token, error } = await auth.login(user);
 
     if (error) {
       return res.status(400).json({ error });

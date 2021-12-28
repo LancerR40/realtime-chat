@@ -32,12 +32,12 @@
 
 .incomingMessage {
   background-color: rgb(245, 245, 245);
-  border-radius: 25px 25px 25px 0;
+  border-radius: 15px 15px 15px 0;
 }
 
 .outgoingMessage {
   background-color: rgb(49, 84, 199);
-  border-radius: 25px 25px 0 25px;
+  border-radius: 15px 15px 0 15px;
   color: #fff;
 }
 
