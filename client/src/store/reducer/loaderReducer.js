@@ -1,12 +1,7 @@
-const initialState = {
-  signupLoader: false,
-  loginLoader: false,
-};
-
-const loaderReducer = (state = initialState, action) => {
+const loaderReducer = (state = false, action) => {
   switch (action.type) {
-    case '@loader/SIGNUP_LOADER':
-      return { ...state, signupLoader: action.payload };
+    case '@loader/LOADER':
+      return action.payload;
 
     default:
       return state;

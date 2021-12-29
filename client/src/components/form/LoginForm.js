@@ -9,7 +9,7 @@ import { RiLockPasswordLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 
 const LoginForm = ({ state, onChange, onSubmit }) => {
-  const isLoading = useSelector((state) => state.loader.signupLoader);
+  const isLoading = useSelector((state) => state.loader);
 
   return (
     <form onSubmit={onSubmit}>

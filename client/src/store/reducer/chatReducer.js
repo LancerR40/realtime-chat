@@ -159,6 +159,16 @@ const chatReducer = (state = initialState, action) => {
           currentChat,
         };
 
+        if (state.usersFound.length) {
+          const usersFound = [...state.usersFound].map((user) =>
+            user.id === payload.userId
+              ? { ...user, isConnected: payload.isConnected }
+              : user
+          );
+
+          newState.usersFound = [...usersFound];
+        }
+
         return newState;
       }
 
@@ -166,6 +176,16 @@ const chatReducer = (state = initialState, action) => {
         ...state,
         contacts,
       };
+
+      if (state.usersFound.length) {
+        const usersFound = [...state.usersFound].map((user) =>
+          user.id === payload.userId
+            ? { ...user, isConnected: payload.isConnected }
+            : user
+        );
+
+        newState.usersFound = [...usersFound];
+      }
 
       return newState;
     }

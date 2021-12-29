@@ -30,25 +30,36 @@ class ChatServices {
     const usersFound = await User.find({
       fullname: { $regex: `^${fullname}`, $options: 'i' },
     });
+
     const { contacts: userContacts } = await User.findOne({ _id: userId });
 
-    const formatUsers = usersFound
-      .filter((user) => user._id.toString() !== userId)
-      .map(({ _id, fullname, avatar }) => ({
+    // Filter all found users, but filter the user performing the search
+    const filteredUsers = usersFound.filter(
+      (user) => String(user._id) !== userId
+    );
+
+    // We change the property from _id to id
+    const formatContacts = filteredUsers.map(
+      ({ _id, fullname, avatar, isConnected }) => ({
         id: _id,
         fullname,
         avatar,
-      }));
+        isConnected,
+      })
+    );
 
-    for (let row = 0; row < formatUsers.length; row++) {
+    // From the found users, the user's contacts are deleted
+    for (let row = 0; row < formatContacts.length; row++) {
       for (let column = 0; column < userContacts.length; column++) {
-        if (String(formatUsers[row].id) === String(userContacts[column]._id)) {
-          formatUsers.splice(row, 1);
+        if (
+          String(formatContacts[row].id) === String(userContacts[column]._id)
+        ) {
+          formatContacts.splice(row, 1);
         }
       }
     }
 
-    return { usersFound: formatUsers };
+    return { usersFound: formatContacts };
   };
 
   saveMessage = async (message, token) => {

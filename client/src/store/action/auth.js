@@ -28,14 +28,14 @@ export const isAuthAction = () => {
 export const signupAction = (data, setData) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADER_CONSTANTS.SIGNUP_LOADER,
+      type: LOADER_CONSTANTS.LOADER,
       payload: true,
     });
 
     const { message, error } = await authServices.signupService(data);
 
     dispatch({
-      type: LOADER_CONSTANTS.SIGNUP_LOADER,
+      type: LOADER_CONSTANTS.LOADER,
       payload: false,
     });
 
@@ -57,14 +57,14 @@ export const signupAction = (data, setData) => {
 export const loginAction = (data, push) => {
   return async (dispatch) => {
     dispatch({
-      type: LOADER_CONSTANTS.SIGNUP_LOADER,
+      type: LOADER_CONSTANTS.LOADER,
       payload: true,
     });
 
     const { auth, token, error } = await authServices.loginService(data);
 
     dispatch({
-      type: LOADER_CONSTANTS.SIGNUP_LOADER,
+      type: LOADER_CONSTANTS.LOADER,
       payload: false,
     });
 
