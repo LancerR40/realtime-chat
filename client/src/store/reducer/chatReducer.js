@@ -11,8 +11,9 @@ const chatReducer = (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
-    case CHAT_CONSTANTS.GET_USER_DATA:
+    case CHAT_CONSTANTS.GET_USER_DATA: {
       return { ...state, contacts: payload.contacts, user: payload.user };
+    }
 
     case CHAT_CONSTANTS.USERS_FOUND:
       return { ...state, usersFound: payload };
@@ -78,6 +79,7 @@ const chatReducer = (state = initialState, action) => {
       if (isContact === -1) {
         const newContact = {
           ...outgoingUser,
+          isConnected: true,
           chat: [message],
         };
 

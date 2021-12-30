@@ -65,15 +65,15 @@ export const loginController = async (req, res) => {
   }
 };
 
-export const logoutController = (req, res) => {
-  try {
-    const token = req.headers['x-token'];
+// export const logoutController = (req, res) => {
+//   try {
+//     const token = req.headers['x-token'];
 
-    const auth = new AuthService();
-    auth.logout(token);
+//     const auth = new AuthService();
+//     auth.logout(token);
 
-    res.status(200).json({ auth: false });
-  } catch (error) {
-    res.status(400).json({ error: 'An error occurred, restart and try again' });
-  }
-};
+//     res.status(200).json({ auth: false });
+//   } catch (error) {
+//     res.status(400).json({ error: 'An error occurred, restart and try again' });
+//   }
+// };

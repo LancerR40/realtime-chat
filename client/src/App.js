@@ -26,7 +26,7 @@ const App = () => {
     </Suspense>
   );
 
-  return <AppLayout>{isAuth === false ? notAuthPages : isAuthPages}</AppLayout>;
+  return <AppLayout>{!isAuth ? notAuthPages : isAuthPages}</AppLayout>;
 };
 
 export default App;

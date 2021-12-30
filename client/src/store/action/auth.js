@@ -9,13 +9,7 @@ export const isAuthAction = () => {
     const { auth, error } = response;
 
     if (error) {
-      const token = window.localStorage.getItem('token');
-
-      if (token !== null) {
-        window.localStorage.removeItem('token');
-      }
-
-      return;
+      return window.localStorage.clear();
     }
 
     dispatch({
@@ -87,13 +81,13 @@ export const loginAction = (data, push) => {
 
 export const logoutAction = (push, socket) => {
   return async (dispatch) => {
-    const { auth, error } = await authServices.logoutService();
+    // const { auth, error } = await authServices.logoutService();
 
-    if (error) {
-      return alert(error);
-    }
+    // if (error) {
+    //   return alert(error);
+    // }
 
-    window.localStorage.removeItem('token');
+    window.localStorage.clear();
 
     socket.emit('chat:logout');
 
@@ -111,7 +105,7 @@ export const logoutAction = (push, socket) => {
 
     return dispatch({
       type: AUTH_CONSTANTS.LOGOUT,
-      payload: auth,
+      payload: false,
     });
   };
 };

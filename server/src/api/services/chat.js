@@ -21,9 +21,14 @@ class ChatServices {
       })
     );
 
-    user.contacts = await Promise.all(contacts);
+    const userData = {
+      fullname: user.fullname,
+      email: user.email,
+      avatar: user.avatar,
+      contacts: await Promise.all(contacts),
+    };
 
-    return { user };
+    return { user: userData };
   };
 
   findUsers = async (fullname, userId) => {

@@ -1,6 +1,8 @@
 import User from './User';
 import { verifyJWT } from '../utils/jsonwebtoken';
 
+import AuthService from '../services/auth';
+
 class SocketServer {
   constructor(io) {
     this.io = io;
@@ -39,18 +41,26 @@ class SocketServer {
   };
 
   connectUser = async (socket) => {
-    const { userId, id: socketId } = socket;
+    try {
+      const { userId, id: socketId } = socket;
 
-    const user = await this.findUser(userId);
-    const newUser = {
-      socketId,
-      userId,
-      ...user,
-    };
+      const user = await this.findUser(userId);
+      const newUser = {
+        socketId,
+        userId,
+        ...user,
+      };
 
-    socket.broadcast.emit('chat:user-online', { userId, isConnected: true });
+      // Update db user connection prop to true
+      await User.updateOne({ _id: userId }, { $set: { isConnected: true } });
 
-    this.users.set(socketId, newUser);
+      socket.broadcast.emit('chat:user-online', { userId, isConnected: true });
+
+      this.users.set(socketId, newUser);
+    } catch (error) {
+      // code...
+      console.log(error);
+    }
   };
 
   getUserBySocketId = (socket) => {
@@ -88,13 +98,20 @@ class SocketServer {
     });
   };
 
-  disconnectUser = (socket) => {
-    this.users.delete(socket.id);
+  disconnectUser = async (socket) => {
+    try {
+      const authService = new AuthService();
+      await authService.logout(socket.userId);
 
-    socket.broadcast.emit('chat:user-offline', {
-      userId: socket.userId,
-      isConnected: false,
-    });
+      this.users.delete(socket.id);
+
+      socket.broadcast.emit('chat:user-offline', {
+        userId: socket.userId,
+        isConnected: false,
+      });
+    } catch (error) {
+      // code...
+    }
   };
 
   socketEvents() {

@@ -63,7 +63,11 @@ const MobileUI = () => {
       dispatch(updateContactsConnectionAction(data));
     });
 
-    return () => socket !== null && socket.off();
+    return () => {
+      if (socket !== null) {
+        socket.off();
+      }
+    };
   }, []);
 
   const currentSection = Object.keys(currentChat).length;

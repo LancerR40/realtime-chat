@@ -60,19 +60,11 @@ class AuthService {
 
     const token = createJWT(isUserExist._id);
 
-    isUserExist.isConnected = true;
-
-    await User.updateOne(
-      { _id: isUserExist._id },
-      { $set: { isConnected: true } }
-    );
-
     return { token };
   };
 
-  logout = async (token) => {
-    const payload = verifyJWT(token);
-    const userId = toObjectId(payload.id);
+  logout = async (id) => {
+    const userId = toObjectId(id);
 
     await User.updateOne({ _id: userId }, { $set: { isConnected: false } });
   };

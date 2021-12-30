@@ -37,6 +37,8 @@ const UserCard = ({ chat, isConnected, setCurrentChat }) => {
           <span className={styles.name}>{chat.fullname}</span>
           <span className={styles.lastMsg}>{getLastMessageContent(chat)}</span>
           <span className={styles.timeAgo}>{timeAgo}</span>
+
+          {/* <div className={styles.unreadMessages}>1</div> */}
         </div>
       </div>
 
