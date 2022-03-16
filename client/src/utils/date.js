@@ -1,5 +1,5 @@
 export const formatTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
+  const date = new Date(timestamp)
 
   // prettier-ignore
   const hh = date.getHours() < 10 ? '0' + String(date.getHours()) : date.getHours();
@@ -12,8 +12,8 @@ export const formatTimestamp = (timestamp) => {
   // prettier-ignore
   const month = date.getMonth() + 1 < 10 ? '0' + String(date.getMonth() + 1) : date.getMonth() + 1;
 
-  const year = date.getFullYear();
+  const year = date.getFullYear()
 
   // prettier-ignore
   return hh >= 12 && hh <= 23 ? `${day}/${month}/${year} ${hh}:${mm}PM` : `${day}/${month}/${year} ${hh}:${mm}AM`;
-};
+}

@@ -1,29 +1,29 @@
-import styles from './Header.module.css';
-import PropTypes from 'prop-types';
+import styles from './Header.module.css'
+import PropTypes from 'prop-types'
 
-import { IoArrowBack } from 'react-icons/io5';
+import { IoArrowBack } from 'react-icons/io5'
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setCurrentChatAction,
   findUsersAction,
-} from '../../../store/action/chat';
+} from '../../../store/action/chat'
 
 const Header = ({ userData }) => {
-  const dispatch = useDispatch();
-  const usersFound = useSelector((state) => state.chat.usersFound);
+  const dispatch = useDispatch()
+  const usersFound = useSelector((state) => state.chat.usersFound)
 
   const isConnectedBackground = userData.isConnected
     ? 'rgb(50, 204, 50)'
-    : 'red';
+    : 'red'
 
   const closeChat = () => {
     if (usersFound.length) {
-      dispatch(findUsersAction());
+      dispatch(findUsersAction())
     }
 
-    dispatch(setCurrentChatAction());
-  };
+    dispatch(setCurrentChatAction())
+  }
 
   return (
     <div className={styles.header}>
@@ -49,11 +49,11 @@ const Header = ({ userData }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Header.propTypes = {
   userData: PropTypes.object.isRequired,
-};
+}
 
-export default Header;
+export default Header

@@ -1,7 +1,7 @@
-import styles from './Button.module.css';
-import PropTypes from 'prop-types';
+import styles from './Button.module.css'
+import PropTypes from 'prop-types'
 
-import Loader from '../loader/Loader';
+import Loader from '../loader/Loader'
 
 const Button = ({ title, withAnimation }) => {
   return (
@@ -10,12 +10,12 @@ const Button = ({ title, withAnimation }) => {
 
       {!withAnimation && title}
     </button>
-  );
-};
+  )
+}
 
 Button.propTypes = {
   title: PropTypes.string.isRequired,
   withAnimation: PropTypes.bool,
-};
+}
 
-export default Button;
+export default Button

@@ -1,5 +1,5 @@
-import styles from './Input.module.css';
-import PropTypes from 'prop-types';
+import styles from './Input.module.css'
+import PropTypes from 'prop-types'
 
 const InputAvatar = ({
   label,
@@ -10,7 +10,7 @@ const InputAvatar = ({
   placeholder,
   onChange,
 }) => {
-  const fontColor = value === null ? 'lightslategrey' : 'black';
+  const fontColor = value === null ? 'lightslategrey' : 'black'
 
   return (
     <div className={styles.group}>
@@ -38,8 +38,8 @@ const InputAvatar = ({
         <div className={styles.completedLine}></div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 InputAvatar.propTypes = {
   label: PropTypes.string.isRequired,
@@ -47,12 +47,12 @@ InputAvatar.propTypes = {
   name: PropTypes.string.isRequired,
   value: (props) => {
     if (props === null || props !== null) {
-      return;
+      return
     }
   },
   icon: PropTypes.node,
   placeholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-};
+}
 
-export default InputAvatar;
+export default InputAvatar

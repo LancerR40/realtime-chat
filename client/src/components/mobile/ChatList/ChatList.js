@@ -1,13 +1,13 @@
-import styles from './ChatList.module.css';
+import styles from './ChatList.module.css'
 
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
-import UserCard from './UserCard';
+import UserCard from './UserCard'
 
 const ChatList = ({ setChat }) => {
   const chats = useSelector((state) => {
-    const { contacts } = state.chat;
+    const { contacts } = state.chat
 
     return contacts
       .filter((contact) => contact?.chat.length > 0)
@@ -15,8 +15,8 @@ const ChatList = ({ setChat }) => {
         (a, b) =>
           b.chat[b.chat.length - 1].datetime -
           a.chat[a.chat.length - 1].datetime
-      );
-  });
+      )
+  })
 
   return (
     <div className={styles.chatList}>
@@ -29,11 +29,11 @@ const ChatList = ({ setChat }) => {
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
 ChatList.propTypes = {
   setChat: PropTypes.func.isRequired,
-};
+}
 
-export default ChatList;
+export default ChatList

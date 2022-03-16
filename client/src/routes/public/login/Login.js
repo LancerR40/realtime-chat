@@ -1,36 +1,36 @@
-import styles from './Login.module.css';
+import styles from './Login.module.css'
 
-import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux';
-import { loginAction } from '../../../store/action/auth';
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../../../store/action/auth'
 
-import Form from '../../../components/form/LoginForm';
+import Form from '../../../components/form/LoginForm'
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const { push } = useHistory();
+  const dispatch = useDispatch()
+  const { push } = useHistory()
 
   const [state, setState] = useState({
     email: '',
     password: '',
-  });
+  })
 
   const onChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
 
     setState({
       ...state,
       [name]: value,
-    });
-  };
+    })
+  }
 
   const login = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    dispatch(loginAction(state, push));
-  };
+    dispatch(loginAction(state, push))
+  }
 
   return (
     <div className={styles.login}>
@@ -55,7 +55,7 @@ const Login = () => {
         </span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

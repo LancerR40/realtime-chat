@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import ChatUI from '../routes/private/Chat';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import ChatUI from '../routes/private/Chat'
 
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
 const ToChatPage = () => {
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const isAuth = useSelector((state) => state.auth.isAuth)
 
-  return isAuth === true && <Redirect to="/chat" />;
-};
+  return isAuth === true && <Redirect to="/chat" />
+}
 
 const Private = () => (
   <Router>
@@ -19,6 +19,6 @@ const Private = () => (
       <ToChatPage />
     </Route>
   </Router>
-);
+)
 
-export default Private;
+export default Private

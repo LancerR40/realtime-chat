@@ -1,5 +1,5 @@
-import styles from './Loader.module.css';
+import styles from './Loader.module.css'
 
-const Loader = () => <div className={styles.loader}></div>;
+const Loader = () => <div className={styles.loader}></div>
 
-export default Loader;
+export default Loader

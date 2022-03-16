@@ -1,24 +1,24 @@
-import styles from './Header.module.css';
-import { useRef } from 'react';
+import styles from './Header.module.css'
+import { useRef } from 'react'
 
-import SearchInput from '../SearchInput/SearchInput';
+import SearchInput from '../SearchInput/SearchInput'
 // import Contacts from '../Contacts/Contacts';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { findUsersAction } from '../../../store/action/chat';
+import { useDispatch, useSelector } from 'react-redux'
+import { findUsersAction } from '../../../store/action/chat'
 
 const Header = () => {
-  const userData = useSelector((state) => state.chat.user);
-  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.chat.user)
+  const dispatch = useDispatch()
 
-  const userToSearchRef = useRef('');
+  const userToSearchRef = useRef('')
 
   const searchUsers = (event) => {
-    const { value } = event.target;
-    userToSearchRef.current = value;
+    const { value } = event.target
+    userToSearchRef.current = value
 
-    dispatch(findUsersAction(value));
-  };
+    dispatch(findUsersAction(value))
+  }
 
   return (
     <header className={styles.header}>
@@ -41,7 +41,7 @@ const Header = () => {
         {/* <Contacts /> */}
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

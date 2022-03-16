@@ -1,30 +1,30 @@
-import Header from '../Header/Header';
-import ChatList from '../ChatList/ChatList';
-import ContactList from '../ContactList/ContactList';
-import UsersFoundList from '../UsersFoundList/UsersFoundList';
-import Footer from '../Footer/Footer';
+import Header from '../Header/Header'
+import ChatList from '../ChatList/ChatList'
+import ContactList from '../ContactList/ContactList'
+import UsersFoundList from '../UsersFoundList/UsersFoundList'
+import Footer from '../Footer/Footer'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentChatAction } from '../../../store/action/chat';
+import { useDispatch, useSelector } from 'react-redux'
+import { setCurrentChatAction } from '../../../store/action/chat'
 
-import { CHATS_SECTION, CONTACTS_SECTION } from '../../../constant/chat';
-import { useState } from 'react';
+import { CHATS_SECTION, CONTACTS_SECTION } from '../../../constant/chat'
+import { useState } from 'react'
 
 const ChatMenu = ({ disconnect }) => {
-  const usersFound = useSelector((state) => state.chat.usersFound);
-  const dispatch = useDispatch();
+  const usersFound = useSelector((state) => state.chat.usersFound)
+  const dispatch = useDispatch()
 
-  const [currentSection, setCurrentSection] = useState(CHATS_SECTION);
+  const [currentSection, setCurrentSection] = useState(CHATS_SECTION)
 
   const setCurrentChat = (chat) => {
-    dispatch(setCurrentChatAction(chat));
-  };
+    dispatch(setCurrentChatAction(chat))
+  }
 
   const changeSectionHandler = (sectionName) => {
-    setCurrentSection(sectionName);
-  };
+    setCurrentSection(sectionName)
+  }
 
   return (
     <>
@@ -52,11 +52,11 @@ const ChatMenu = ({ disconnect }) => {
         disconnect={disconnect}
       />
     </>
-  );
-};
+  )
+}
 
 ChatMenu.propTypes = {
   disconnect: PropTypes.func.isRequired,
-};
+}
 
-export default ChatMenu;
+export default ChatMenu

@@ -1,42 +1,42 @@
-import styles from './Chat.module.css';
+import styles from './Chat.module.css'
 
-import ChatMenu from '../../components/mobile/ChatMenu/ChatMenu';
-import ChatFeed from '../../components/mobile/ChatFeed/ChatFeed';
+import ChatMenu from '../../components/mobile/ChatMenu/ChatMenu'
+import ChatFeed from '../../components/mobile/ChatFeed/ChatFeed'
 
-import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutAction } from '../../store/action/auth';
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAction } from '../../store/action/auth'
 import {
   getUserDataAction,
   userMsgFromServerAction,
   updateContactsConnectionAction,
-} from '../../store/action/chat';
+} from '../../store/action/chat'
 
-import { io } from 'socket.io-client';
-import { SOCKET_SERVER_ENDPOINT } from '../../constant/chat';
+import { io } from 'socket.io-client'
+import { SOCKET_SERVER_ENDPOINT } from '../../constant/chat'
 
-import recivedMessage from '../../../public/assets/sounds/src_message_received.mp3';
+import recivedMessage from '../../../public/assets/sounds/src_message_received.mp3'
 
-let socket = null;
+let socket = null
 
 const MobileUI = () => {
-  const dispatch = useDispatch();
-  const { push } = useHistory();
+  const dispatch = useDispatch()
+  const { push } = useHistory()
 
-  const currentChat = useSelector((state) => state.chat.currentChat);
+  const currentChat = useSelector((state) => state.chat.currentChat)
 
   const disconnect = () => {
-    dispatch(logoutAction(push, socket));
+    dispatch(logoutAction(push, socket))
 
-    socket = null;
-  };
+    socket = null
+  }
 
   useEffect(() => {
-    dispatch(getUserDataAction());
+    dispatch(getUserDataAction())
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token')
 
     socket = io(SOCKET_SERVER_ENDPOINT, {
       query: {
@@ -44,33 +44,33 @@ const MobileUI = () => {
       },
       transports: ['websocket'],
       upgrade: false,
-    });
-  }, []);
+    })
+  }, [])
 
   useEffect(() => {
     socket.on('chat:message', (data) => {
-      const audio = new Audio(recivedMessage);
-      audio.play();
+      const audio = new Audio(recivedMessage)
+      audio.play()
 
-      dispatch(userMsgFromServerAction(data));
-    });
+      dispatch(userMsgFromServerAction(data))
+    })
 
     socket.on('chat:user-online', (data) => {
-      dispatch(updateContactsConnectionAction(data));
-    });
+      dispatch(updateContactsConnectionAction(data))
+    })
 
     socket.on('chat:user-offline', (data) => {
-      dispatch(updateContactsConnectionAction(data));
-    });
+      dispatch(updateContactsConnectionAction(data))
+    })
 
     return () => {
       if (socket !== null) {
-        socket.off();
+        socket.off()
       }
-    };
-  }, []);
+    }
+  }, [])
 
-  const currentSection = Object.keys(currentChat).length;
+  const currentSection = Object.keys(currentChat).length
 
   return (
     <div className={styles.mobile}>
@@ -78,9 +78,9 @@ const MobileUI = () => {
 
       {currentSection > 0 && <ChatFeed chat={currentChat} socket={socket} />}
     </div>
-  );
-};
+  )
+}
 
-const Chat = () => <MobileUI />;
+const Chat = () => <MobileUI />
 
-export default Chat;
+export default Chat

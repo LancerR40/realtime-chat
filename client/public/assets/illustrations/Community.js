@@ -529,7 +529,7 @@ function Icon() {
         transform="rotate(-30 413.045 785.875)"
       ></rect>
     </svg>
-  );
+  )
 }
 
-export default Icon;
+export default Icon

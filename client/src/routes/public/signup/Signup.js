@@ -1,46 +1,46 @@
-import styles from './Signup.module.css';
+import styles from './Signup.module.css'
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux';
-import { signupAction } from '../../../store/action/auth';
+import { useDispatch } from 'react-redux'
+import { signupAction } from '../../../store/action/auth'
 
-import Form from '../../../components/form/SignupForm';
+import Form from '../../../components/form/SignupForm'
 
 const Signup = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const [state, setState] = useState({
     fullname: '',
     email: '',
     password: '',
     avatar: null,
-  });
+  })
 
   const onChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value, files } = e.target
 
     if (files) {
-      return setState((state) => ({ ...state, [name]: files[0] }));
+      return setState((state) => ({ ...state, [name]: files[0] }))
     }
 
-    setState((state) => ({ ...state, [name]: value }));
-  };
+    setState((state) => ({ ...state, [name]: value }))
+  }
 
   const signup = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const formData = new FormData();
-    const { fullname, email, password, avatar } = state;
+    const formData = new FormData()
+    const { fullname, email, password, avatar } = state
 
-    formData.append('fullname', fullname);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('avatar', avatar);
+    formData.append('fullname', fullname)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append('avatar', avatar)
 
-    dispatch(signupAction(formData, setState));
-  };
+    dispatch(signupAction(formData, setState))
+  }
 
   return (
     <div className={styles.signup}>
@@ -65,7 +65,7 @@ const Signup = () => {
         </span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup

@@ -1,13 +1,13 @@
-import styles from './ContactList.module.css';
-import PropTypes from 'prop-types';
+import styles from './ContactList.module.css'
+import PropTypes from 'prop-types'
 // import { useState, useEffect } from 'react';
 // import { BsTrash, BsFillTrashFill } from 'react-icons/bs';
 // import { FaTrash } from 'react-icons/fa';
 
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
 const ContactList = ({ setChat }) => {
-  const contacts = useSelector((state) => state.chat.contacts);
+  const contacts = useSelector((state) => state.chat.contacts)
 
   return (
     <div className={styles.contactList}>
@@ -63,11 +63,11 @@ const ContactList = ({ setChat }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 ContactList.propTypes = {
   setChat: PropTypes.func.isRequired,
-};
+}
 
-export default ContactList;
+export default ContactList

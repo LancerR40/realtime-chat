@@ -1,10 +1,10 @@
-import styles from './Home.module.css';
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import styles from './Home.module.css'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import GreatChat from 'Public/assets/illustrations/GreatChat';
-import Community from 'Public/assets/illustrations/Community';
-import Security from 'Public/assets/illustrations/Security';
+import GreatChat from 'Public/assets/illustrations/GreatChat'
+import Community from 'Public/assets/illustrations/Community'
+import Security from 'Public/assets/illustrations/Security'
 
 const CONTENT = [
   {
@@ -25,17 +25,17 @@ const CONTENT = [
     img: <Security />,
     description: 'Concerned about safety? We take care of you',
   },
-];
+]
 
 const Home = () => {
-  const { push } = useHistory();
+  const { push } = useHistory()
 
-  const [currentImg, setCurrentImg] = useState(CONTENT[1]);
+  const [currentImg, setCurrentImg] = useState(CONTENT[1])
 
-  const changeImgHandler = (index) => setCurrentImg(CONTENT[index]);
+  const changeImgHandler = (index) => setCurrentImg(CONTENT[index])
 
   const activePointerHandler = (id) =>
-    currentImg.id === id ? styles.activePointer : '';
+    currentImg.id === id ? styles.activePointer : ''
 
   return (
     <div className={styles.home}>
@@ -77,7 +77,7 @@ const Home = () => {
         Log In
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

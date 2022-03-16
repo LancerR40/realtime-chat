@@ -1,5 +1,5 @@
-import styles from './Input.module.css';
-import PropTypes from 'prop-types';
+import styles from './Input.module.css'
+import PropTypes from 'prop-types'
 
 const Input = ({ label, type, name, value, icon, placeholder, onChange }) => {
   return (
@@ -23,8 +23,8 @@ const Input = ({ label, type, name, value, icon, placeholder, onChange }) => {
         <div className={styles.completedLine}></div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Input.propTypes = {
   label: PropTypes.string.isRequired,
@@ -34,6 +34,6 @@ Input.propTypes = {
   icon: PropTypes.node,
   placeholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-};
+}
 
-export default Input;
+export default Input

@@ -1,40 +1,40 @@
-import authServices from '../../api/services/auth';
-import { AUTH_CONSTANTS } from '../constant/auth';
-import { CHAT_CONSTANTS } from '../constant/chat';
-import { LOADER_CONSTANTS } from '../constant/loader';
+import authServices from '../../api/services/auth'
+import { AUTH_CONSTANTS } from '../constant/auth'
+import { CHAT_CONSTANTS } from '../constant/chat'
+import { LOADER_CONSTANTS } from '../constant/loader'
 
 export const isAuthAction = () => {
   return async (dispatch) => {
-    const response = await authServices.isAuthService();
-    const { auth, error } = response;
+    const response = await authServices.isAuthService()
+    const { auth, error } = response
 
     if (error) {
-      return window.localStorage.clear();
+      return window.localStorage.clear()
     }
 
     dispatch({
       type: AUTH_CONSTANTS.AUTH_VERIFY,
       payload: auth,
-    });
-  };
-};
+    })
+  }
+}
 
 export const signupAction = (data, setData) => {
   return async (dispatch) => {
     dispatch({
       type: LOADER_CONSTANTS.LOADER,
       payload: true,
-    });
+    })
 
-    const { message, error } = await authServices.signupService(data);
+    const { message, error } = await authServices.signupService(data)
 
     dispatch({
       type: LOADER_CONSTANTS.LOADER,
       payload: false,
-    });
+    })
 
     if (error) {
-      return alert(error);
+      return alert(error)
     }
 
     setData({
@@ -42,42 +42,42 @@ export const signupAction = (data, setData) => {
       email: '',
       password: '',
       avatar: null,
-    });
+    })
 
-    alert(message);
-  };
-};
+    alert(message)
+  }
+}
 
 export const loginAction = (data, push) => {
   return async (dispatch) => {
     dispatch({
       type: LOADER_CONSTANTS.LOADER,
       payload: true,
-    });
+    })
 
-    const { auth, token, error } = await authServices.loginService(data);
+    const { auth, token, error } = await authServices.loginService(data)
 
     dispatch({
       type: LOADER_CONSTANTS.LOADER,
       payload: false,
-    });
+    })
 
     if (error) {
-      return alert(error);
+      return alert(error)
     }
 
     if (auth) {
-      window.localStorage.setItem('token', token);
+      window.localStorage.setItem('token', token)
 
-      push('/chat');
+      push('/chat')
 
       dispatch({
         type: AUTH_CONSTANTS.LOGIN,
         payload: auth,
-      });
+      })
     }
-  };
-};
+  }
+}
 
 export const logoutAction = (push, socket) => {
   return async (dispatch) => {
@@ -87,11 +87,11 @@ export const logoutAction = (push, socket) => {
     //   return alert(error);
     // }
 
-    window.localStorage.clear();
+    window.localStorage.clear()
 
-    socket.emit('chat:logout');
+    socket.emit('chat:logout')
 
-    push('/');
+    push('/')
 
     dispatch({
       type: CHAT_CONSTANTS.CLEAN_CHAT_SESSION,
@@ -101,11 +101,11 @@ export const logoutAction = (push, socket) => {
         usersFound: [],
         contacts: [],
       },
-    });
+    })
 
     return dispatch({
       type: AUTH_CONSTANTS.LOGOUT,
       payload: false,
-    });
-  };
-};
+    })
+  }
+}

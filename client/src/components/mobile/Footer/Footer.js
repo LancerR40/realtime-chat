@@ -1,13 +1,13 @@
-import styles from './Footer.module.css';
-import PropTypes from 'prop-types';
+import styles from './Footer.module.css'
+import PropTypes from 'prop-types'
 
-import { BsFillChatSquareFill, BsChatSquare } from 'react-icons/bs';
-import { AiFillContacts, AiOutlineContacts } from 'react-icons/ai';
-import { FiLogOut } from 'react-icons/fi';
+import { BsFillChatSquareFill, BsChatSquare } from 'react-icons/bs'
+import { AiFillContacts, AiOutlineContacts } from 'react-icons/ai'
+import { FiLogOut } from 'react-icons/fi'
 
-const CHATS = 'Chats';
-const CONTACTS = 'Contacts';
-const LOGOUT = 'Logout';
+const CHATS = 'Chats'
+const CONTACTS = 'Contacts'
+const LOGOUT = 'Logout'
 
 const Footer = ({ currentSection, changeSection, disconnect }) => {
   const elements = [
@@ -39,19 +39,19 @@ const Footer = ({ currentSection, changeSection, disconnect }) => {
       sectionName: CONTACTS,
       onClick: changeSection,
     },
-  ];
+  ]
 
   return (
     <footer className={styles.footer}>
       {elements.map((section) => {
         const classes = `${styles.iconContainer} ${
           currentSection === section.sectionName && styles.active
-        }`;
+        }`
 
         const icon =
           currentSection === section.sectionName
             ? section.activeIcon
-            : section.inactiveIcon;
+            : section.inactiveIcon
 
         return (
           <div
@@ -63,7 +63,7 @@ const Footer = ({ currentSection, changeSection, disconnect }) => {
 
             <span className={styles.text}>{section.sectionName}</span>
           </div>
-        );
+        )
       })}
 
       <div className={styles.iconContainer} onClick={disconnect}>
@@ -71,13 +71,13 @@ const Footer = ({ currentSection, changeSection, disconnect }) => {
         <span className={styles.text}>{LOGOUT}</span>
       </div>
     </footer>
-  );
-};
+  )
+}
 
 Footer.propTypes = {
   currentSection: PropTypes.string.isRequired,
   changeSection: PropTypes.func.isRequired,
   disconnect: PropTypes.func.isRequired,
-};
+}
 
-export default Footer;
+export default Footer

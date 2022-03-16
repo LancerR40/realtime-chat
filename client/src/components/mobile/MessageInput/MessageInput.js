@@ -1,7 +1,7 @@
-import styles from './MessageInput.module.css';
-import PropTypes from 'prop-types';
+import styles from './MessageInput.module.css'
+import PropTypes from 'prop-types'
 
-import { FaTelegramPlane } from 'react-icons/fa';
+import { FaTelegramPlane } from 'react-icons/fa'
 
 const MessageInput = ({ text, sendMessage, onChange }) => {
   return (
@@ -18,13 +18,13 @@ const MessageInput = ({ text, sendMessage, onChange }) => {
         <FaTelegramPlane className={styles.icon} />
       </div>
     </div>
-  );
-};
+  )
+}
 
 MessageInput.propTypes = {
   text: PropTypes.string.isRequired,
   sendMessage: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-};
+}
 
-export default MessageInput;
+export default MessageInput

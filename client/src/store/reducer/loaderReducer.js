@@ -1,11 +1,11 @@
 const loaderReducer = (state = false, action) => {
   switch (action.type) {
     case '@loader/LOADER':
-      return action.payload;
+      return action.payload
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default loaderReducer;
+export default loaderReducer

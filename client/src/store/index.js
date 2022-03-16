@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './reducer/authReducer';
-import chatReducer from './reducer/chatReducer';
-import loaderReducer from './reducer/loaderReducer';
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer from './reducer/authReducer'
+import chatReducer from './reducer/chatReducer'
+import loaderReducer from './reducer/loaderReducer'
 
 const store = configureStore({
   reducer: {
@@ -9,6 +9,6 @@ const store = configureStore({
     chat: chatReducer,
     loader: loaderReducer,
   },
-});
+})
 
-export default store;
+export default store

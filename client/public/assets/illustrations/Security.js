@@ -142,7 +142,7 @@ function Icon() {
         transform="translate(-232.632 -60.108)"
       ></path>
     </svg>
-  );
+  )
 }
 
-export default Icon;
+export default Icon

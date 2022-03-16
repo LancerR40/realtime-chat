@@ -1,55 +1,55 @@
-import styles from './ChatFeed.module.css';
-import PropTypes from 'prop-types';
+import styles from './ChatFeed.module.css'
+import PropTypes from 'prop-types'
 
-import Header from './Header';
-import Message from './Message';
-import MessageInput from '../MessageInput/MessageInput';
+import Header from './Header'
+import Message from './Message'
+import MessageInput from '../MessageInput/MessageInput'
 
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { sendMessageAction } from '../../../store/action/chat';
+import { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { sendMessageAction } from '../../../store/action/chat'
 
-import { formatTimestamp } from '../../../utils/date';
+import { formatTimestamp } from '../../../utils/date'
 
-import sendMessageSound from '../../../../public/assets/sounds/src_message_sent.mp3';
+import sendMessageSound from '../../../../public/assets/sounds/src_message_sent.mp3'
 
 const ChatFeed = ({ chat, socket }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const currentChat = useSelector((state) => state.chat.currentChat);
-  const messages = useSelector((state) => state.chat.currentChat.chat);
+  const currentChat = useSelector((state) => state.chat.currentChat)
+  const messages = useSelector((state) => state.chat.currentChat.chat)
 
-  const chatContainer = useRef('');
-  const [messageText, setMessageText] = useState('');
+  const chatContainer = useRef('')
+  const [messageText, setMessageText] = useState('')
 
   const messageTextHandler = (event) => {
-    const { value } = event.target;
-    setMessageText(value);
-  };
+    const { value } = event.target
+    setMessageText(value)
+  }
 
   const sendMessage = () => {
     if (messageText === '') {
-      return;
+      return
     }
 
     const message = {
       incomingUserId: currentChat.id,
       messageContent: messageText,
-    };
+    }
 
-    dispatch(sendMessageAction(message, socket));
+    dispatch(sendMessageAction(message, socket))
 
-    const audio = new Audio(sendMessageSound);
-    audio.play();
+    const audio = new Audio(sendMessageSound)
+    audio.play()
 
-    setMessageText('');
-  };
+    setMessageText('')
+  }
 
   useEffect(() => {
-    const { current: DOMElement } = chatContainer;
+    const { current: DOMElement } = chatContainer
 
-    DOMElement.scrollTop = DOMElement.scrollHeight;
-  }, [messages]);
+    DOMElement.scrollTop = DOMElement.scrollHeight
+  }, [messages])
 
   const renderMessages = messages?.map((message, index) =>
     message.outgoingUserId !== currentChat.id ? (
@@ -67,7 +67,7 @@ const ChatFeed = ({ chat, socket }) => {
         time={formatTimestamp(message.datetime)}
       />
     )
-  );
+  )
 
   return (
     <>
@@ -83,12 +83,12 @@ const ChatFeed = ({ chat, socket }) => {
         onChange={messageTextHandler}
       />
     </>
-  );
-};
+  )
+}
 
 ChatFeed.propTypes = {
   chat: PropTypes.object.isRequired,
   socket: PropTypes.object.isRequired,
-};
+}
 
-export default ChatFeed;
+export default ChatFeed

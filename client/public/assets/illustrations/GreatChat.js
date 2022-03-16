@@ -246,7 +246,7 @@ function Icon() {
         transform="translate(-106.206 -92.986)"
       ></path>
     </svg>
-  );
+  )
 }
 
-export default Icon;
+export default Icon

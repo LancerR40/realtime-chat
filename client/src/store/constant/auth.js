@@ -4,4 +4,4 @@ export const AUTH_CONSTANTS = {
   LOGIN: '@auth/LOGIN',
   LOGOUT: '@auth/LOGOUT',
   LOADING_STATUS: '@auth/LOADING_STATUS',
-};
+}

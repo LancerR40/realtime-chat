@@ -1,53 +1,53 @@
-import { CHAT_CONSTANTS } from '../constant/chat';
+import { CHAT_CONSTANTS } from '../constant/chat'
 
 const initialState = {
   user: {},
   currentChat: {},
   usersFound: [],
   contacts: [],
-};
+}
 
 const chatReducer = (state = initialState, action) => {
-  const { payload } = action;
+  const { payload } = action
 
   switch (action.type) {
     case CHAT_CONSTANTS.GET_USER_DATA: {
-      return { ...state, contacts: payload.contacts, user: payload.user };
+      return { ...state, contacts: payload.contacts, user: payload.user }
     }
 
     case CHAT_CONSTANTS.USERS_FOUND:
-      return { ...state, usersFound: payload };
+      return { ...state, usersFound: payload }
 
     case CHAT_CONSTANTS.SET_CURRENT_CHAT:
-      return { ...state, currentChat: payload };
+      return { ...state, currentChat: payload }
 
     case CHAT_CONSTANTS.CLEAN_CHAT_SESSION:
-      return payload;
+      return payload
 
     case CHAT_CONSTANTS.SEND_MSG_TO_USER: {
-      const { incomingUserId, isContact } = payload;
+      const { incomingUserId, isContact } = payload
 
       if (!isContact) {
         const newContact = {
           ...state.currentChat,
           chat: [payload],
-        };
+        }
 
-        const contacts = [...state.contacts, newContact];
+        const contacts = [...state.contacts, newContact]
 
         return {
           ...state,
           currentChat: newContact,
           contacts,
-        };
+        }
       }
 
-      const contacts = [...state.contacts];
+      const contacts = [...state.contacts]
       const findContactIndex = contacts.findIndex(
         ({ id }) => id === incomingUserId
-      );
+      )
 
-      delete payload.isContact;
+      delete payload.isContact
 
       const updatedContacts = Object.values({
         ...state.contacts,
@@ -55,35 +55,35 @@ const chatReducer = (state = initialState, action) => {
           ...state.contacts[findContactIndex],
           chat: state.contacts[findContactIndex].chat.concat(payload),
         },
-      });
+      })
 
       const currentChat = {
         ...state.currentChat,
         chat: state.currentChat.chat.concat(payload),
-      };
+      }
 
       return {
         ...state,
         currentChat,
         contacts: updatedContacts,
-      };
+      }
     }
 
     case CHAT_CONSTANTS.USER_MSG_FROM_SERVER: {
-      const { outgoingUser, message } = action.payload;
+      const { outgoingUser, message } = action.payload
 
       const isContact = state.contacts.findIndex(
         (contact) => contact.id === outgoingUser.id
-      );
+      )
 
       if (isContact === -1) {
         const newContact = {
           ...outgoingUser,
           isConnected: true,
           chat: [message],
-        };
+        }
 
-        const isCurrentChat = state.currentChat?.id === outgoingUser.id;
+        const isCurrentChat = state.currentChat?.id === outgoingUser.id
 
         if (isCurrentChat) {
           const newState = {
@@ -93,17 +93,17 @@ const chatReducer = (state = initialState, action) => {
               ...state.currentChat,
               chat: [message],
             },
-          };
+          }
 
-          return newState;
+          return newState
         }
 
         const newState = {
           ...state,
           contacts: [...state.contacts, newContact],
-        };
+        }
 
-        return newState;
+        return newState
       }
 
       const contacts = Object.values({
@@ -112,9 +112,9 @@ const chatReducer = (state = initialState, action) => {
           ...state.contacts[isContact],
           chat: state.contacts[isContact].chat.concat(message),
         },
-      });
+      })
 
-      const isCurrentChat = state.currentChat?.id === outgoingUser.id;
+      const isCurrentChat = state.currentChat?.id === outgoingUser.id
 
       if (isCurrentChat) {
         const newState = {
@@ -124,17 +124,17 @@ const chatReducer = (state = initialState, action) => {
             chat: state.currentChat.chat.concat(message),
           },
           contacts,
-        };
+        }
 
-        return newState;
+        return newState
       }
 
       const newState = {
         ...state,
         contacts,
-      };
+      }
 
-      return newState;
+      return newState
     }
 
     case '@chat/UPDATE_CONTACT_CONNECTION': {
@@ -143,58 +143,58 @@ const chatReducer = (state = initialState, action) => {
           return {
             ...contact,
             isConnected: payload.isConnected,
-          };
+          }
         }
 
-        return contact;
-      });
+        return contact
+      })
 
       if (state.currentChat?.id === payload.userId) {
         const currentChat = {
           ...state.currentChat,
           isConnected: payload.isConnected,
-        };
+        }
 
         const newState = {
           ...state,
           contacts,
           currentChat,
-        };
+        }
 
         if (state.usersFound.length) {
           const usersFound = [...state.usersFound].map((user) =>
             user.id === payload.userId
               ? { ...user, isConnected: payload.isConnected }
               : user
-          );
+          )
 
-          newState.usersFound = [...usersFound];
+          newState.usersFound = [...usersFound]
         }
 
-        return newState;
+        return newState
       }
 
       const newState = {
         ...state,
         contacts,
-      };
+      }
 
       if (state.usersFound.length) {
         const usersFound = [...state.usersFound].map((user) =>
           user.id === payload.userId
             ? { ...user, isConnected: payload.isConnected }
             : user
-        );
+        )
 
-        newState.usersFound = [...usersFound];
+        newState.usersFound = [...usersFound]
       }
 
-      return newState;
+      return newState
     }
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default chatReducer;
+export default chatReducer

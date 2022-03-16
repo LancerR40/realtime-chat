@@ -1,20 +1,20 @@
-import styles from './SearchInput.module.css';
-import PropTypes from 'prop-types';
+import styles from './SearchInput.module.css'
+import PropTypes from 'prop-types'
 
-import { BiSearch } from 'react-icons/bi';
-import { RiDeleteBack2Line } from 'react-icons/ri';
+import { BiSearch } from 'react-icons/bi'
+import { RiDeleteBack2Line } from 'react-icons/ri'
 
 const getStyleProp = (userFullname) => {
-  const { length } = userFullname;
+  const { length } = userFullname
 
   return {
     searchIcon: !length ? '1' : '0',
     deleteIcon: length ? '1' : '0',
-  };
-};
+  }
+}
 
 const SearchInput = ({ userToSearch, searchUsersHandler }) => {
-  const { current: userFullname } = userToSearch;
+  const { current: userFullname } = userToSearch
 
   return (
     <div className={styles.searchInput}>
@@ -38,12 +38,12 @@ const SearchInput = ({ userToSearch, searchUsersHandler }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 SearchInput.propTypes = {
   userToSearch: PropTypes.object.isRequired,
   searchUsersHandler: PropTypes.func.isRequired,
-};
+}
 
-export default SearchInput;
+export default SearchInput

@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-import Input from './input/Input';
-import Button from './button/Button';
+import Input from './input/Input'
+import Button from './button/Button'
 
-import { AiOutlineMail } from 'react-icons/ai';
-import { RiLockPasswordLine } from 'react-icons/ri';
+import { AiOutlineMail } from 'react-icons/ai'
+import { RiLockPasswordLine } from 'react-icons/ri'
 
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
 const LoginForm = ({ state, onChange, onSubmit }) => {
-  const isLoading = useSelector((state) => state.loader);
+  const isLoading = useSelector((state) => state.loader)
 
   return (
     <form onSubmit={onSubmit}>
@@ -35,13 +35,13 @@ const LoginForm = ({ state, onChange, onSubmit }) => {
 
       <Button title="Log In" withAnimation={isLoading} />
     </form>
-  );
-};
+  )
+}
 
 LoginForm.propTypes = {
   state: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-};
+}
 
-export default LoginForm;
+export default LoginForm

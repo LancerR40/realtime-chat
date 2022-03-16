@@ -1,8 +1,8 @@
-import styles from './Contacts.module.css';
-import { useSelector } from 'react-redux';
+import styles from './Contacts.module.css'
+import { useSelector } from 'react-redux'
 
 const Contacts = () => {
-  const contacts = useSelector((state) => state.chat.contacts);
+  const contacts = useSelector((state) => state.chat.contacts)
 
   return (
     <div className={styles.contacts}>
@@ -13,7 +13,7 @@ const Contacts = () => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default Contacts;
+export default Contacts
